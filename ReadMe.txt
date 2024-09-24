@@ -1,1 +1,6 @@
-Simply input a .TXT file in the "input_content" directory. Then run the automator app.
+Dependancies.
+
+1.FFmpeg
+2.Youtube-dl
+  - https://github.com/ytdl-org/youtube-dl/issues/32647#issuecomment-1827487371
+  - https://askubuntu.com/questions/1037666/youtube-dl-python-not-found-18-04
