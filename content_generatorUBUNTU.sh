@@ -1,5 +1,4 @@
 #!/bin/bash
-echo "tests"
 NODE_PATH="/usr/bin/node"
 NPM_PATH="/usr/bin/npm"
 
