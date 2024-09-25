@@ -9,7 +9,6 @@ dotenv.config();
 const client = new textToSpeech.TextToSpeechClient();
 const openai = new OpenAI({ apiKey: process.env.OPENAI_APIKEY });
 
-
 async function list_input_files(): Promise<string[]>{
     return new Promise((resolve, reject) => {
         fs.readdir("../input_content", (err, files) => {
@@ -79,12 +78,13 @@ async function speech_to_text(valid_file: string) {
     });
     const writeFile = util.promisify(fs.writeFile);
     await writeFile(`../srt_dir/${valid_file}.srt`, transcription, 'utf8');
-    console.log(transcription);
+    console.log(`Transcription made, file: ${validfile}`);
   }
 
 async function main() {
     const listed_files = await list_input_files();
     const valid_files = await valid_input_files(listed_files)
+    console.log(`${valid_files.length} files, to be processed.`)
     for(let i = 0 ; i < valid_files.length; i++){
         await text_to_speech(valid_files[i]);
         await speech_to_text(valid_files[i]);   
