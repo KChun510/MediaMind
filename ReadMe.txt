@@ -12,8 +12,13 @@ Dependancies.
 
 Google Cloud Platform:
 - Gcloud Text to speech
+  link: https://cloud.google.com/docs/authentication/provide-credentials-adc
+
 - YouTube API
-  Link: https://www.npmjs.com/package/youtube-search-api
+  Download Oauth Json: https://console.cloud.google.com/apis/credentials?authuser=3&hl=en&project=auto-cont-gen
+  Place that Json file in the working dir, then rename to client_secret.json.
+  Go to link bellow, follow from step 2.
+  Link: https://developers.google.com/youtube/v3/quickstart/nodejs
 
 
 Notes: 
