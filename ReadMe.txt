@@ -13,10 +13,7 @@ Dependancies.
 Google Cloud Platform:
 - Gcloud Text to speech
 - YouTube API
-  - !Need to upload client_secret.json to working dir!
-  - Can be found here: https://console.cloud.google.com/apis/credentials?authuser=3&project=auto-cont-gen&supportedpurview=project
-  - ^ Download the Oauth2.0 JSON file, right most to the ID ^
-  - Follow from step 2: https://developers.google.com/youtube/v3/quickstart/nodejs
+
 
 Notes: 
 Also if using a new GCP account the above API's have to be re-enabled.
