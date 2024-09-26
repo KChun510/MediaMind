@@ -13,6 +13,7 @@ Dependancies.
 Google Cloud Platform:
 - Gcloud Text to speech
 - YouTube API
+  Link: https://www.npmjs.com/package/youtube-search-api
 
 
 Notes: 
