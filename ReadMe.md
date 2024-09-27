@@ -1,24 +1,24 @@
-Dependancies.
+# Dependencies
 
-1.FFmpeg
-2.Youtube-dl
-    - https://github.com/ytdl-org/youtube-dl/issues/32647#issuecomment-1827487371
-    - https://askubuntu.com/questions/1037666/youtube-dl-python-not-found-18-04
-3. Node.js
-    - link: https://nodejs.org/en/download/package-manager
-4. Google Cloud SDK + ADC
-    - link: https://cloud.google.com/docs/authentication/provide-credentials-adc
+1. **FFmpeg**
+2. **Youtube-dl**
+    - [GitHub Issue](https://github.com/ytdl-org/youtube-dl/issues/32647#issuecomment-1827487371)
+    - [Ask Ubuntu](https://askubuntu.com/questions/1037666/youtube-dl-python-not-found-18-04)
+3. **Node.js**
+    - [Download Node.js](https://nodejs.org/en/download/package-manager)
+4. **Google Cloud SDK + ADC**
+    - [Google Cloud Authentication](https://cloud.google.com/docs/authentication/provide-credentials-adc)
 
+## Google Cloud Platform
 
-Google Cloud Platform:
-- Gcloud Text to speech
-  link: https://cloud.google.com/docs/authentication/provide-credentials-adc
+- **Gcloud Text to Speech**
+    - [Documentation](https://cloud.google.com/docs/authentication/provide-credentials-adc)
 
-- YouTube API
-  Download Oauth Json: https://console.cloud.google.com/apis/credentials?authuser=3&hl=en&project=auto-cont-gen
-  Place that Json file in the working dir, then rename to client_secret.json.
-  Go to link bellow, follow from step 2.
-  Link: https://developers.google.com/youtube/v3/quickstart/nodejs
+- **YouTube API**
+    - Download OAuth JSON: [API Credentials](https://console.cloud.google.com/apis/credentials?authuser=3&hl=en&project=auto-cont-gen)  
+    Place that JSON file in the working directory, then rename it to `client_secret.json`.  
+    Follow the steps from this link: [YouTube API Quickstart](https://developers.google.com/youtube/v3/quickstart/nodejs)
+
 
 
 Notes: 
