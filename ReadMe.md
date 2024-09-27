@@ -2,8 +2,8 @@ Dependancies.
 
 1.FFmpeg
 2.Youtube-dl
-  - https://github.com/ytdl-org/youtube-dl/issues/32647#issuecomment-1827487371
-  - https://askubuntu.com/questions/1037666/youtube-dl-python-not-found-18-04
+  https://github.com/ytdl-org/youtube-dl/issues/32647#issuecomment-1827487371
+  https://askubuntu.com/questions/1037666/youtube-dl-python-not-found-18-04
 3. Node.js
   link: https://nodejs.org/en/download/package-manager
 4. Google Cloud SDK + ADC
