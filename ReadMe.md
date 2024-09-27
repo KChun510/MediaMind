@@ -19,8 +19,6 @@
     Place that JSON file in the working directory, then rename it to `client_secret.json`.  
     Follow the steps from this link: [YouTube API Quickstart](https://developers.google.com/youtube/v3/quickstart/nodejs)
 <br></br>
-<br></br>
-
 Notes: 
 Also if using a new GCP account the above API's have to be re-enabled.
 Will need a valid GCP account with billing.
