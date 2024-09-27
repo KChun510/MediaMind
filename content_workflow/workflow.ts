@@ -28,7 +28,7 @@ async function valid_input_files(input_files:string[]):Promise<string[]> {
     try {
         // Read CSV file
         let valid_files: string[] = [];
-        const invalid_files = await fs.promises.readFile("../invalid_files/file_log.csv", 'utf8');
+        const invalid_files = await fs.promises.readFile("../invalid_files/file_txt.csv", 'utf8');
         let invalid_filesArray = invalid_files.split(',').map(item => item.trim());
         
         input_files.forEach(file => {
@@ -38,7 +38,7 @@ async function valid_input_files(input_files:string[]):Promise<string[]> {
             }
         });
         invalid_filesArray = invalid_filesArray.join(',');
-        await fs.writeFile("../invalid_files/file_log.csv", invalid_filesArray, (err) => {console.log(err)});
+        await fs.writeFile("../invalid_files/file_txt.csv", invalid_filesArray, (err) => {console.log(err)});
 
 
         return valid_files; // Return the array of file names
