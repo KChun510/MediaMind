@@ -11,7 +11,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_APIKEY });
 
 async function list_input_files(): Promise<string[]>{
     return new Promise((resolve, reject) => {
-        fs.readdir("../input_content", (err, files) => {
+        fs.readdir("../input_content/text_storys", (err, files) => {
             if (err) {
                 reject(err); // Reject the promise if there's an error
             } else {
