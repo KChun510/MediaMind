@@ -9,6 +9,7 @@
 4. **Google Cloud SDK + ADC**
     - [Google Cloud Authentication](https://cloud.google.com/docs/authentication/provide-credentials-adc)
 5. **SQLite3**
+    - npm install sqlite3
 
 ## Google Cloud Platform
 
