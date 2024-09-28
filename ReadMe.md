@@ -37,3 +37,8 @@ Current Design of the system:
     - Store YT Vid id's as UNID, and video times in next cell.
     - Will be used for the cutting of videos.
     - A Case: When we layer our story's over gameplay.
+2. **HDD Storage**
+    - Make sure to set the HDD location for Video storage, in " content_generator{MAC -or- UBUNTU} ".
+
+
+<sub><sup>Updated: 9/27/24 </sup></sub>
