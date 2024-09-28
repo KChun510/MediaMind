@@ -9,6 +9,7 @@
 4. **Google Cloud SDK + ADC**
     - [Google Cloud Authentication](https://cloud.google.com/docs/authentication/provide-credentials-adc)
 5. **SQLite3**
+    - npm install sqlite3
 
 ## Google Cloud Platform
 
@@ -22,7 +23,7 @@
 <br></br>
 
 Notes: 
-Also if using a new GCP account the above API's have to be re-enabled.
+Also if using a new GCP account the above APIs have to be re-enabled.
 Will need a valid GCP account with billing.
 Current account kchun1080@gmail.com
 
