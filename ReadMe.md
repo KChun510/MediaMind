@@ -28,3 +28,11 @@ Current account kchun1080@gmail.com
 Current Design of the system:
 ![alt text](https://github.com/KChun510/auto_cont_gen/blob/0e581b80ece6ae74c47da919546873a0feba2a3f/diagrams/auto_cont_gen.drawio.png)
 
+
+
+
+### Dev Notes:
+1. **SQLite** will be using this heavily down the line.
+    - Store YT Vid id's as UNID, and video times in next cell.
+    - Will be used for the cutting of videos.
+    - A Case: When we layer our story's over gameplay.
