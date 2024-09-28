@@ -8,6 +8,7 @@
     - [Download Node.js](https://nodejs.org/en/download/package-manager)
 4. **Google Cloud SDK + ADC**
     - [Google Cloud Authentication](https://cloud.google.com/docs/authentication/provide-credentials-adc)
+5. **SQLite3**
 
 ## Google Cloud Platform
 
