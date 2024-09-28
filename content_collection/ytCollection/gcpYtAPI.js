@@ -92,9 +92,11 @@ function storeToken(token) {
  *
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-async function getVideosByKeyWords(auth, { keywords = 'dogs', videoLicense = "any", results = 10, pages = 0, }) {
-    console.log(`Passed in: ${keywords}, ${videoLicense} ,${results}, ${pages}`)
-    var service = google.youtube('v3');
+
+// Notes: If your searching by video license, then we need to specify a type of video.
+
+async function getVideosByKeyWords(auth, { keywords = 'dogs', type = 'video', videoDefinition = 'standard', videoLicense = "any", results = 10, pages = 0 }) {
+    let service = google.youtube('v3');
     let pageToken = undefined;
     for (let i = 0; i < pages; i++) {
         try {
@@ -103,15 +105,15 @@ async function getVideosByKeyWords(auth, { keywords = 'dogs', videoLicense = "an
                 part: 'snippet',
                 q: keywords,
                 maxResults: results,
+                videoDefinition,
                 videoLicense,
+                type,
                 pageToken
             })
             const video_data = res.data.items
             if (video_data.length > 0) {
                 console.log(video_data)
                 pageToken = res.data.nextPageToken
-                pages++
-
             } else {
                 console.log("Nothing found under that keyword")
                 return
@@ -123,5 +125,71 @@ async function getVideosByKeyWords(auth, { keywords = 'dogs', videoLicense = "an
     }
 }
 
+const formatTime = (timeString) => {
+    const str_len = timeString.length
+    timeString = timeString.slice(2, str_len)
+    let final = []
+    let temp_store = []
+    for (let i = 0; i < str_len; i++) {
+        const charDecVal = timeString.charCodeAt(i)
+        if (charDecVal >= 65 && charDecVal <= 90) {
+            console.log(temp_store)
+            final.push(temp_store)
+            temp_store = []
+            continue
+        } else {
+            temp_store.push(timeString[i])
+        }
+    }
+    if (final.length <= 2) {
+        return `00:${final[0].length > 1 ? `${final[0][0]}${final[0][1]}` : `0${final[0][0]}`}:${final[1].length > 1 ? `${final[1][0]}${final[1][1]}` :
+            `0${final[1][0]}`}`
+    } else {
+        return `${final[0].length > 1 ? `${final[0][0]}${final[0][1]}` : `0${final[0][0]}`}:${final[1].length > 1 ? `${final[1][0]}${final[1][1]}` : `0${final[1][0]}`}:${final[2].length > 1 ? `${final[2][0]}${final[2][1]}` :
+            `0${final[2][0]}`}`
+    }
+}
 
-module.exports = { authorize, getVideosByKeyWords }
+async function getVideoDetails(auth, videoIDs = []) {
+    const id_log = videoIDs
+    let service = google.youtube('v3'); const idLen = videoIDs.length
+    if (idLen > 50) {
+        let tempArr = []
+        let chunked = []
+        videoIDs.forEach((id, index) => {
+            if (tempArr.length < 50) {
+                tempArr.push(id)
+            } else if (tempArr.length > 50 | index === idLen - 1) {
+                chunked.push(tempArr)
+                tempArr = []
+            }
+        })
+        videoIDs = chunked
+    } else {
+        videoIDs = [[videoIDs]]
+    }
+    try {
+        let id_index = 0
+        let return_objArr = []
+        for (const idSet of videoIDs) {
+            const res = await service.videos.list({
+                auth: auth,
+                part: 'snippet,contentDetails',
+                //part: 'snippet,contentDetails,statistics',
+                id: idSet
+            })
+            const videoData = res.data.items
+            for (const video of videoData) {
+                const formattedTime = formatTime(video.contentDetails.duration)
+                return_objArr.push({ videoID: id_log[id_index], videoLen: formattedTime, videoName: video.snippet.title })
+                id_index++
+            }
+        }
+        return return_objArr
+    } catch (e) {
+        console.log(`Getting video details failed error: ${e}`)
+    }
+}
+
+
+module.exports = { authorize, getVideosByKeyWords, getVideoDetails }

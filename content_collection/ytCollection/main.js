@@ -38,10 +38,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 var gcpYtAPI_1 = require("./gcpYtAPI");
 var fs = require("fs");
+var db_actions_1 = require("../../db_dir/db_actions");
+//Our db connector
 (function () {
     fs.readFile('client_secret.json', 'utf8', function processClientSecrets(err, content) {
         return __awaiter(this, void 0, void 0, function () {
-            var oAuthToken;
+            var oAuthToken, videoDetails;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -51,13 +53,19 @@ var fs = require("fs");
                         }
                         return [4 /*yield*/, (0, gcpYtAPI_1.authorize)(JSON.parse(content))
                             // Shiza stock footage call
+                            //getVideosByKeyWords(oAuthToken, { keywords: "funny dog memes", videoDefinition = 'standard' ,videoLicense: "creativeCommon", results: 5, pages: 1 })
+                            // Real video footage
+                            // getVideosByKeyWords(oAuthToken, { keywords: "funny dog memes", videoLicense: "youtube", results: 5, pages: 4 })
                         ];
                     case 1:
                         oAuthToken = _a.sent();
-                        // Shiza stock footage call
-                        (0, gcpYtAPI_1.getVideosByKeyWords)(oAuthToken, { keywords: "funny dog memes", videoLicense: "creativeCommon", results: 5, pages: 4 });
-                        // Real video footage
-                        (0, gcpYtAPI_1.getVideosByKeyWords)(oAuthToken, { keywords: "funny dog memes", videoLicense: "youtube", results: 5, pages: 4 });
+                        return [4 /*yield*/, (0, gcpYtAPI_1.getVideoDetails)(oAuthToken, ["0g726Vd7vnc"])];
+                    case 2:
+                        videoDetails = _a.sent();
+                        videoDetails === null || videoDetails === void 0 ? void 0 : videoDetails.map(function (_a) {
+                            var videoID = _a.videoID, videoLen = _a.videoLen, videoName = _a.videoName;
+                            return (0, db_actions_1.appendVideoItem)({ videoID: videoID, videoLen: videoLen, videoName: videoName });
+                        });
                         return [2 /*return*/];
                 }
             });
