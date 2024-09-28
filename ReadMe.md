@@ -39,4 +39,4 @@ Current Design of the system:
     - A Case: When we layer our story's over gameplay.
 
 
-<sub><sup>Updated: 9/27/24 </sup></sub>,
+<sub><sup>Updated: 9/27/24 </sup></sub>
