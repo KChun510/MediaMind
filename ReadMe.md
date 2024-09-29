@@ -26,11 +26,11 @@ Notes:
 Also if using a new GCP account the above APIs have to be re-enabled.
 Will need a valid GCP account with billing.
 Current account kchun1080@gmail.com
-
+<br></br>
 Current Design of the system:
 ![alt text](https://github.com/KChun510/auto_cont_gen/blob/872c82fecb8f03755b2fff0488f726890d193a63/diagrams/auto_cont_gen.drawio.png)
 
-
+<br></br>
 
 
 ### Dev Notes:
