@@ -25,10 +25,24 @@ export const appendVideoItem = (arg: VIDEO_SQL_SCHEMA) => {
 	db.run(insertSql, [arg.videoID, arg.videoLen, arg.videoName], function(err: Error | null) {
 		if (err) {
 			console.log(err.message);
+		} else {
+			console.log(`A row has been appended with rowID ${this.lastID}`)
 		}
-		console.log(`A row has been appended with rowID ${this.lastID}`)
 	});
 };
+
+export const pullAllVidIDs = (): Promise<string[]> => {
+	return new Promise((res, rej) => {
+		db.all("SELECT videoID FROM video_cont", (err, rows: any) => {
+			if (err) {
+				return rej(err)
+			} else {
+				const videoIDs: string[] = rows.map(({ videoID }) => videoID)
+				return res(videoIDs)
+			}
+		})
+	})
+}
 
 /*
 export const appendRedditItem  = (arg: SQL_SCHEMA) => {

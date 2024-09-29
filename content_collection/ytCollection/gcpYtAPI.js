@@ -2,6 +2,7 @@ var fs = require('fs');
 var readline = require('readline');
 var { google } = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
+var { pullAllVidIDs } = require('../../db_dir/db_actions.js')
 
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/youtube-nodejs-quickstart.json
@@ -95,10 +96,12 @@ function storeToken(token) {
 
 // Notes: If your searching by video license, then we need to specify a type of video.
 
-async function getVideosByKeyWords(auth, { keywords = 'dogs', type = 'video', videoDefinition = 'standard', videoLicense = "any", results = 10, pages = 0 }) {
+async function getVideosByKeyWords(auth, { valid_vids = 1, keywords = 'dogs', type = 'video', videoDefinition = 'standard', videoLicense = "any", results = 10, videoDuration = "any" }) {
     let service = google.youtube('v3');
     let pageToken = undefined;
-    for (let i = 0; i < pages; i++) {
+    const invalidVidIDs = await pullAllVidIDs()
+    let validIDs = []
+    while (valid_vids > 0) {
         try {
             const res = await service.search.list({
                 auth: auth,
@@ -108,11 +111,23 @@ async function getVideosByKeyWords(auth, { keywords = 'dogs', type = 'video', vi
                 videoDefinition,
                 videoLicense,
                 type,
+                videoDuration,
                 pageToken
             })
             const video_data = res.data.items
             if (video_data.length > 0) {
-                console.log(video_data)
+                for (const data of video_data) {
+                    const vid_id = data.id.videoId
+                    if (invalidVidIDs.includes(vid_id)) {
+                        continue
+                    } else {
+                        validIDs.push(vid_id)
+                        valid_vids--
+                        if (valid_vids === 0) {
+                            return validIDs
+                        }
+                    }
+                }
                 pageToken = res.data.nextPageToken
             } else {
                 console.log("Nothing found under that keyword")
@@ -141,12 +156,14 @@ const formatTime = (timeString) => {
             temp_store.push(timeString[i])
         }
     }
-    if (final.length <= 2) {
-        return `00:${final[0].length > 1 ? `${final[0][0]}${final[0][1]}` : `0${final[0][0]}`}:${final[1].length > 1 ? `${final[1][0]}${final[1][1]}` :
-            `0${final[1][0]}`}`
+    console.log(timeString)
+    if (final.length == 1) {
+        return `00:00:${final[0].length > 1 ? `${final[0][0]}${final[0][1]}` : `0${final[0][0]}`}`
+    }
+    else if (final.length == 2) {
+        return `00:${final[0].length > 1 ? `${final[0][0]}${final[0][1]}` : `0${final[0][0]}`}:${final[1].length > 1 ? `${final[1][0]}${final[1][1]}` : `0${final[1][0]}`}`
     } else {
-        return `${final[0].length > 1 ? `${final[0][0]}${final[0][1]}` : `0${final[0][0]}`}:${final[1].length > 1 ? `${final[1][0]}${final[1][1]}` : `0${final[1][0]}`}:${final[2].length > 1 ? `${final[2][0]}${final[2][1]}` :
-            `0${final[2][0]}`}`
+        return `${final[0].length > 1 ? `${final[0][0]}${final[0][1]}` : `0${final[0][0]}`}:${final[1].length > 1 ? `${final[1][0]}${final[1][1]}` : `0${final[1][0]}`}:${final[2].length > 1 ? `${final[2][0]}${final[2][1]}` : `0${final[2][0]}`}`
     }
 }
 

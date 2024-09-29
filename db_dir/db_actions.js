@@ -1,6 +1,6 @@
 "use strict";
-exports.__esModule = true;
-exports.appendVideoItem = void 0;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.pullAllVidIDs = exports.appendVideoItem = void 0;
 var sqlite3 = require("sqlite3");
 var TABLE_NAMES;
 (function (TABLE_NAMES) {
@@ -20,10 +20,29 @@ var appendVideoItem = function (arg) {
         if (err) {
             console.log(err.message);
         }
-        console.log("A row has been appended with rowID ".concat(this.lastID));
+        else {
+            console.log("A row has been appended with rowID ".concat(this.lastID));
+        }
     });
 };
 exports.appendVideoItem = appendVideoItem;
+var pullAllVidIDs = function () {
+    return new Promise(function (res, rej) {
+        db.all("SELECT videoID FROM video_cont", function (err, rows) {
+            if (err) {
+                return rej(err);
+            }
+            else {
+                var videoIDs = rows.map(function (_a) {
+                    var videoID = _a.videoID;
+                    return videoID;
+                });
+                return res(videoIDs);
+            }
+        });
+    });
+};
+exports.pullAllVidIDs = pullAllVidIDs;
 /*
 export const appendRedditItem  = (arg: SQL_SCHEMA) => {
     const insertSql = `INSERT INTO ${TABLE_NAMES.video_cont} (videoID, videoLen, videoName) VALUES (?, ?, ?)`;
