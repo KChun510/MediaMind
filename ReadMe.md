@@ -30,11 +30,8 @@ Current account kchun1080@gmail.com
 
 Current Design of the system:
 <br></br>
-![alt text](https://github.com/KChun510/auto_cont_gen/blob/872c82fecb8f03755b2fff0488f726890d193a63/diagrams/auto_cont_gen.drawio.png)
-
+![alt text](https://github.com/KChun510/auto_cont_gen/blob/ffde504e6f9606e5bd2a4b20e83dcc78e6612d82/diagrams/auto_cont_gen.drawio.png)
 <br></br>
-
-
 ### Dev Notes:
 1. **SQLite** will be using this heavily down the line.
     - Store YT Vid id's as UNID, and video times in next cell.
