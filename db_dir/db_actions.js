@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.pullAllRedditIDs = exports.pullAllVidIDs = exports.appendVideoItem = exports.appendRedditPost = void 0;
 var sqlite3 = require("sqlite3");
 var TABLE_NAMES;

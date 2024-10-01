@@ -24,6 +24,7 @@ interface redditPost {
 	text: string
 }
 
+
 // The bellows script will need to both append to DB and append text files in the workflow dir.
 export async function POST_Get_Reddit_Post(sub_reddit: string, story_count = 1): Promise<redditPost[]> {
 	const req_url = `https://www.reddit.com/r/${sub_reddit}/top.json?t=all&count=0&limit=25`
