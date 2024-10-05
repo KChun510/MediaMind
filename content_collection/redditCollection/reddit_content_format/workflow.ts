@@ -87,7 +87,6 @@ async function main() {
     const valid_files = await valid_input_files(listed_files)
     console.log(`${valid_files.length} files, to be processed.`)
     for (let i = 0; i < valid_files.length; i++) {
-        console.log("Made it to the innner loop")
         await text_to_speech(valid_files[i]);
         await speech_to_text(valid_files[i]);
     }
