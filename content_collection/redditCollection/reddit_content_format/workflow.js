@@ -13,7 +13,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -46,7 +46,7 @@ function list_input_files() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             return [2 /*return*/, new Promise(function (resolve, reject) {
-                    fs.readdir("../input_content", function (err, files) {
+                    fs.readdir("./input_content/text_storys", function (err, files) {
                         if (err) {
                             reject(err); // Reject the promise if there's an error
                         }
@@ -69,7 +69,7 @@ function valid_input_files(input_files) {
                 case 0:
                     _a.trys.push([0, 3, , 4]);
                     valid_files_1 = [];
-                    return [4 /*yield*/, fs.promises.readFile("../invalid_files/file_log.csv", 'utf8')];
+                    return [4 /*yield*/, fs.promises.readFile("./invalid_files/inv_txt.csv", 'utf8')];
                 case 1:
                     invalid_files = _a.sent();
                     invalid_filesArray_1 = invalid_files.split(',').map(function (item) { return item.trim(); });
@@ -80,7 +80,7 @@ function valid_input_files(input_files) {
                         }
                     });
                     invalid_filesArray_1 = invalid_filesArray_1.join(',');
-                    return [4 /*yield*/, fs.writeFile("../invalid_files/file_log.csv", invalid_filesArray_1, function (err) { console.log(err); })];
+                    return [4 /*yield*/, fs.writeFile("./invalid_files/inv_txt.csv", invalid_filesArray_1, function (err) { console.log(err); })];
                 case 2:
                     _a.sent();
                     return [2 /*return*/, valid_files_1]; // Return the array of file names
@@ -100,9 +100,9 @@ function text_to_speech(valid_file) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    readFile = util.promisify(fs.readFile);
                     console.log(valid_file);
-                    return [4 /*yield*/, readFile("../input_content/".concat(valid_file), 'utf8')];
+                    readFile = util.promisify(fs.readFile);
+                    return [4 /*yield*/, readFile("./input_content/text_storys/".concat(valid_file), 'utf8')];
                 case 1:
                     fileContent = _a.sent();
                     request = {
@@ -114,7 +114,7 @@ function text_to_speech(valid_file) {
                 case 2:
                     response = (_a.sent())[0];
                     writeFile = util.promisify(fs.writeFile);
-                    return [4 /*yield*/, writeFile("../audio_dir/".concat(valid_file, ".mp3"), response.audioContent, 'binary')];
+                    return [4 /*yield*/, writeFile("./audio_dir/".concat(valid_file, ".mp3"), response.audioContent, 'binary')];
                 case 3:
                     _a.sent();
                     console.log("Audio content written to file: ".concat(valid_file, ".mp3"));
@@ -129,18 +129,17 @@ function speech_to_text(valid_file) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, openai.audio.transcriptions.create({
-                        file: fs.createReadStream("../audio_dir/".concat(valid_file, ".mp3")),
+                        file: fs.createReadStream("./audio_dir/".concat(valid_file, ".mp3")),
                         model: "whisper-1",
                         response_format: "srt"
                     })];
                 case 1:
                     transcription = _a.sent();
                     writeFile = util.promisify(fs.writeFile);
-                    return [4 /*yield*/, writeFile("../srt_dir/".concat(valid_file, ".srt"), transcription, 'utf8')];
+                    return [4 /*yield*/, writeFile("./srt_dir/".concat(valid_file, ".srt"), transcription, 'utf8')];
                 case 2:
                     _a.sent();
-                    console.log("Herer");
-                    console.log(transcription);
+                    console.log("Transcription made, file: ".concat(valid_file));
                     return [2 /*return*/];
             }
         });
@@ -162,6 +161,7 @@ function main() {
                     _a.label = 3;
                 case 3:
                     if (!(i < valid_files.length)) return [3 /*break*/, 7];
+                    console.log("Made it to the innner loop");
                     return [4 /*yield*/, text_to_speech(valid_files[i])];
                 case 4:
                     _a.sent();
