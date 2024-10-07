@@ -33,12 +33,13 @@ Current Design of the system:
 ![alt text](https://github.com/KChun510/auto_cont_gen/blob/ffde504e6f9606e5bd2a4b20e83dcc78e6612d82/diagrams/auto_cont_gen.drawio.png)
 <br></br>
 ### Dev Notes:
-1. **SQLite** will be using this heavily down the line.
-    - Store YT Vid id's as UNID, and video times in next cell.
-    - Will be used for the cutting of videos.
-    - A Case: When we layer our story's over gameplay.
+1. **SQLite** needed to hold story and video times.
+    - Use the times for video editing algorithm.
+    - Cut video times based on story length.
 2. **HDD Storage**
     - Make sure to set the HDD location for Video storage, in " content_generator{MAC -or- UBUNTU} ".
-
+3. **TODO**
+    - Create a closing function for our DB. 
+    - Will need to close DB connection, once scripts are done executing (Best Practice).
 
 <sub><sup>Updated: 9/27/24 </sup></sub>
