@@ -42,4 +42,4 @@ Current Design of the system:
     - Create a closing function for our DB. 
     - Will need to close DB connection, once scripts are done executing (Best Practice).
 
-<sub><sup>Updated: 9/27/24 </sup></sub>
+<sub><sup>Updated: 10/07/24 </sup></sub>
