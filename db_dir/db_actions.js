@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pullAllRedditIDs = exports.pullAllVidIDs = exports.appendVideoItem = exports.appendRedditPost = void 0;
+exports.pullAllRedditIDs = exports.pullAllVidIDs = exports.appendVideoItem = exports.updateRedditPost = exports.appendRedditPost = void 0;
 var sqlite3 = require("sqlite3");
 var TABLE_NAMES;
 (function (TABLE_NAMES) {
@@ -26,6 +26,18 @@ var appendRedditPost = function (arg) {
     });
 };
 exports.appendRedditPost = appendRedditPost;
+var updateRedditPost = function (arg) {
+    var updateSql = "UPDATE ".concat(TABLE_NAMES.reddit_cont, " SET postLen = ? where postID = ?");
+    db.run(updateSql, [arg.postLen, arg.postID], function (err) {
+        if (err) {
+            console.log(err.message);
+        }
+        else {
+            console.log("Post with ID: ".concat(arg.postID, ", time has been added."));
+        }
+    });
+};
+exports.updateRedditPost = updateRedditPost;
 var appendVideoItem = function (arg) {
     var insertSql = "INSERT INTO ".concat(TABLE_NAMES.video_cont, " (videoID, videoLen, videoName) VALUES (?, ?, ?)");
     db.run(insertSql, [arg.videoID, arg.videoLen, arg.videoName], function (err) {

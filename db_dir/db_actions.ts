@@ -12,8 +12,9 @@ type VIDEO_SQL_SCHEMA = {
 };
 
 type REDDIT_POST_SCHEMA = {
-	postID: string,
-	postTitle: string
+	postID?: string,
+	postLen?: string,
+	postTitle?: string
 }
 
 // Our db connector
@@ -34,6 +35,17 @@ export const appendRedditPost = (arg: REDDIT_POST_SCHEMA) => {
 		}
 	})
 
+}
+
+export const updateRedditPost = (arg: REDDIT_POST_SCHEMA ) => {
+	const updateSql = `UPDATE ${TABLE_NAMES.reddit_cont} SET postLen = ? where postID = ?`
+	db.run(updateSql, [arg.postLen, arg.postID], function(err: Error | null){
+		if (err) {
+			console.log(err.message)
+		} else {
+			console.log(`Post with ID: ${arg.postID}, time has been added.`)
+		}
+	})
 }
 
 export const appendVideoItem = (arg: VIDEO_SQL_SCHEMA) => {
