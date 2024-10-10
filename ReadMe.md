@@ -30,7 +30,7 @@ Current account kchun1080@gmail.com
 
 Current Design of the system:
 <br></br>
-![alt text](https://github.com/KChun510/auto_cont_gen/blob/ffde504e6f9606e5bd2a4b20e83dcc78e6612d82/diagrams/auto_cont_gen.drawio.png)
+![alt text](https://github.com/KChun510/auto_cont_gen/blob/181a20562adcb1b819048437c7bca1fe27cc4350/diagrams/auto_cont_gen.drawio%20(1).png)
 <br></br>
 
 Current Design of editing algorithm:
@@ -45,7 +45,8 @@ Current Design of editing algorithm:
 2. **HDD Storage**
     - Make sure to set the HDD location for Video storage, in " content_generator{MAC -or- UBUNTU} ".
 3. **TODO**
+    - Add video downloading F(n), at end of ytCollection script.
     - Create a closing function for our DB. 
     - Will need to close DB connection, once scripts are done executing (Best Practice).
 
-<sub><sup>Updated: 10/08/24 </sup></sub>
+<sub><sup>Updated: 10/10/24 </sup></sub>
