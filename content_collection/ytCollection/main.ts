@@ -2,6 +2,10 @@ import { authorize, getVideosByKeyWords, getVideoDetails } from './gcpYtAPI'
 import * as fs from 'fs'
 import { appendVideoItem } from '../../db_dir/db_actions'
 
+
+// At the end of this script, put out download commands.
+// will need to import "child-process"
+
 (function() {
     fs.readFile('client_secret.json', 'utf8', async function processClientSecrets(err, content) {
         if (err) {
