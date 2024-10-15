@@ -4,6 +4,7 @@
 2. **Youtube-dl**
     - [GitHub Issue](https://github.com/ytdl-org/youtube-dl/issues/32647#issuecomment-1827487371)
     - [Ask Ubuntu](https://askubuntu.com/questions/1037666/youtube-dl-python-not-found-18-04)
+    - [Brew Install](https://formulae.brew.sh/formula/yt-dlp)
 3. **Node.js**
     - [Download Node.js](https://nodejs.org/en/download/package-manager)
 4. **Google Cloud SDK + ADC**
@@ -45,6 +46,7 @@ Current Design of editing algorithm:
 2. **HDD Storage**
     - Make sure to set the HDD location for Video storage, in " content_generator{MAC -or- UBUNTU} ".
 3. **TODO**
+    - Finish the edit script, in working state 'polishing'
     - Add video downloading F(n), at end of ytCollection script.
     - Create a closing function for our DB. 
     - Will need to close DB connection, once scripts are done executing (Best Practice).

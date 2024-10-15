@@ -18,6 +18,11 @@ import { appendVideoItem } from '../../db_dir/db_actions'
         const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 1, keywords: "funny dog memes", videoLicense: "youtube", results: 5 })
         const videoDetails = await getVideoDetails(oAuthToken, vidIdRes)
         videoDetails?.map(({ videoID, videoLen, videoName }) => appendVideoItem({ videoID, videoLen, videoName }))
+        /*
+         * This will be the location of the download script.
+         */
+
+
     });
 })()
 
