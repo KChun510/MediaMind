@@ -46,6 +46,7 @@ Current Design of editing algorithm:
 2. **HDD Storage**
     - Make sure to set the HDD location for Video storage, in " content_generator{MAC -or- UBUNTU} ".
 3. **TODO**
+    - Finish the edit script, in working state 'polishing'
     - Add video downloading F(n), at end of ytCollection script.
     - Create a closing function for our DB. 
     - Will need to close DB connection, once scripts are done executing (Best Practice).
