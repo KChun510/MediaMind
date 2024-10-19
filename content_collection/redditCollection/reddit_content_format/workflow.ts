@@ -9,7 +9,7 @@ dotenv.config({ path: '../../../.env' });
 
 const client = new textToSpeech.TextToSpeechClient();
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-const outPutDir = "../../../editing/";
+const outPutDir = "../../../editing/reddit_cont/";
 
 async function list_input_files(): Promise<string[]> {
     return new Promise((resolve, reject) => {
