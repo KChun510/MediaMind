@@ -1,6 +1,8 @@
 ffmpeg \\
     -i codeShort.mp4 \\
+    -t 00:00:10 \\
     -i ytShort.mp4 \\
+    -t 00:00:10 \\
     -filter_complex \\
         "[0]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[top]; \\
          [1]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[bottom]; \\

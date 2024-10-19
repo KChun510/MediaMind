@@ -37,6 +37,8 @@ function authorize(credentials) {
         });
     });
 }
+
+
 /**
  * Get and store new token after prompting for user authorization, and then
  * execute the given callback with the authorized OAuth2 client.
@@ -148,7 +150,6 @@ const formatTime = (timeString) => {
     for (let i = 0; i < str_len; i++) {
         const charDecVal = timeString.charCodeAt(i)
         if (charDecVal >= 65 && charDecVal <= 90) {
-            console.log(temp_store)
             final.push(temp_store)
             temp_store = []
             continue

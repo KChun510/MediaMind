@@ -1,34 +1,14 @@
-import { pullAllRedditIDs } from '../../db_dir/db_actions'
-const username = "";
-const password = "";
-const clientId = "";
-const clientSecret = "";
-
-const url = 'https://www.reddit.com/api/v1/access_token';
-
-const auth_headers = new Headers({
-	'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret),
-	'Content-Type': 'application/x-www-form-urlencoded'
-});
-
-const auth_body = new URLSearchParams({
-	'grant_type': 'password',
-	'username': username,
-	'password': password,
-	'scope': 'read'
-});
+import { pullAllInvRedditIDs } from '../../db_dir/db_actions'
 
 interface redditPost {
 	postID: string,
 	postTitle: string,
 	text: string
 }
-
-
 // The bellows script will need to both append to DB and append text files in the workflow dir.
 export async function POST_Get_Reddit_Post(sub_reddit: string, story_count = 1): Promise<redditPost[]> {
 	const req_url = `https://www.reddit.com/r/${sub_reddit}/top.json?t=all&count=0&limit=25`
-	const invalid_id = await pullAllRedditIDs()
+	const invalid_id = await pullAllInvRedditIDs()
 	const final_res: redditPost[] = []
 	try {
 		while (story_count > 0) {
@@ -74,6 +54,9 @@ export async function POST_Get_Reddit_Post(sub_reddit: string, story_count = 1):
 						}
 					}
 					const final_str = temp_str.join('')
+					if (final_str.length == 0) {
+						continue
+					}
 					final_res.push({ postID: data.id, postTitle: data.title, text: final_str })
 					story_count -= 1
 				}
@@ -86,34 +69,9 @@ export async function POST_Get_Reddit_Post(sub_reddit: string, story_count = 1):
 	}
 }
 
-async function auth(): Promise<string | false> {
-	try {
-		const res = await fetch(url, { method: 'POST', headers: auth_headers, body: auth_body });
-		if (!res.ok) {
-			throw new Error(`HTTP error! status: ${res.status}`);
-		}
-		const data: any = await res.json();
-		const auth_token: string = data.access_token; // Store the access token
-		//console.log(data)
-		return auth_token
-	} catch (e) {
-		console.error("Error: ", e);
-		return false
-	}
-
-
-}
 
 (async function() {
 	//	console.log(await POST_REQ('crazystories', 2))
 })();
 
 
-// Notes for OAuth2.O.
-// First request an Oauth Token, token is used for following API request.
-// - To do so, here were using Oauth2.0 Basic.
-// - In the header, send over our 'Basic' + clientId + ':' + clientSecret.
-//    - With the content type
-// - Then in the body send over the Acocunt creds.
-// 
-// After the above is done, we'll get an AUTH token. 

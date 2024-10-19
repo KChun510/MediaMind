@@ -3,11 +3,13 @@ const fs = require('fs');
 const util = require('util');
 const OpenAI = require("openai");
 const dotenv = require('dotenv');
+import { updateRedditPost } from "../../../db_dir/db_actions";
 
 dotenv.config({ path: '../../../.env' });
 
 const client = new textToSpeech.TextToSpeechClient();
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const outPutDir = "../../../editing/reddit_cont/";
 
 async function list_input_files(): Promise<string[]> {
     return new Promise((resolve, reject) => {
@@ -49,7 +51,6 @@ async function valid_input_files(input_files: string[]): Promise<string[]> {
 };
 
 async function text_to_speech(valid_file: string): Promise<null> {
-    console.log(valid_file)
     // Read text file from "input content folder"
     const readFile = util.promisify(fs.readFile);
     const fileContent = await readFile(`./input_content/text_storys/${valid_file}`, 'utf8');
@@ -64,21 +65,32 @@ async function text_to_speech(valid_file: string): Promise<null> {
 
     // Write audio file to audio_dir
     const writeFile = util.promisify(fs.writeFile);
-    await writeFile(`./audio_dir/${valid_file}.mp3`, response.audioContent, 'binary');
+    await writeFile(`${outPutDir}/audio_dir/${valid_file}.mp3`, response.audioContent, 'binary');
     console.log(`Audio content written to file: ${valid_file}.mp3`);
 
     return null
 }
 
+function parse_transcript(trans: string): string {
+    const transcript = trans.split("\n")
+    let timeStamp = transcript[transcript.length - 5]
+    let time = ""
+    for (let i = 17; i <= 24; i++) {
+        time += timeStamp[i]
+    }
+    return time
+}
 
 async function speech_to_text(valid_file: string) {
     const transcription = await openai.audio.transcriptions.create({
-        file: fs.createReadStream(`./audio_dir/${valid_file}.mp3`),
+        file: fs.createReadStream(`${outPutDir}/audio_dir/${valid_file}.mp3`),
         model: "whisper-1",
         response_format: "srt",
     });
+    const time_stamp = parse_transcript(transcription)
+    updateRedditPost({ postLen: time_stamp, postID: valid_file.slice(0, valid_file.length - 4) })
     const writeFile = util.promisify(fs.writeFile);
-    await writeFile(`./srt_dir/${valid_file}.srt`, transcription, 'utf8');
+    await writeFile(`${outPutDir}/srt_dir/${valid_file}.srt`, transcription, 'utf8');
     console.log(`Transcription made, file: ${valid_file}`);
 }
 
