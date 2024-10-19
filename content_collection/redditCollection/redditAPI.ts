@@ -12,7 +12,7 @@ export async function POST_Get_Reddit_Post(sub_reddit: string, story_count = 1):
 	const final_res: redditPost[] = []
 	try {
 		while (story_count > 0) {
-
+			console.log("request being made")
 			const res = await fetch(req_url, { method: 'GET' });
 			if (!res.ok) {
 				throw new Error(`HTTP error! status: ${res.status} `);

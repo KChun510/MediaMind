@@ -9,7 +9,7 @@ dotenv.config({ path: '../../../.env' });
 
 const client = new textToSpeech.TextToSpeechClient();
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-const outPutDir = "../../../editing/reddit_cont/";
+const outPutDir = `${process.env.CONT_DIR}/reddit_cont`
 
 async function list_input_files(): Promise<string[]> {
     return new Promise((resolve, reject) => {
@@ -62,6 +62,8 @@ async function text_to_speech(valid_file: string): Promise<null> {
         audioConfig: { audioEncoding: 'MP3', speakingRate: 1.2 },
     };
     const [response] = await client.synthesizeSpeech(request);
+
+    console.log("Writing to the file")
 
     // Write audio file to audio_dir
     const writeFile = util.promisify(fs.writeFile);

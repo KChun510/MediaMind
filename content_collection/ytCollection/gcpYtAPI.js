@@ -13,7 +13,7 @@ var TOKEN_PATH = TOKEN_DIR + 'youtube-nodejs-quickstart.json';
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
- * given callback function.
+
  *
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
@@ -119,11 +119,12 @@ async function getVideosByKeyWords(auth, { valid_vids = 1, keywords = 'dogs', ty
             const video_data = res.data.items
             if (video_data.length > 0) {
                 for (const data of video_data) {
-                    const vid_id = data.id.videoId
-                    if (invalidVidIDs.includes(vid_id)) {
+                    if (invalidVidIDs.includes(data.id.videoId)) {
+                        continue
+                    } else if (data.snippet.liveBroadcastContent === 'live') {
                         continue
                     } else {
-                        validIDs.push(vid_id)
+                        validIDs.push(data.id.videoId)
                         valid_vids--
                         if (valid_vids === 0) {
                             return validIDs

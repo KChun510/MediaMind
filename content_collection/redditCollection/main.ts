@@ -26,10 +26,6 @@ function chunkFile(postID: string, postTitle: string, data: string) {
 	let currSize = 0
 	const min = 4500
 
-
-	// Because all of our chars, are normal vals a-z, A-Z. 
-	// Each char is one Byte
-
 	console.log(postID + " Is being chuncked into parts.")
 	for (let i = 0; i < data.length; i++) {
 		if (currSize < min) {
@@ -51,12 +47,10 @@ function chunkFile(postID: string, postTitle: string, data: string) {
 	const filePath = `./reddit_content_format/input_content/text_storys/${chunkedPostID}.txt`
 	writeTxtFile(filePath, currStr)
 	appendRedditPost({ postID: chunkedPostID, postTitle: postTitle })
-
 }
 
-
 (async function() {
-	const reddit_post = await POST_Get_Reddit_Post('crazystories', 2)
+	const reddit_post = await POST_Get_Reddit_Post('crazystories', 1)
 	const invalid_post = await pullAllInvRedditIDs()
 	//	const reddit_post = (await POST_Get_Reddit_Post('nosleep', 4))
 	for (const post of reddit_post) {
@@ -69,7 +63,6 @@ function chunkFile(postID: string, postTitle: string, data: string) {
 				const filePath = `./reddit_content_format/input_content/text_storys/${data.postID}.txt`
 				writeTxtFile(filePath, data.text)
 				appendRedditPost({ postID: data.postID, postTitle: data.postTitle })
-
 			}
 		}
 	}

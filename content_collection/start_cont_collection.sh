@@ -2,14 +2,16 @@
 
 # Script to download YT videos
 echo 'YouTube videos has begun.'
-$NODE './ytCollection/main.js'
+cd 'ytCollection'
+npx tsx 'main.ts'
 
 
-
+cd '../redditCollection'
 # Script to download Reddit stories, has begun
 echo 'Downloading reddit stories'
 # Gather the reddit scripts
-$NODE './redditCollection/main.js'
+npx tsx 'main.ts'
 # Format the reddit scripts
-$NODE './redditCollection/reddit_content_format/workflow.js'
+cd 'reddit_content_format'
+npx tsx 'workflow.ts'
 

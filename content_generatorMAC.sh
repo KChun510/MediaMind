@@ -1,5 +1,4 @@
 #!/bin/bash
-export STORAGE_LOCATION="~/Desktop/temp_VID_location"
 NODE_PATH="/usr/local/bin/node"
 NPM_PATH="/usr/local/bin/npm"
 
