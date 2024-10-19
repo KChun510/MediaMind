@@ -3,6 +3,7 @@ import * as sqlite3 from 'sqlite3';
 enum TABLE_NAMES {
 	reddit_cont = 'reddit_cont',
 	video_cont = 'video_cont',
+	invalid_storys = 'invalid_storys',
 }
 
 type VIDEO_SQL_SCHEMA = {
@@ -25,6 +26,18 @@ let db = new sqlite3.Database(`${__dirname}/video_data.db`, (err: Error | null) 
 	console.log('Connected to the SQLite database.')
 });
 
+export const appendInvalidID = (arg: REDDIT_POST_SCHEMA) => {
+	const insertSql = `INSERT INTO ${TABLE_NAMES.invalid_storys} (postID) VALUES (?)`
+	db.run(insertSql, [arg.postID], function(err: Error | null) {
+		if (err) {
+			console.log(err.message)
+
+		} else {
+			console.log(`${arg.postID} has been logged to invalid_storys`)
+		}
+	})
+}
+
 export const appendRedditPost = (arg: REDDIT_POST_SCHEMA) => {
 	const insertSql = `INSERT INTO ${TABLE_NAMES.reddit_cont} (postID, postTitle) VALUES (?, ?)`
 	db.run(insertSql, [arg.postID, arg.postTitle], function(err: Error | null) {
@@ -37,9 +50,9 @@ export const appendRedditPost = (arg: REDDIT_POST_SCHEMA) => {
 
 }
 
-export const updateRedditPost = (arg: REDDIT_POST_SCHEMA ) => {
+export const updateRedditPost = (arg: REDDIT_POST_SCHEMA) => {
 	const updateSql = `UPDATE ${TABLE_NAMES.reddit_cont} SET postLen = ? where postID = ?`
-	db.run(updateSql, [arg.postLen, arg.postID], function(err: Error | null){
+	db.run(updateSql, [arg.postLen, arg.postID], function(err: Error | null) {
 		if (err) {
 			console.log(err.message)
 		} else {
@@ -65,7 +78,7 @@ interface VideoRow {
 
 export const pullAllVidIDs = (): Promise<string[]> => {
 	return new Promise((res, rej) => {
-		db.all("SELECT videoID FROM video_cont", (err, rows: VideoRow[]) => {
+		db.all(`SELECT videoID FROM ${TABLE_NAMES.video_cont}`, (err, rows: VideoRow[]) => {
 			if (err) {
 				return rej(err)
 			} else {
@@ -80,9 +93,9 @@ interface RedditRow {
 	postID: string,
 }
 
-export const pullAllRedditIDs = (): Promise<string[]> => {
+export const pullAllInvRedditIDs = (): Promise<string[]> => {
 	return new Promise((res, rej) => {
-		db.all("SELECT postID from reddit_cont", (err, rows: RedditRow[]) => {
+		db.all(`SELECT postID from ${TABLE_NAMES.invalid_storys}`, (err, rows: RedditRow[]) => {
 			if (err) {
 				return rej(err)
 			} else {
