@@ -6,13 +6,13 @@ enum TABLE_NAMES {
 	invalid_storys = 'invalid_storys',
 }
 
-type VIDEO_SQL_SCHEMA = {
+export type VIDEO_SQL_SCHEMA = {
 	videoID: string,
 	videoLen: string,
 	videoName: string,
 };
 
-type REDDIT_POST_SCHEMA = {
+export type REDDIT_POST_SCHEMA = {
 	postID?: string,
 	postLen?: string,
 	postTitle?: string
@@ -106,15 +106,40 @@ export const pullAllInvRedditIDs = (): Promise<string[]> => {
 	})
 }
 
-/*
-export const appendRedditItem  = (arg: SQL_SCHEMA) => {
-    const insertSql = `INSERT INTO ${TABLE_NAMES.video_cont} (videoID, videoLen, videoName) VALUES (?, ?, ?)`;
-    db.run(insertSql, [arg.R_ID, arg.Item, arg.Price, arg.Cals], function(err: Error | null){
-	if(err){
-	    console.log(err.message);
-	}
-	console.log(`A row has been appended with rowID ${this.lastID}`)
-    });
-};
+export const selectAllFromVideo = (limit: number): Promise<VIDEO_SQL_SCHEMA[]> => {
+	return new Promise((res, rej) => {
+		db.all(`SELECT * FROM video_cont LIMIT ${limit}`, (err, row: VIDEO_SQL_SCHEMA[]) => {
+			if (err) {
+				return rej(err)
+			} else {
+				return res(row)
+			}
+		})
+
+	})
+}
+
+export const selectAllFromReddit = (): Promise<REDDIT_POST_SCHEMA[]> => {
+	return new Promise((res, rej) => {
+		db.all(`SELECT * FROM reddit_cont`, (err, row: REDDIT_POST_SCHEMA[]) => {
+			if (err) {
+				return rej(err)
+			} else {
+				return res(row)
+			}
+		})
+	})
+}
+
+/* Dev F(n)
+(async function() {
+
+	console.log(await selectAllFromVideo(2))
+	console.log(await selectAllFromReddit())
+
+}())
 */
+
+
+
 
