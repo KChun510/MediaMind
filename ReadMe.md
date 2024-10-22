@@ -51,4 +51,12 @@ Current Design of editing algorithm:
     - Create a closing function for our DB. 
     - Will need to close DB connection, once scripts are done executing (Best Practice).
 
+### Future Works:
+1. Implement MAOP (Multi-Agent Oriented Prgramming)
+    - Our agent will be a AI model.
+    - Use this agent on making decions on what kind of videos we want to download.
+    - Or control the editing of videos.
+    - Use it to evaluate the most revelent topics in current timeline.
+    - etc.....
+
 <sub><sup>Updated: 10/10/24 </sup></sub>
