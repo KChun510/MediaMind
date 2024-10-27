@@ -39,6 +39,13 @@ Current Design of editing algorithm:
 ![alt text](https://github.com/KChun510/auto_cont_gen/blob/e5a002c93cc1b84001c752c8baffa8df3c42e670/diagrams/video_edit_algo.drawio.png)
 <br></br>
 
+
+### Common Errors:
+- ** Getting "invalid grant" from the YouTube Data API? **
+    - Navigate to "~Home/.Credentials". And remove the client json file.
+    - Re-run the script. 
+
+
 ### Dev Notes:
 1. **SQLite** needed to hold story and video times.
     - Use the times for video editing algorithm.
