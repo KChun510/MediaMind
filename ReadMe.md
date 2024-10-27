@@ -41,9 +41,9 @@ Current Design of editing algorithm:
 
 
 ### Common Errors:
-- ** Getting "invalid grant" from the YouTube Data API? **
-    - Navigate to "~Home/.Credentials". And remove the client json file.
-    - Re-run the script. 
+1. ** Getting "invalid grant" from the YouTube Data API? **
+     - Navigate to "~Home/.Credentials". And remove the client json file.
+     - Re-run the script. 
 
 
 ### Dev Notes:
