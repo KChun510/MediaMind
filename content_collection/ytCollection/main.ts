@@ -1,6 +1,6 @@
 import { authorize, getVideosByKeyWords, getVideoDetails } from './gcpYtAPI'
 import * as fs from 'fs'
-import { appendVideoItem } from '../../db_dir/db_actions.js'
+import { appendVideoItem, appendInvVidID } from '../../db_dir/db_actions.js'
 import { execSync } from 'child_process'
 const dotenv = require('dotenv');
 dotenv.config({ path: '../../.env' });
@@ -21,7 +21,7 @@ dotenv.config({ path: '../../.env' });
         const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 1, keywords: "short gameplay", videoLicense: "any", results: 10 })
 
         const videoDetails = await getVideoDetails(oAuthToken, vidIdRes)
-        for (const video of videoDetails ? videoDetails : []) {
+        for (const video of videoDetails ?? []) {
             const videoCommand = `yt-dlp --sub-lang "en.*" --embed-subs --no-overwrites https://www.youtube.com/watch?v=${video.videoID} -o "${outPutPath}/videos/${video.videoID}"`
 
 
@@ -29,6 +29,7 @@ dotenv.config({ path: '../../.env' });
             const subtitleCommand = `ffmpeg -i ${outPutPath}/videos/${video.videoID}.* -map 0:s:0? ${outPutPath}/srt/${video.videoID}`
 
             appendVideoItem({ videoID: video.videoID, videoLen: video.videoLen, videoName: video.videoName })
+            appendInvVidID(video.videoID)
             console.log(execSync(videoCommand).toString())
             //console.log(execSync(subtitleCommand).toString())
 

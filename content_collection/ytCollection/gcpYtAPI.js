@@ -2,7 +2,7 @@ var fs = require('fs');
 var readline = require('readline');
 var { google } = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
-var { pullAllVidIDs } = require('../../db_dir/db_actions.js')
+var { getInvVideoIds } = require('../../db_dir/db_actions.js')
 
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/youtube-nodejs-quickstart.json
@@ -101,10 +101,11 @@ function storeToken(token) {
 async function getVideosByKeyWords(auth, { valid_vids = 1, keywords = 'dogs', type = 'video', videoDefinition = 'standard', videoLicense = "any", results = 10, videoDuration = "any" }) {
     let service = google.youtube('v3');
     let pageToken = undefined;
-    const invalidVidIDs = await pullAllVidIDs()
+    const invalidVidIDs = await getInvVideoIds()
     let validIDs = []
     while (valid_vids > 0) {
         try {
+            // Do not delete the await bellow!!
             const res = await service.search.list({
                 auth: auth,
                 part: 'snippet',

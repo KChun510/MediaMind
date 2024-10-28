@@ -1,12 +1,13 @@
 "use strict";
 exports.__esModule = true;
-exports.selectAllFromReddit = exports.selectAllFromVideo = exports.pullAllInvRedditIDs = exports.pullAllVidIDs = exports.appendVideoItem = exports.updateRedditPost = exports.appendRedditPost = exports.appendInvalidID = void 0;
+exports.updateVideoData = exports.delVidData = exports.appendInvVidID = exports.getInvVideoIds = exports.selectAllFromReddit = exports.selectAllFromVideo = exports.pullAllInvRedditIDs = exports.pullAllVidIDs = exports.appendVideoItem = exports.updateRedditPost = exports.appendRedditPost = exports.appendInvalidID = void 0;
 var sqlite3 = require("sqlite3");
 var TABLE_NAMES;
 (function (TABLE_NAMES) {
     TABLE_NAMES["reddit_cont"] = "reddit_cont";
     TABLE_NAMES["video_cont"] = "video_cont";
     TABLE_NAMES["invalid_storys"] = "invalid_storys";
+    TABLE_NAMES["invalid_videos"] = "invalid_videos";
 })(TABLE_NAMES || (TABLE_NAMES = {}));
 // Our db connector
 var db = new sqlite3.Database("".concat(__dirname, "/video_data.db"), function (err) {
@@ -123,11 +124,71 @@ var selectAllFromReddit = function () {
     });
 };
 exports.selectAllFromReddit = selectAllFromReddit;
-/* Dev F(n)
+var getInvVideoIds = function () {
+    return new Promise(function (res, rej) {
+        db.all("SELECT * FROM ".concat(TABLE_NAMES.invalid_videos), function (err, rows) {
+            if (err) {
+                return rej(err);
+            }
+            else {
+                var videoId = rows.map(function (_a) {
+                    var videoID = _a.videoID;
+                    return videoID;
+                });
+                return res(videoId);
+            }
+        });
+    });
+};
+exports.getInvVideoIds = getInvVideoIds;
+var appendInvVidID = function (videoID) {
+    var insertSql = "INSERT INTO ".concat(TABLE_NAMES.invalid_videos, " (videoID) VALUES (?)");
+    db.run(insertSql, [videoID], function (err) {
+        if (err) {
+            console.log(err.message);
+        }
+        else {
+            console.log("Video with ID: ".concat(videoID, " added to inv log."));
+        }
+    });
+};
+exports.appendInvVidID = appendInvVidID;
+var delVidData = function (videoID) {
+    var deleteSql = "DELETE FROM video_cont WHERE videoID = \"".concat(videoID, "\"");
+    console.log("Deleting ".concat(videoID));
+    db.run(deleteSql, function (err) {
+        if (err) {
+            console.log(err.message);
+        }
+        else {
+            console.log("Video with ID: ".concat(videoID, " removed."));
+        }
+    });
+};
+exports.delVidData = delVidData;
+var updateVideoData = function (arg) {
+    var updateSql = "UPDATE ".concat(TABLE_NAMES.video_cont, " SET videoLen = ? where videoID = ?");
+    db.run(updateSql, [arg.videoLen, arg.videoID], function (err) {
+        if (err) {
+            console.log(err.message);
+        }
+        else {
+            console.log("Video with ID: ".concat(arg.videoID, ", time stamp updated."));
+        }
+    });
+};
+exports.updateVideoData = updateVideoData;
+// Dev F(n)
+/*
 (async function() {
+    const invId = await pullAllVidIDs()
+    //console.log(invId)
+    //	console.log(await getInvVideoIds())
+    console.log(invId)
 
-    console.log(await selectAllFromVideo(2))
-    console.log(await selectAllFromReddit())
+    //	console.log(await selectAllFromVideo(2))
+    //	console.log(await selectAllFromReddit())
 
 }())
+
 */
