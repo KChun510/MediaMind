@@ -9,6 +9,10 @@ async function gather_single_story() {
         const chosen_post_ID = chosen_story.postID?.slice(0, chosen_story.postID.length - 3)
         story_queue.push(chosen_story)
 
+
+
+        // Video data, appended to DB we junk it < 5000mb
+        // This loop bellow checks for pt.2-pt.n
         for (let i = 1; i < allRedditStories.length; i++) {
                 const postObj = allRedditStories[i]
                 if (postObj.postID?.slice(0, postObj.postID.length - 3) === chosen_post_ID) {
@@ -40,10 +44,9 @@ function videoTime(videoData: VIDEO_SQL_SCHEMA[]): number {
         return total_sec
 }
 
-function updateTime(timeStamp: string, seconds: number) {
-        console.log(timeStamp)
-        console.log(seconds)
+function updateTime(videoObj: VIDEO_SQL_SCHEMA, seconds: number) {
         let total_sec = 0
+        let timeStamp = videoObj.videoLen
         const [hours, minutes, secs] = timeStamp.split(':').map(Number)
         total_sec += hours * 3600 + minutes * 60 + secs
         total_sec -= seconds
@@ -59,10 +62,9 @@ function updateTime(timeStamp: string, seconds: number) {
                 String(secsReturn).padStart(2, '0'),
         ].join(':');
 
-        console.error(returnStamp)
+        videoObj.videoLen = returnStamp
 
-
-        return returnStamp
+        return
 }
 
 
@@ -72,39 +74,57 @@ function updateTime(timeStamp: string, seconds: number) {
         let videoQ = await selectAllFromVideo(videoQ_limit)
         const storyQTime = storyTime(storyQ)
         let videoQTime = videoTime(videoQ)
+        console.log(videoQ)
+
+
+        while (videoQTime < 0) {
+                delVidData(videoQ[0].videoID)
+                delete_video(videoQ[0].videoID)
+                videoQ = await selectAllFromVideo(videoQ_limit)
+                videoQTime = videoTime(videoQ)
+        }
 
         while (storyQTime > videoQTime) {
+                const prevVideoTime = videoQTime
                 videoQ_limit++
                 videoQ = await selectAllFromVideo(videoQ_limit)
                 videoQTime = videoTime(videoQ)
+                if (prevVideoTime === videoQTime) {
+                        console.log(`Not enough videos to support clip, download more.`)
+                        return
+                }
+                console.error(`story ${storyQTime}, video: ${videoQTime}`)
+                console.log(videoQ)
         }
 
         let currVideoTime = videoTime([videoQ[0]])
         let currStoryTime = 0
         let currVideoIndex = 0
         for (const part of storyQ) {
-                currStoryTime = storyTime([part])
-                console.error(`currStory: ${currStoryTime}, currVideoTime: ${currVideoTime}`)
-                console.log(videoQ)
-                if (currStoryTime > currVideoTime) {
-                        console.error("Made it")
-                        currVideoIndex++
-                        currVideoTime = videoTime([videoQ[currVideoIndex]])
-                        delVidData(videoQ[currVideoIndex - 1].videoID)
-                        delete_video(videoQ[currVideoIndex - 1].videoID)
-                        console.log(`Video to be removed: ${videoQ[currVideoIndex - 1].videoID}`)
-                } if (currVideoIndex >= videoQ.length) {
-                        console.error("Currnet reddit Story excedes our video Q.")
-                        return
-
-                } else if (part.postID) {
-                        videoQ[currVideoIndex].videoLen = updateTime(videoQ[currVideoIndex].videoLen, currStoryTime)
-                        create_story_over_single_video(part.postID, videoQ[currVideoIndex].videoID)
-                        segment_clip(part.postID, 20)
-
-                        updateVideoData({ videoLen: videoQ[currVideoIndex].videoLen, videoID: videoQ[currVideoIndex].videoID, videoName: videoQ[currVideoIndex].videoName })
-                        cut_video(part.postLen ?? '00:00:00', videoQ[currVideoIndex].videoID)
-
+                try {
+                        currStoryTime = storyTime([part])
+                        // Needed, logic deletes un-useable video
+                        if (currStoryTime > currVideoTime) {
+                                currVideoIndex++
+                                currVideoTime = videoTime([videoQ[currVideoIndex]])
+                                delVidData(videoQ[currVideoIndex - 1].videoID)
+                                delete_video(videoQ[currVideoIndex - 1].videoID)
+                                console.log(`Video to be removed: ${videoQ[currVideoIndex - 1].videoID}`)
+                                // Additional condition logic
+                        } if (currVideoIndex >= videoQ.length) {
+                                console.error("Currnet reddit Story excedes our video Q.")
+                                return
+                        } if (part.postID) {
+                                // Updade the current video time (i.e: VieoTime - StoryTime)
+                                updateTime(videoQ[currVideoIndex], currStoryTime)
+                                create_story_over_single_video(part.postID, videoQ[currVideoIndex].videoID)
+                                segment_clip(part.postID, 20)
+                                updateVideoData({ videoLen: videoQ[currVideoIndex].videoLen, videoID: videoQ[currVideoIndex].videoID, videoName: videoQ[currVideoIndex].videoName })
+                                // Need to cut our video, after clip was made ( No overlapping content )
+                                cut_video(part.postLen ?? '00:00:00', videoQ[currVideoIndex].videoID)
+                        }
+                } catch (e) {
+                        console.error(`There was a E, while editing video: ${videoQ[currVideoIndex].videoID} with post: ${part.postID}, \n e code of: ${e} `)
                 }
         }
         console.log(storyQ)

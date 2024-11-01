@@ -159,7 +159,7 @@ const formatTime = (timeString) => {
             temp_store.push(timeString[i])
         }
     }
-    console.log(timeString)
+    //console.log(timeString)
     if (final.length == 1) {
         return `00:00:${final[0].length > 1 ? `${final[0][0]}${final[0][1]}` : `0${final[0][0]}`}`
     }
@@ -172,7 +172,8 @@ const formatTime = (timeString) => {
 
 async function getVideoDetails(auth, videoIDs = []) {
     const id_log = videoIDs
-    let service = google.youtube('v3'); const idLen = videoIDs.length
+    let service = google.youtube('v3')
+    const idLen = videoIDs.length
     if (idLen > 50) {
         let tempArr = []
         let chunked = []

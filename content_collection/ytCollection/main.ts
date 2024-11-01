@@ -1,11 +1,26 @@
 import { authorize, getVideosByKeyWords, getVideoDetails } from './gcpYtAPI'
 import * as fs from 'fs'
-import { appendVideoItem, appendInvVidID } from '../../db_dir/db_actions.js'
+import { appendVideoItem, appendInvVidID, VIDEO_SQL_SCHEMA } from '../../db_dir/db_actions.js'
 import { execSync } from 'child_process'
 const dotenv = require('dotenv');
 dotenv.config({ path: '../../.env' });
 
+
+
+function videoTime(videoData: VIDEO_SQL_SCHEMA[]): number {
+    let total_sec = 0
+    for (const obj of videoData) {
+        const [hours, minutes, seconds] = obj.videoLen.split(':').map(Number)
+        total_sec += hours * 3600 + minutes * 60 + seconds
+    }
+    return total_sec
+}
+
 (function() {
+    const minVideoTime = 180
+    // Max for now is 10 mins
+    const maxVideoTime = 600
+    let totalVideoTime = 0
     const outPutPath = `${process.env.CONT_DIR}/youTube_cont`
     fs.readFile('client_secret.json', 'utf8', async function processClientSecrets(err, content) {
         if (err) {
@@ -14,27 +29,31 @@ dotenv.config({ path: '../../.env' });
         }
         // Authorize a client with the loaded credentials, then call the YouTube API.
         const oAuthToken = await authorize(JSON.parse(content))
-
         //getVideosByKeyWords(oAuthToken, { keywords: "funny dog memes", videoDefinition = 'standard' ,videoLicense: "creativeCommon", results: 5, pages: 1 })
+        while (totalVideoTime <= maxVideoTime) {
+            //        const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 1, keywords: "Gameplay Playthrough", videoLicense: "youtube", results: 5 })
+            const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "short gameplay", videoLicense: "any", results: 10 })
+            const videoDetails = await getVideoDetails(oAuthToken, vidIdRes)
 
-        //        const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 1, keywords: "Gameplay Playthrough", videoLicense: "youtube", results: 5 })
-        const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 1, keywords: "short gameplay", videoLicense: "any", results: 10 })
+            for (const video of videoDetails ?? []) {
 
-        const videoDetails = await getVideoDetails(oAuthToken, vidIdRes)
-        for (const video of videoDetails ?? []) {
-            const videoCommand = `yt-dlp --sub-lang "en.*" --embed-subs --no-overwrites https://www.youtube.com/watch?v=${video.videoID} -o "${outPutPath}/videos/${video.videoID}"`
-
-
-
-            const subtitleCommand = `ffmpeg -i ${outPutPath}/videos/${video.videoID}.* -map 0:s:0? ${outPutPath}/srt/${video.videoID}`
-
-            appendVideoItem({ videoID: video.videoID, videoLen: video.videoLen, videoName: video.videoName })
-            appendInvVidID(video.videoID)
-            console.log(execSync(videoCommand).toString())
-            //console.log(execSync(subtitleCommand).toString())
-
+                const videoCommand = `yt-dlp --sub-lang "en.*" --embed-subs --no-overwrites https://www.youtube.com/watch?v=${video.videoID} -o "${outPutPath}/videos/${video.videoID}"`
+                const subtitleCommand = `ffmpeg -i ${outPutPath}/videos/${video.videoID}.* -map 0:s:0? ${outPutPath}/srt/${video.videoID}`
+                const currVidTime = videoTime([video])
+                if (totalVideoTime >= maxVideoTime) {
+                    return
+                }
+                else if (currVidTime >= minVideoTime && currVidTime <= maxVideoTime) {
+                    appendVideoItem({ videoID: video.videoID, videoLen: video.videoLen, videoName: video.videoName })
+                    appendInvVidID(video.videoID)
+                    console.log(`Downloaded videoID: ${video.videoID}, Len: ${video.videoLen}`)
+                    console.log(execSync(videoCommand).toString())
+                    totalVideoTime += currVidTime
+                } else {
+                    appendInvVidID(video.videoID)
+                }
+            }
         }
-
     });
 })()
 

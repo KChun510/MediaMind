@@ -170,6 +170,8 @@ export const delVidData = (videoID: string) => {
 
 
 
+
+
 export const updateVideoData = (arg: VIDEO_SQL_SCHEMA) => {
 	const updateSql = `UPDATE ${TABLE_NAMES.video_cont} SET videoLen = ? where videoID = ?`
 	db.run(updateSql, [arg.videoLen, arg.videoID], function(err: Error | null) {
