@@ -9,7 +9,7 @@ dotenv.config({ path: '../../../.env' });
 
 const client = new textToSpeech.TextToSpeechClient();
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-const outPutDir = "../../../editing/reddit_cont/";
+const outPutDir = `${process.env.CONT_DIR}/reddit_cont`
 
 async function list_input_files(): Promise<string[]> {
     return new Promise((resolve, reject) => {
@@ -63,6 +63,8 @@ async function text_to_speech(valid_file: string): Promise<null> {
     };
     const [response] = await client.synthesizeSpeech(request);
 
+    console.log("Writing to the file")
+
     // Write audio file to audio_dir
     const writeFile = util.promisify(fs.writeFile);
     await writeFile(`${outPutDir}/audio_dir/${valid_file}.mp3`, response.audioContent, 'binary');
@@ -88,13 +90,17 @@ async function speech_to_text(valid_file: string) {
         response_format: "srt",
     });
     const time_stamp = parse_transcript(transcription)
+    if (time_stamp.length != 8) {
+        console.error(`File: ${valid_file}, invalid time stamp: ${time_stamp}`)
+        return
+    }
     updateRedditPost({ postLen: time_stamp, postID: valid_file.slice(0, valid_file.length - 4) })
     const writeFile = util.promisify(fs.writeFile);
     await writeFile(`${outPutDir}/srt_dir/${valid_file}.srt`, transcription, 'utf8');
     console.log(`Transcription made, file: ${valid_file}`);
 }
 
-async function main() {
+(async function() {
     const listed_files = await list_input_files();
     const valid_files = await valid_input_files(listed_files)
     console.log(`${valid_files.length} files, to be processed.`)
@@ -102,5 +108,4 @@ async function main() {
         await text_to_speech(valid_files[i]);
         await speech_to_text(valid_files[i]);
     }
-};
-main()
+})()

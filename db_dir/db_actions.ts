@@ -4,15 +4,16 @@ enum TABLE_NAMES {
 	reddit_cont = 'reddit_cont',
 	video_cont = 'video_cont',
 	invalid_storys = 'invalid_storys',
+	invalid_videos = `invalid_videos`
 }
 
-type VIDEO_SQL_SCHEMA = {
+export type VIDEO_SQL_SCHEMA = {
 	videoID: string,
 	videoLen: string,
 	videoName: string,
 };
 
-type REDDIT_POST_SCHEMA = {
+export type REDDIT_POST_SCHEMA = {
 	postID?: string,
 	postLen?: string,
 	postTitle?: string
@@ -106,15 +107,105 @@ export const pullAllInvRedditIDs = (): Promise<string[]> => {
 	})
 }
 
-/*
-export const appendRedditItem  = (arg: SQL_SCHEMA) => {
-    const insertSql = `INSERT INTO ${TABLE_NAMES.video_cont} (videoID, videoLen, videoName) VALUES (?, ?, ?)`;
-    db.run(insertSql, [arg.R_ID, arg.Item, arg.Price, arg.Cals], function(err: Error | null){
-	if(err){
-	    console.log(err.message);
+export const selectAllFromVideo = (limit: number): Promise<VIDEO_SQL_SCHEMA[]> => {
+	return new Promise((res, rej) => {
+		db.all(`SELECT * FROM video_cont LIMIT ${limit}`, (err, row: VIDEO_SQL_SCHEMA[]) => {
+			if (err) {
+				return rej(err)
+			} else {
+				return res(row)
+			}
+		})
+
+	})
+}
+
+export const selectAllFromReddit = (): Promise<REDDIT_POST_SCHEMA[]> => {
+	return new Promise((res, rej) => {
+		db.all(`SELECT * FROM reddit_cont`, (err, row: REDDIT_POST_SCHEMA[]) => {
+			if (err) {
+				return rej(err)
+			} else {
+				return res(row)
+			}
+		})
+	})
+}
+
+export const getInvVideoIds = () => {
+	return new Promise((res, rej) => {
+		db.all(`SELECT * FROM ${TABLE_NAMES.invalid_videos}`, (err, rows: { videoID: string }[]) => {
+			if (err) {
+				return rej(err)
+			} else {
+				const videoId: string[] = rows.map(({ videoID }) => videoID)
+				return res(videoId)
+			}
+		})
+	})
+}
+
+export const delRedditData = (postID: string) => {
+	const deleteSql = `DELETE FROM	${TABLE_NAMES.reddit_cont} WHERE postID = "${postID}"`
+	db.run(deleteSql, function(err: Error | null) {
+		if (err) {
+			console.log(err.message)
+		}
+		else {
+			console.log(`rPost with ID: ${postID} removed`)
+		}
+	})
+}
+
+export const appendInvVidID = (videoID: string) => {
+	const insertSql = `INSERT INTO ${TABLE_NAMES.invalid_videos} (videoID) VALUES (?)`
+	db.run(insertSql, [videoID], function(err: Error | null) {
+		if (err) {
+			console.log(err.message)
+		} else {
+			console.log(`Video with ID: ${videoID} added to inv log.`)
+		}
 	}
-	console.log(`A row has been appended with rowID ${this.lastID}`)
-    });
+	)
+}
+export const delVidData = (videoID: string) => {
+	const deleteSql = `DELETE FROM ${TABLE_NAMES.video_cont} WHERE videoID = "${videoID}"`
+	db.run(deleteSql, function(err: Error | null) {
+		if (err) {
+			console.log(err.message);
+		} else {
+			console.log(`Video with ID: ${videoID} removed.`);
+		}
+	});
 };
+
+
+
+
+
+export const updateVideoData = (arg: VIDEO_SQL_SCHEMA) => {
+	const updateSql = `UPDATE ${TABLE_NAMES.video_cont} SET videoLen = ? where videoID = ?`
+	db.run(updateSql, [arg.videoLen, arg.videoID], function(err: Error | null) {
+		if (err) {
+			console.log(err.message)
+		} else {
+			console.log(`Video with ID: ${arg.videoID}, time stamp updated.`)
+		}
+	})
+}
+// Dev F(n)
+/*
+(async function() {
+	const invId = await pullAllVidIDs()
+	//console.log(invId)
+	//	console.log(await getInvVideoIds())
+	console.log(invId)
+
+	//	console.log(await selectAllFromVideo(2))
+	//	console.log(await selectAllFromReddit())
+
+}())
+
 */
+
 

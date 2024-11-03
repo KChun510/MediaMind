@@ -1,2 +1,4 @@
 .env
 client_secret.json
+content_collection/redditCollection/reddit_content_format/input_content/
+content_collection/redditCollection/reddit_content_format/invalid_files/

@@ -2,7 +2,7 @@ var fs = require('fs');
 var readline = require('readline');
 var { google } = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
-var { pullAllVidIDs } = require('../../db_dir/db_actions.js')
+var { getInvVideoIds } = require('../../db_dir/db_actions.js')
 
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/youtube-nodejs-quickstart.json
@@ -13,7 +13,7 @@ var TOKEN_PATH = TOKEN_DIR + 'youtube-nodejs-quickstart.json';
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
- * given callback function.
+
  *
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
@@ -101,10 +101,11 @@ function storeToken(token) {
 async function getVideosByKeyWords(auth, { valid_vids = 1, keywords = 'dogs', type = 'video', videoDefinition = 'standard', videoLicense = "any", results = 10, videoDuration = "any" }) {
     let service = google.youtube('v3');
     let pageToken = undefined;
-    const invalidVidIDs = await pullAllVidIDs()
+    const invalidVidIDs = await getInvVideoIds()
     let validIDs = []
     while (valid_vids > 0) {
         try {
+            // Do not delete the await bellow!!
             const res = await service.search.list({
                 auth: auth,
                 part: 'snippet',
@@ -119,11 +120,12 @@ async function getVideosByKeyWords(auth, { valid_vids = 1, keywords = 'dogs', ty
             const video_data = res.data.items
             if (video_data.length > 0) {
                 for (const data of video_data) {
-                    const vid_id = data.id.videoId
-                    if (invalidVidIDs.includes(vid_id)) {
+                    if (invalidVidIDs.includes(data.id.videoId)) {
+                        continue
+                    } else if (data.snippet.liveBroadcastContent === 'live') {
                         continue
                     } else {
-                        validIDs.push(vid_id)
+                        validIDs.push(data.id.videoId)
                         valid_vids--
                         if (valid_vids === 0) {
                             return validIDs
@@ -136,8 +138,8 @@ async function getVideosByKeyWords(auth, { valid_vids = 1, keywords = 'dogs', ty
                 return
             }
         } catch (e) {
-            console.log(`Searching by keyword API fail: ${e}`)
-            return
+            console.error(`Searching by keyword API fail: ${e}`)
+            return e
         }
     }
 }
@@ -157,7 +159,7 @@ const formatTime = (timeString) => {
             temp_store.push(timeString[i])
         }
     }
-    console.log(timeString)
+    //console.log(timeString)
     if (final.length == 1) {
         return `00:00:${final[0].length > 1 ? `${final[0][0]}${final[0][1]}` : `0${final[0][0]}`}`
     }
@@ -170,7 +172,8 @@ const formatTime = (timeString) => {
 
 async function getVideoDetails(auth, videoIDs = []) {
     const id_log = videoIDs
-    let service = google.youtube('v3'); const idLen = videoIDs.length
+    let service = google.youtube('v3')
+    const idLen = videoIDs.length
     if (idLen > 50) {
         let tempArr = []
         let chunked = []
@@ -205,7 +208,8 @@ async function getVideoDetails(auth, videoIDs = []) {
         }
         return return_objArr
     } catch (e) {
-        console.log(`Getting video details failed error: ${e}`)
+        console.error(`Getting video details failed error: ${e}`)
+        return e
     }
 }
 

@@ -1,7 +1,0 @@
-hey,
-
-I'm trying to set up an Automator (mac) quick action where I run npm run dev.
-
-But when I choose Run Shell Script and enter npm run dev, I get the error, unknown command npm.
-
-Kind of confused by this since when I enter it directly into terminal it works fine. But for some reason when I enter it as a script it doesn't work?
