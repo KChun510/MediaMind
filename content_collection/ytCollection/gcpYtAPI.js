@@ -138,8 +138,8 @@ async function getVideosByKeyWords(auth, { valid_vids = 1, keywords = 'dogs', ty
                 return
             }
         } catch (e) {
-            console.log(`Searching by keyword API fail: ${e}`)
-            return
+            console.error(`Searching by keyword API fail: ${e}`)
+            return e
         }
     }
 }
@@ -208,7 +208,8 @@ async function getVideoDetails(auth, videoIDs = []) {
         }
         return return_objArr
     } catch (e) {
-        console.log(`Getting video details failed error: ${e}`)
+        console.error(`Getting video details failed error: ${e}`)
+        return e
     }
 }
 

@@ -145,6 +145,18 @@ export const getInvVideoIds = () => {
 	})
 }
 
+export const delRedditData = (postID: string) => {
+	const deleteSql = `DELETE FROM	${TABLE_NAMES.reddit_cont} WHERE postID = "${postID}"`
+	db.run(deleteSql, function(err: Error | null) {
+		if (err) {
+			console.log(err.message)
+		}
+		else {
+			console.log(`rPost with ID: ${postID} removed`)
+		}
+	})
+}
+
 export const appendInvVidID = (videoID: string) => {
 	const insertSql = `INSERT INTO ${TABLE_NAMES.invalid_videos} (videoID) VALUES (?)`
 	db.run(insertSql, [videoID], function(err: Error | null) {
@@ -158,7 +170,6 @@ export const appendInvVidID = (videoID: string) => {
 }
 export const delVidData = (videoID: string) => {
 	const deleteSql = `DELETE FROM ${TABLE_NAMES.video_cont} WHERE videoID = "${videoID}"`
-	console.log(`Deleting ${videoID}`);
 	db.run(deleteSql, function(err: Error | null) {
 		if (err) {
 			console.log(err.message);

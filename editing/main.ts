@@ -1,5 +1,5 @@
-import { selectAllFromVideo, selectAllFromReddit, delVidData, updateVideoData, REDDIT_POST_SCHEMA, VIDEO_SQL_SCHEMA } from '../db_dir/db_actions'
-import { create_story_over_single_video, cut_video, delete_video, segment_clip } from './ffmpegAPI'
+import { selectAllFromVideo, selectAllFromReddit, delVidData, delRedditData, updateVideoData, REDDIT_POST_SCHEMA, VIDEO_SQL_SCHEMA } from '../db_dir/db_actions'
+import { create_story_over_single_video, cut_video, delete_video, delete_reddit_cont, segment_clip } from './sysCallAPI'
 require('dotenv').config('../.env');
 
 async function gather_single_story() {
@@ -8,8 +8,6 @@ async function gather_single_story() {
         const chosen_story = allRedditStories[0]
         const chosen_post_ID = chosen_story.postID?.slice(0, chosen_story.postID.length - 3)
         story_queue.push(chosen_story)
-
-
 
         // Video data, appended to DB we junk it < 5000mb
         // This loop bellow checks for pt.2-pt.n
@@ -67,6 +65,15 @@ function updateTime(videoObj: VIDEO_SQL_SCHEMA, seconds: number) {
         return
 }
 
+function videoCleanUp(videoID: string) {
+        delVidData(videoID)
+        delete_video(videoID)
+}
+
+function redditCleanUp(postID: string) {
+        delRedditData(postID)
+        delete_reddit_cont(postID)
+}
 
 (async function() {
         let videoQ_limit = 1
@@ -76,14 +83,16 @@ function updateTime(videoObj: VIDEO_SQL_SCHEMA, seconds: number) {
         let videoQTime = videoTime(videoQ)
         console.log(videoQ)
 
-
+        // If the first vid we grab, has neg total time
         while (videoQTime < 0) {
-                delVidData(videoQ[0].videoID)
-                delete_video(videoQ[0].videoID)
+                videoCleanUp(videoQ[0].videoID)
                 videoQ = await selectAllFromVideo(videoQ_limit)
                 videoQTime = videoTime(videoQ)
         }
 
+
+        console.log("Gathering videos")
+        // Gather enough vids, to meet story time
         while (storyQTime > videoQTime) {
                 const prevVideoTime = videoQTime
                 videoQ_limit++
@@ -94,9 +103,9 @@ function updateTime(videoObj: VIDEO_SQL_SCHEMA, seconds: number) {
                         return
                 }
                 console.error(`story ${storyQTime}, video: ${videoQTime}`)
-                console.log(videoQ)
         }
 
+        console.log("\nVideo Editing begun. \n")
         let currVideoTime = videoTime([videoQ[0]])
         let currStoryTime = 0
         let currVideoIndex = 0
@@ -107,8 +116,7 @@ function updateTime(videoObj: VIDEO_SQL_SCHEMA, seconds: number) {
                         if (currStoryTime > currVideoTime) {
                                 currVideoIndex++
                                 currVideoTime = videoTime([videoQ[currVideoIndex]])
-                                delVidData(videoQ[currVideoIndex - 1].videoID)
-                                delete_video(videoQ[currVideoIndex - 1].videoID)
+                                videoCleanUp(videoQ[currVideoIndex - 1].videoID)
                                 console.log(`Video to be removed: ${videoQ[currVideoIndex - 1].videoID}`)
                                 // Additional condition logic
                         } if (currVideoIndex >= videoQ.length) {
@@ -122,6 +130,9 @@ function updateTime(videoObj: VIDEO_SQL_SCHEMA, seconds: number) {
                                 updateVideoData({ videoLen: videoQ[currVideoIndex].videoLen, videoID: videoQ[currVideoIndex].videoID, videoName: videoQ[currVideoIndex].videoName })
                                 // Need to cut our video, after clip was made ( No overlapping content )
                                 cut_video(part.postLen ?? '00:00:00', videoQ[currVideoIndex].videoID)
+                                redditCleanUp(part.postID)
+
+                                console.log(`Clip made! ${part.postID}`)
                         }
                 } catch (e) {
                         console.error(`There was a E, while editing video: ${videoQ[currVideoIndex].videoID} with post: ${part.postID}, \n e code of: ${e} `)

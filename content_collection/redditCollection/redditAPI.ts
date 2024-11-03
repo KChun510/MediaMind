@@ -7,11 +7,17 @@ interface redditPost {
 }
 // The bellows script will need to both append to DB and append text files in the workflow dir.
 export async function POST_Get_Reddit_Post(sub_reddit: string, story_count = 1): Promise<redditPost[]> {
-	const req_url = `https://www.reddit.com/r/${sub_reddit}/top.json?t=all&count=0&limit=25`
+	let page_count = 25
+	let req_url = `https://www.reddit.com/r/${sub_reddit}/top.json?t=all&count=0&limit=${page_count}`
 	const invalid_id = await pullAllInvRedditIDs()
 	const final_res: redditPost[] = []
+	let after = null
 	try {
 		while (story_count > 0) {
+			if (after) {
+				// Tyring to use the "after" param, but not working. Just going to increase the amound of searches.
+				req_url = `https://www.reddit.com/r/${sub_reddit}/top.json?t=all&count=0&limit=${page_count}&after=${after}`
+			}
 			console.log("request being made")
 			const res = await fetch(req_url, { method: 'GET' });
 			if (!res.ok) {
@@ -61,6 +67,10 @@ export async function POST_Get_Reddit_Post(sub_reddit: string, story_count = 1):
 					story_count -= 1
 				}
 			}
+			if (page_count < 100) {
+				page_count *= 2
+			}
+			after = redditPosts.pop().data.id
 		} return final_res
 
 	} catch (e) {
@@ -68,7 +78,6 @@ export async function POST_Get_Reddit_Post(sub_reddit: string, story_count = 1):
 		return final_res
 	}
 }
-
 
 (async function() {
 	//	console.log(await POST_REQ('crazystories', 2))
