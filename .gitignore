@@ -2,3 +2,5 @@
 client_secret.json
 content_collection/redditCollection/reddit_content_format/input_content/
 content_collection/redditCollection/reddit_content_format/invalid_files/
+content_collection/redditCollection/reddit_content_format/input_content/text_storys
+db_dir/video_data.db
