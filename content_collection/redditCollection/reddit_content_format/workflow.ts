@@ -72,7 +72,7 @@ async function text_to_speech(valid_file: string): Promise<null> {
 
     return null
 }
-
+// Used for SRT output from openAI
 function parse_transcript(trans: string): string {
     const transcript = trans.split("\n")
     let timeStamp = transcript[transcript.length - 5]
@@ -83,20 +83,41 @@ function parse_transcript(trans: string): string {
     return time
 }
 
+function formatTime(time: { secs: number, miliSec: string }): string {
+    const miliSec = time.miliSec ? time.miliSec.slice(0, 3) : "000"
+    const hoursReturn = Math.floor(time.secs / 3600);
+    const minutesReturn = Math.floor((time.secs % 3600) / 60);
+    const secsReturn = time.secs % 60;
+    const returnStamp = [
+        String(hoursReturn).padStart(2, '0'),
+        String(minutesReturn).padStart(2, '0'),
+        String(secsReturn).padStart(2, '0'),
+    ].join(':');
+
+    return returnStamp + `,${miliSec}`
+}
+
 async function speech_to_text(valid_file: string) {
     const transcription = await openai.audio.transcriptions.create({
         file: fs.createReadStream(`${outPutDir}/audio_dir/${valid_file}.mp3`),
         model: "whisper-1",
-        response_format: "srt",
+        response_format: "verbose_json",
+        timestamp_granularities: ["word"]
     });
-    const time_stamp = parse_transcript(transcription)
-    if (time_stamp.length != 8) {
-        console.error(`File: ${valid_file}, invalid time stamp: ${time_stamp}`)
-        return
+    let srt_string = ""
+    for (let i = 0; i < transcription.words.length; i++) {
+        const startTime = transcription.words[i].start.toString().split(".")
+        const endTime = transcription.words[i].end.toString().split(".")
+        const word = transcription.words[i].word.toUpperCase()
+        srt_string += `${i + 1}\n${formatTime({ secs: startTime[0], miliSec: startTime[1] })} --> ${formatTime({ secs: endTime[0], miliSec: endTime[1] })}\n${word}\n\n`
     }
+    const totalTime = transcription.duration.toString().split(".")
+    const time_stamp = formatTime({ secs: totalTime[0], miliSec: totalTime[1] }).split(",")[0]
+
     updateRedditPost({ postLen: time_stamp, postID: valid_file.slice(0, valid_file.length - 4) })
+
     const writeFile = util.promisify(fs.writeFile);
-    await writeFile(`${outPutDir}/srt_dir/${valid_file}.srt`, transcription, 'utf8');
+    await writeFile(`${outPutDir}/srt_dir/${valid_file}.srt`, srt_string, 'utf8');
     console.log(`Transcription made, file: ${valid_file}`);
 }
 
