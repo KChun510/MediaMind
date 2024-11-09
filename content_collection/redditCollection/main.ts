@@ -8,6 +8,11 @@ interface redditPost {
 	text: string
 }
 
+enum subReddits {
+	CRAZY_STORIES = 'crazystories',
+	DRAMA = 'SubredditDrama'
+}
+
 const byteSize = (outStr: string) => new Blob([outStr]).size
 
 function writeTxtFile(filePath: string, data: string) {
@@ -50,7 +55,7 @@ function chunkFile(postID: string, postTitle: string, data: string) {
 }
 
 (async function() {
-	const reddit_post = await POST_Get_Reddit_Post('crazystories', 1)
+	const reddit_post = await POST_Get_Reddit_Post(subReddits.DRAMA, 10)
 	const invalid_post = await pullAllInvRedditIDs()
 	//	const reddit_post = (await POST_Get_Reddit_Post('nosleep', 4))
 	for (const post of reddit_post) {
