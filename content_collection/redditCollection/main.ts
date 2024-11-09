@@ -55,7 +55,7 @@ function chunkFile(postID: string, postTitle: string, data: string) {
 }
 
 (async function() {
-	const reddit_post = await POST_Get_Reddit_Post(subReddits.DRAMA, 10)
+	const reddit_post = await POST_Get_Reddit_Post(subReddits.DRAMA, 1)
 	const invalid_post = await pullAllInvRedditIDs()
 	//	const reddit_post = (await POST_Get_Reddit_Post('nosleep', 4))
 	for (const post of reddit_post) {
