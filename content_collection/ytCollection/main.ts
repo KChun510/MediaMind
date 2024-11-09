@@ -50,9 +50,8 @@ function videoTime(videoData: VIDEO_SQL_SCHEMA[]): number {
                     }
                 }
             } catch (e) {
-                console.log(`\n Quitting edit exec: ${e}  \n`)
+                console.log(`\n Quitting download exec: ${e}  \n`)
                 return
-
             }
         }
     });
