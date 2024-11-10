@@ -132,6 +132,45 @@ export const selectAllFromReddit = (): Promise<REDDIT_POST_SCHEMA[]> => {
 	})
 }
 
+type timeStamp = {
+	postLen?: string,
+	videoLen?: string,
+}
+
+function convertTimeStamp(timeStamps: timeStamp[]): number {
+	let total_sec = 0
+	for (const time of timeStamps) {
+		const currTimeStamp = time.postLen ?? time.videoLen ?? "000:000:000"
+		const [hours, minutes, seconds] = currTimeStamp.split(':').map(Number)
+		total_sec += hours * 3600 + minutes * 60 + seconds
+	}
+	return total_sec
+}
+
+export const getTotalRedditTime = (): Promise<number | Error> => {
+	return new Promise((res, rej) => {
+		db.all(`SELECT postLen FROM reddit_cont;`, (err, row: timeStamp[]) => {
+			if (err) {
+				return rej(err)
+			} else {
+				return res(convertTimeStamp(row))
+			}
+		})
+	})
+}
+
+export const getTotalVideoTime = (): Promise<number | Error> => {
+	return new Promise((res, rej) => {
+		db.all(`SELECT videoLen FROM video_cont;`, (err, row: timeStamp[]) => {
+			if (err) {
+				return rej(err)
+			} else {
+				return res(convertTimeStamp(row))
+			}
+		})
+	})
+}
+
 export const getInvVideoIds = () => {
 	return new Promise((res, rej) => {
 		db.all(`SELECT * FROM ${TABLE_NAMES.invalid_videos}`, (err, rows: { videoID: string }[]) => {
@@ -196,16 +235,9 @@ export const updateVideoData = (arg: VIDEO_SQL_SCHEMA) => {
 // Dev F(n)
 /*
 (async function() {
-	const invId = await pullAllVidIDs()
-	//console.log(invId)
-	//	console.log(await getInvVideoIds())
-	console.log(invId)
-
-	//	console.log(await selectAllFromVideo(2))
-	//	console.log(await selectAllFromReddit())
+	console.log(await getTotalRedditTime())
+	console.log(await getTotalVideoTime())
 
 }())
-
 */
-
 

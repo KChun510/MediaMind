@@ -1,6 +1,13 @@
+import { OpenAI } from "openai"
 import { POST_Get_Reddit_Post } from './redditAPI'
 import { appendRedditPost, appendInvalidID, pullAllInvRedditIDs } from '../../db_dir/db_actions'
+import { writeMetaData } from '../../sysCallAPI'
+import * as util from 'util'
 import * as fs from 'fs'
+import * as dotenv from 'dotenv'
+dotenv.config({ path: '../../.env' });
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
 interface redditPost {
 	postID: string,
@@ -55,6 +62,18 @@ function chunkFile(postID: string, postTitle: string, data: string) {
 	appendRedditPost({ postID: chunkedPostID, postTitle: postTitle })
 }
 
+
+async function create_metaData(input: { valid_file: string, text_cont: string }) {
+	const meta_data = await openai.chat.completions.create({
+		messages: [{ role: "system", content: "You are tasked with analyzing text, creating a one sentance description in a entertaining tone of the text and a list of popular hashtags about the text. You output the single sentance, then seperated by a new line you list the hashtags together seperated by one space between each one." },
+		{ role: "user", content: `Here is the text analyze: ${input.text_cont}` }],
+		model: "gpt-4o-mini",
+	});
+	const metaContent = meta_data.choices[0].message.content
+	writeMetaData(input.valid_file, metaContent ?? "")
+}
+
+
 (async function() {
 	const reddit_post = await POST_Get_Reddit_Post(subReddits.TECH_SUPPORT, 1)
 	const invalid_post = await pullAllInvRedditIDs()
@@ -62,6 +81,7 @@ function chunkFile(postID: string, postTitle: string, data: string) {
 	for (const post of reddit_post) {
 		const data = post as redditPost
 		if (!invalid_post.includes(data.postID)) {
+			create_metaData({ valid_file: data.postID, text_cont: data.text })
 			appendInvalidID({ postID: data.postID })
 			if (byteSize(data.text) >= 5000) {
 				chunkFile(data.postID, data.postTitle, data.text)

@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.updateVideoData = exports.delVidData = exports.appendInvVidID = exports.getInvVideoIds = exports.selectAllFromReddit = exports.selectAllFromVideo = exports.pullAllInvRedditIDs = exports.pullAllVidIDs = exports.appendVideoItem = exports.updateRedditPost = exports.appendRedditPost = exports.appendInvalidID = void 0;
+exports.updateVideoData = exports.delVidData = exports.appendInvVidID = exports.delRedditData = exports.getInvVideoIds = exports.getTotalVideoTime = exports.getTotalRedditTime = exports.selectAllFromReddit = exports.selectAllFromVideo = exports.pullAllInvRedditIDs = exports.pullAllVidIDs = exports.appendVideoItem = exports.updateRedditPost = exports.appendRedditPost = exports.appendInvalidID = void 0;
 var sqlite3 = require("sqlite3");
 var TABLE_NAMES;
 (function (TABLE_NAMES) {
@@ -124,6 +124,43 @@ var selectAllFromReddit = function () {
     });
 };
 exports.selectAllFromReddit = selectAllFromReddit;
+function convertTimeStamp(timeStamps) {
+    var _a, _b;
+    var total_sec = 0;
+    for (var _i = 0, timeStamps_1 = timeStamps; _i < timeStamps_1.length; _i++) {
+        var time = timeStamps_1[_i];
+        var currTimeStamp = (_b = (_a = time.postLen) !== null && _a !== void 0 ? _a : time.videoLen) !== null && _b !== void 0 ? _b : "000:000:000";
+        var _c = currTimeStamp.split(':').map(Number), hours = _c[0], minutes = _c[1], seconds = _c[2];
+        total_sec += hours * 3600 + minutes * 60 + seconds;
+    }
+    return total_sec;
+}
+var getTotalRedditTime = function () {
+    return new Promise(function (res, rej) {
+        db.all("SELECT postLen FROM reddit_cont;", function (err, row) {
+            if (err) {
+                return rej(err);
+            }
+            else {
+                return res(convertTimeStamp(row));
+            }
+        });
+    });
+};
+exports.getTotalRedditTime = getTotalRedditTime;
+var getTotalVideoTime = function () {
+    return new Promise(function (res, rej) {
+        db.all("SELECT videoLen FROM video_cont;", function (err, row) {
+            if (err) {
+                return rej(err);
+            }
+            else {
+                return res(convertTimeStamp(row));
+            }
+        });
+    });
+};
+exports.getTotalVideoTime = getTotalVideoTime;
 var getInvVideoIds = function () {
     return new Promise(function (res, rej) {
         db.all("SELECT * FROM ".concat(TABLE_NAMES.invalid_videos), function (err, rows) {
@@ -141,6 +178,18 @@ var getInvVideoIds = function () {
     });
 };
 exports.getInvVideoIds = getInvVideoIds;
+var delRedditData = function (postID) {
+    var deleteSql = "DELETE FROM\t".concat(TABLE_NAMES.reddit_cont, " WHERE postID = \"").concat(postID, "\"");
+    db.run(deleteSql, function (err) {
+        if (err) {
+            console.log(err.message);
+        }
+        else {
+            console.log("rPost with ID: ".concat(postID, " removed"));
+        }
+    });
+};
+exports.delRedditData = delRedditData;
 var appendInvVidID = function (videoID) {
     var insertSql = "INSERT INTO ".concat(TABLE_NAMES.invalid_videos, " (videoID) VALUES (?)");
     db.run(insertSql, [videoID], function (err) {
@@ -154,8 +203,7 @@ var appendInvVidID = function (videoID) {
 };
 exports.appendInvVidID = appendInvVidID;
 var delVidData = function (videoID) {
-    var deleteSql = "DELETE FROM video_cont WHERE videoID = \"".concat(videoID, "\"");
-    console.log("Deleting ".concat(videoID));
+    var deleteSql = "DELETE FROM ".concat(TABLE_NAMES.video_cont, " WHERE videoID = \"").concat(videoID, "\"");
     db.run(deleteSql, function (err) {
         if (err) {
             console.log(err.message);
@@ -181,14 +229,8 @@ exports.updateVideoData = updateVideoData;
 // Dev F(n)
 /*
 (async function() {
-    const invId = await pullAllVidIDs()
-    //console.log(invId)
-    //	console.log(await getInvVideoIds())
-    console.log(invId)
-
-    //	console.log(await selectAllFromVideo(2))
-    //	console.log(await selectAllFromReddit())
+    console.log(await getTotalRedditTime())
+    console.log(await getTotalVideoTime())
 
 }())
-
 */
