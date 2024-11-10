@@ -1,15 +1,17 @@
-const textToSpeech = require('@google-cloud/text-to-speech');
-const fs = require('fs');
-const util = require('util');
-const OpenAI = require("openai");
-const dotenv = require('dotenv');
-import { updateRedditPost } from "../../../db_dir/db_actions";
+const textToSpeech = require('@google-cloud/text-to-speech')
+const fs = require('fs')
+const util = require('util')
+const OpenAI = require("openai")
+const dotenv = require('dotenv')
+import { updateRedditPost } from "../../../db_dir/db_actions"
 
 dotenv.config({ path: '../../../.env' });
 
-const client = new textToSpeech.TextToSpeechClient();
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const gcpClient = new textToSpeech.TextToSpeechClient()
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 const outPutDir = `${process.env.CONT_DIR}/reddit_cont`
+const readFile = util.promisify(fs.readFile)
+const writeFile = util.promisify(fs.writeFile)
 
 async function list_input_files(): Promise<string[]> {
     return new Promise((resolve, reject) => {
@@ -26,6 +28,7 @@ async function list_input_files(): Promise<string[]> {
 
 
 // Check if the input file has already been proccessed before.
+
 async function valid_input_files(input_files: string[]): Promise<string[]> {
     try {
         // Read CSV file
@@ -42,7 +45,6 @@ async function valid_input_files(input_files: string[]): Promise<string[]> {
         invalid_filesArray = invalid_filesArray.join(',');
         await fs.writeFile("./invalid_files/inv_txt.csv", invalid_filesArray, (err) => { console.log(err) });
 
-
         return valid_files; // Return the array of file names
     } catch (err) {
         console.error('Error reading CSV file', err);
@@ -50,9 +52,8 @@ async function valid_input_files(input_files: string[]): Promise<string[]> {
     }
 };
 
-async function text_to_speech(valid_file: string): Promise<null> {
+async function text_to_speech(valid_file: string) {
     // Read text file from "input content folder"
-    const readFile = util.promisify(fs.readFile);
     const fileContent = await readFile(`./input_content/text_storys/${valid_file}`, 'utf8');
 
     // Make a req to GCP, passing in file content
@@ -61,16 +62,14 @@ async function text_to_speech(valid_file: string): Promise<null> {
         voice: { languageCode: 'en-AU', name: 'en-AU-Wavenet-B', ssmlGender: 'MALE' },
         audioConfig: { audioEncoding: 'MP3', speakingRate: 1.2 },
     };
-    const [response] = await client.synthesizeSpeech(request);
+    const [response] = await gcpClient.synthesizeSpeech(request);
 
     console.log("Writing to the file")
 
     // Write audio file to audio_dir
-    const writeFile = util.promisify(fs.writeFile);
     await writeFile(`${outPutDir}/audio_dir/${valid_file}.mp3`, response.audioContent, 'binary');
     console.log(`Audio content written to file: ${valid_file}.mp3`);
 
-    return null
 }
 // Used for SRT output from openAI
 function parse_transcript(trans: string): string {
@@ -116,7 +115,6 @@ async function speech_to_text(valid_file: string) {
 
     updateRedditPost({ postLen: time_stamp, postID: valid_file.slice(0, valid_file.length - 4) })
 
-    const writeFile = util.promisify(fs.writeFile);
     await writeFile(`${outPutDir}/srt_dir/${valid_file}.srt`, srt_string, 'utf8');
     console.log(`Transcription made, file: ${valid_file}`);
 }
@@ -126,7 +124,8 @@ async function speech_to_text(valid_file: string) {
     const valid_files = await valid_input_files(listed_files)
     console.log(`${valid_files.length} files, to be processed.`)
     for (let i = 0; i < valid_files.length; i++) {
-        await text_to_speech(valid_files[i]);
-        await speech_to_text(valid_files[i]);
+        // Put the dir creating file here, + write text file of # and des
+        await text_to_speech(valid_files[i])
+        await speech_to_text(valid_files[i])
     }
 })()

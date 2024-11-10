@@ -1,5 +1,5 @@
 const { execSync } = require('child_process');
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config({ path: require('find-config')('.env') })
 import fs from 'fs';
 
 const CONT_DIR = process.env.CONT_DIR
@@ -11,7 +11,16 @@ const CONT_DIRS = {
         ytVideos: `${CONT_DIR}/youTube_cont/videos`,
         ytSrt: `${CONT_DIR}/youTube_cont/srt`,
         prodVidAndStory: `${CONT_DIR}/prod_vids/single_vid_plus_reddit/`
+}
 
+export function writeMetaData(rPostID: string, textCont: string) {
+        fs.writeFile(`${CONT_DIRS.prodVidAndStory}${rPostID}.txt`, textCont, (err) => {
+                if (err) {
+                        console.error('Error writing file:', err)
+                } else {
+                        console.log(`MetaData created for: ${rPostID}`)
+                }
+        })
 }
 
 export function create_story_over_single_video(rPostId: string, ytVideoId: string) {
@@ -56,16 +65,16 @@ export function delete_reddit_cont(postID: string) {
 
 
 
-export function segment_clip(ytVideoId: string, seconds: number) {
+export function segment_clip(redditId: string, seconds: number) {
         if (seconds === 0) {
                 return
         }
         const secs = seconds.toString()
 
-        const seg_string = `ffmpeg -i ${CONT_DIRS.prodVidAndStory}/${ytVideoId}.mp4 -f segment -segment_time ${secs} -c:v libx264 -c:a aac -map 0 -reset_timestamps 1 ${CONT_DIRS.prodVidAndStory}/${ytVideoId}%03d.mp4`;
-        const del_string = `rm ${CONT_DIRS.prodVidAndStory}/${ytVideoId}.mp4`
+        const seg_string = `ffmpeg -i ${CONT_DIRS.prodVidAndStory}/${redditId}.mp4 -f segment -segment_time ${secs} -c:v libx264 -c:a aac -map 0 -reset_timestamps 1 ${CONT_DIRS.prodVidAndStory}/${redditId}%03d.mp4`;
+        const del_string = `rm ${CONT_DIRS.prodVidAndStory}/${redditId}.mp4`
         execSync(`${seg_string} && ${del_string}`)
-        console.log(`Video of ID: ${ytVideoId}, has been segmented.`)
+        console.log(`Video of ID: ${redditId}, has been segmented.`)
 }
 
 const cmd_stacked_vids = `ffmpeg -i ${CONT_DIRS.ytVideos}/Q-TQQE1y68c.webm -t 00:00:10 -i ${CONT_DIRS.ytVideos}/si0Lp1SLHXg.webm -t 00:00:10 -filter_complex "[0]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[top]; 

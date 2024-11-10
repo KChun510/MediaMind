@@ -1,5 +1,5 @@
 import { selectAllFromVideo, selectAllFromReddit, delVidData, delRedditData, updateVideoData, REDDIT_POST_SCHEMA, VIDEO_SQL_SCHEMA } from '../db_dir/db_actions'
-import { create_story_over_single_video, cut_video, delete_video, delete_reddit_cont, segment_clip } from './sysCallAPI'
+import { create_story_over_single_video, cut_video, delete_video, delete_reddit_cont, segment_clip } from '../sysCallAPI'
 require('dotenv').config('../.env');
 
 async function gather_single_story() {
@@ -49,7 +49,6 @@ function updateTime(videoObj: VIDEO_SQL_SCHEMA, seconds: number) {
         total_sec += hours * 3600 + minutes * 60 + secs
         total_sec -= seconds
 
-
         const hoursReturn = Math.floor(total_sec / 3600);
         const minutesReturn = Math.floor((total_sec % 3600) / 60);
         const secsReturn = total_sec % 60;
@@ -81,7 +80,6 @@ function redditCleanUp(postID: string) {
         let videoQ = await selectAllFromVideo(videoQ_limit)
         const storyQTime = storyTime(storyQ)
         let videoQTime = videoTime(videoQ)
-        console.log(videoQ)
 
         // If the first vid we grab, has neg total time
         while (videoQTime < 0) {
@@ -89,7 +87,6 @@ function redditCleanUp(postID: string) {
                 videoQ = await selectAllFromVideo(videoQ_limit)
                 videoQTime = videoTime(videoQ)
         }
-
 
         console.log("Gathering videos")
         // Gather enough vids, to meet story time
