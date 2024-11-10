@@ -66,4 +66,4 @@ Current Design of editing algorithm:
     - Use it to evaluate the most revelent topics in current timeline.
     - etc.....
 
-<sub><sup>Updated: 10/10/24 </sup></sub>
+<sub><sup>Updated: 11/09/24 </sup></sub>
