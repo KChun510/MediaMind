@@ -1,6 +1,6 @@
 import { authorize, getVideosByKeyWords, getVideoDetails } from './gcpYtAPI'
 import * as fs from 'fs'
-import { appendVideoItem, appendInvVidID, VIDEO_SQL_SCHEMA } from '../../db_dir/db_actions.js'
+import { getTotalRedditTime, getTotalVideoTime, appendVideoItem, appendInvVidID, VIDEO_SQL_SCHEMA } from '../../db_dir/db_actions'
 import { execSync } from 'child_process'
 const dotenv = require('dotenv');
 dotenv.config({ path: '../../.env' });
@@ -14,8 +14,19 @@ function videoTime(videoData: VIDEO_SQL_SCHEMA[]): number {
     return total_sec
 }
 
-(function() {
-    const minVideoTime = 180
+async function DownloadNotNeeded(): Promise<boolean> {
+    if (await getTotalVideoTime() >= await getTotalRedditTime()) {
+        return true
+    }
+    return false
+}
+
+(async function() {
+    // Check if we need to download more YT videos.
+    if (await DownloadNotNeeded()) {
+        console.log("No yt videos needed to download.")
+        return
+    }
     // Max for now is 10 mins
     const maxVideoTime = 600
     let totalVideoTime = 0
@@ -27,7 +38,6 @@ function videoTime(videoData: VIDEO_SQL_SCHEMA[]): number {
         }
         // Authorize a client with the loaded credentials, then call the YouTube API.
         const oAuthToken = await authorize(JSON.parse(content))
-
         while (totalVideoTime <= maxVideoTime) {
             try {
                 const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "First Person Shooter or forza gameplay", videoLicense: "any", results: 10 })
@@ -39,7 +49,7 @@ function videoTime(videoData: VIDEO_SQL_SCHEMA[]): number {
                     if (totalVideoTime >= maxVideoTime) {
                         return
                     }
-                    else if (currVidTime >= minVideoTime && currVidTime <= maxVideoTime) {
+                    else if (currVidTime <= maxVideoTime) {
                         appendVideoItem({ videoID: video.videoID, videoLen: video.videoLen, videoName: video.videoName })
                         appendInvVidID(video.videoID)
                         console.log(`Downloaded videoID: ${video.videoID}, Len: ${video.videoLen}`)
