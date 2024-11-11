@@ -66,4 +66,7 @@ Current Design of editing algorithm:
     - Use it to evaluate the most revelent topics in current timeline.
     - etc.....
 
+2. break accounts into objects / own personas!!
+
+
 <sub><sup>Updated: 11/09/24 </sup></sub>
