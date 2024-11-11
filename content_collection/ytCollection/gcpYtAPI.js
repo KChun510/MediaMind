@@ -98,7 +98,7 @@ function storeToken(token) {
 
 // Notes: If your searching by video license, then we need to specify a type of video.
 
-async function getVideosByKeyWords(auth, { valid_vids = 1, keywords = 'dogs', type = 'video', videoDefinition = 'standard', videoLicense = "any", results = 10, videoDuration = "medium" }) {
+async function getVideosByKeyWords(auth, { valid_vids = 1, keywords = 'dogs', type = 'video', videoDefinition = 'high', videoLicense = "any", results = 10, videoDuration = "medium" }) {
     let service = google.youtube('v3');
     let pageToken = undefined;
     const invalidVidIDs = await getInvVideoIds()
@@ -115,7 +115,7 @@ async function getVideosByKeyWords(auth, { valid_vids = 1, keywords = 'dogs', ty
                 videoLicense,
                 type,
                 videoDuration,
-                publishedAfter: "2020-01-01T00:00:00+00:00",
+                publishedAfter: "2022-01-01T00:00:00+00:00",
                 pageToken
             })
             const video_data = res.data.items
