@@ -31,7 +31,7 @@ Current account kchun1080@gmail.com
 
 Current Design of the system:
 <br></br>
-![alt text](https://github.com/KChun510/auto_cont_gen/blob/691f72c70515b652d36977375b78416cc4d2cad2/diagrams/auto_cont_gen-11_11_24.drawio.png)
+![alt text](https://github.com/KChun510/auto_cont_gen/blob/c7cacaaea24663360c97f64ded710ecb17bda962/diagrams/auto_cont_gen11_12_24.drawio.png)
 <br></br>
 
 Current Design of editing algorithm:
