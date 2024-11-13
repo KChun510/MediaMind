@@ -123,7 +123,7 @@ function redditCleanUp(postID: string) {
                                 // Updade the current video time (i.e: VieoTime - StoryTime)
                                 updateTime(videoQ[currVideoIndex], currStoryTime)
                                 create_story_over_single_video(part.postID, videoQ[currVideoIndex].videoID)
-                                segment_clip(part.postID, 20)
+                                segment_clip(part.postID, 50)
                                 updateVideoData({ videoLen: videoQ[currVideoIndex].videoLen, videoID: videoQ[currVideoIndex].videoID, videoName: videoQ[currVideoIndex].videoName })
                                 // Need to cut our video, after clip was made ( No overlapping content )
                                 cut_video(part.postLen ?? '00:00:00', videoQ[currVideoIndex].videoID)
