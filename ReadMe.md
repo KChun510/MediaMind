@@ -47,16 +47,12 @@ Current Design of editing algorithm:
 
 
 ### Dev Notes:
-1. **SQLite** needed to hold story and video times.
-    - Use the times for video editing algorithm.
-    - Cut video times based on story length.
-2. **HDD Storage**
-    - Make sure to set the HDD location for Video storage, in " content_generator{MAC -or- UBUNTU} ".
-3. **TODO**
-    - Finish the edit script, in working state 'polishing'
-    - Add video downloading F(n), at end of ytCollection script.
-    - Create a closing function for our DB. 
-    - Will need to close DB connection, once scripts are done executing (Best Practice).
+1. Need to add a "Catchy Hook but Appropiate" at the begining of all stories.
+    - Using openAI API
+2. Split our content into neiches, each neiche has it's own account.
+3. Find a better TTS service, free if optional.
+4. Auto-post, save this for last some human intervention needed.
+
 
 ### Future Works:
 1. Implement MAOP (Multi-Agent Oriented Prgramming)
@@ -69,4 +65,4 @@ Current Design of editing algorithm:
 2. break accounts into objects / own personas!!
 
 
-<sub><sup>Updated: 11/09/24 </sup></sub>
+<sub><sup>Updated: 11/13/24</sup></sub>
