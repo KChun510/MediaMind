@@ -1,8 +1,8 @@
-CONT_DIR=/Users/WestCoastToasted/Desktop/content_for_system
+CONT_DIR=/Users/westcoasttoast/Desktop/content_for_system
 read -p "Name of new Account: " name
 mkdir $CONT_DIR/$name
 mkdir $CONT_DIR/$name/reddit_cont $CONT_DIR/$name/reddit_cont/audio_dir $CONT_DIR/$name/reddit_cont/srt_dir
 mkdir $CONT_DIR/$name/youTube_cont $CONT_DIR/$name/youTube_cont/srt $CONT_DIR/$name/youTube_cont/videos
 mkdir $CONT_DIR/$name/prod_vids $CONT_DIR/$name/prod_vids/single_vid_plus_reddit
 cp -r blankAccount ./$name
-printf "OPENAI_API_KEY=''\nCONT_DIR='/Users/WestCoastToasted/Desktop/content_for_system/$name'" > ./$name/.env
+printf "OPENAI_API_KEY=''\nCONT_DIR='$CONT_DIR/$name'" > ./$name/.env
