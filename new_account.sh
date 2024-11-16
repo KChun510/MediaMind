@@ -6,4 +6,4 @@ mkdir $CONT_DIR/$name/youTube_cont $CONT_DIR/$name/youTube_cont/srt $CONT_DIR/$n
 mkdir $CONT_DIR/$name/prod_vids $CONT_DIR/$name/prod_vids/single_vid_plus_reddit
 cp -r blankAccount ./$name
 printf "OPENAI_API_KEY=''\nCONT_DIR='$CONT_DIR/$name'" > ./$name/.env
-printf "Dont forget upload:\n1) .env file\n2) client-secret.json"
+printf "Dont forget upload:\n1) .env file\n2) client-secret.json\n3) crontTab"
