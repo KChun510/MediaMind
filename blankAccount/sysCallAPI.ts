@@ -65,8 +65,6 @@ export function delete_reddit_cont(postID: string) {
         console.log(execSync(`${cmd_string1} && ${cmd_string2} && ${cmd_string3}`).toString())
 }
 
-
-
 export function segment_clip(redditId: string, seconds: number) {
         if (seconds === 0) {
                 return
