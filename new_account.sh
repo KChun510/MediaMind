@@ -1,4 +1,4 @@
-CONT_DIR=/Users/westcoasttoast/Desktop/content_for_system
+CONT_DIR="/mnt/md0/work_station/content_for_system"
 read -p "Name of new Account: " name
 mkdir $CONT_DIR/$name
 mkdir $CONT_DIR/$name/reddit_cont $CONT_DIR/$name/reddit_cont/audio_dir $CONT_DIR/$name/reddit_cont/srt_dir
