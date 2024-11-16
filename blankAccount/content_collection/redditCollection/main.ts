@@ -4,8 +4,7 @@ import { appendRedditPost, appendInvalidID, pullAllInvRedditIDs } from '../../db
 import { writeMetaData } from '../../sysCallAPI'
 import * as util from 'util'
 import * as fs from 'fs'
-import * as dotenv from 'dotenv'
-dotenv.config({ path: '../../.env' });
+require('dotenv').config({ path: require('find-config')('.env') })
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 

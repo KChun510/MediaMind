@@ -2,8 +2,7 @@ import { authorize, getVideosByKeyWords, getVideoDetails } from './gcpYtAPI'
 import * as fs from 'fs'
 import { getTotalRedditTime, getTotalVideoTime, appendVideoItem, appendInvVidID, VIDEO_SQL_SCHEMA } from '../../db_dir/db_actions'
 import { execSync } from 'child_process'
-const dotenv = require('dotenv');
-dotenv.config({ path: '../../.env' });
+require('dotenv').config({ path: require('find-config')('.env') })
 
 function videoTime(videoData: VIDEO_SQL_SCHEMA[]): number {
     let total_sec = 0
