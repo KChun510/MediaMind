@@ -1,8 +1,8 @@
-const { execSync } = require('child_process');
-const util = require('util')
+import { exec, execSync } from 'child_process'
+import * as util from 'util'
+import fs from 'fs';
 const readFile = util.promisify(fs.readFile)
 require('dotenv').config({ path: require('find-config')('.env') })
-import fs from 'fs';
 
 const CONT_DIR = process.env.CONT_DIR
 
@@ -79,47 +79,37 @@ export function segment_clip(redditId: string, seconds: number) {
         console.log(`Video of ID: ${redditId}, has been segmented.`)
 }
 
-async function tts_example(valid_file: string) {
-    // Read text file from "input content folder"
-    const fileContent = await readFile(`./input_content/text_storys/${valid_file}`, 'utf8');
-
-    // Make a req to GCP, passing in file content
-    const request = {
-        input: { text: fileContent },
-        voice: { languageCode: 'en-AU', name: 'en-AU-Wavenet-B', ssmlGender: 'MALE' },
-        audioConfig: { audioEncoding: 'MP3', speakingRate: 1.2 },
-    };
-    const [response] = await gcpClient.synthesizeSpeech(request);
-
-    console.log("Writing to the file")
-
-    // Write audio file to audio_dir
-    await writeFile(`${outPutDir}/audio_dir/${valid_file}.mp3`, response.audioContent, 'binary');
-    console.log(`Audio content written to file: ${valid_file}.mp3`);
+function getRandomInt(min: number, max: number) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-export async function tts_coqui(valid_file: string, randomized: boolean, inputSpeaker: srting | null = null ){
+export async function tts_coqui(valid_file: string, randomized: boolean, inputSpeaker: string | null = null) {
         const avail_speakers = ['Claribel Dervla', 'Daisy Studious', 'Gracie Wise', 'Tammie Ema', 'Alison Dietlinde', 'Ana Florence', 'Annmarie Nele', 'Asya Anara', 'Brenda Stern', 'Gitta Nikolina', 'Henriette Usha', 'Sofia Hellen', 'Tammy Grit', 'Tanja Adelina', 'Vjollca Johnnie', 'Andrew Chipper', 'Badr Odhiambo', 'Dionisio Schuyler', 'Royston Min', 'Viktor Eka', 'Abrahan Mack', 'Adde Michal', 'Baldur Sanjin', 'Craig Gutsy', 'Damien Black', 'Gilberto Mathias', 'Ilkin Urbano', 'Kazuhiko Atallah', 'Ludvig Milivoj', 'Suad Qasim', 'Torcull Diarmuid', 'Viktor Menelaos', 'Zacharie Aimilios', 'Nova Hogarth', 'Maja Ruoho', 'Uta Obando', 'Lidiya Szekeres', 'Chandra MacFarland', 'Szofi Granger', 'Camilla Holmström', 'Lilya Stainthorpe', 'Zofija Kendrick', 'Narelle Moon', 'Barbora MacLean', 'Alexandra Hisakawa', 'Alma María', 'Rosemary Okafor', 'Ige Behringer', 'Filip Traverse', 'Damjan Chapman', 'Wulf Carlevaro', 'Aaron Dreschner', 'Kumar Dahl', 'Eugenio Mataracı', 'Ferran Simen', 'Xavier Hayasaka', 'Luis Moray', 'Marcos Rudaski']
         const outPutDir = `${process.env.CONT_DIR}/reddit_cont`
         const fileContent = await readFile(`./input_content/text_storys/${valid_file}`, 'utf8');
         let tts_string = ""
 
-        if (randomized){
+        if (randomized) {
                 const chosenSpeaker = avail_speakers[getRandomInt(0, 57)]
-                console.error(`Speaker Chosen: ${chosenSpeaker}`) 
+                console.error(`Speaker Chosen: ${chosenSpeaker}`)
                 tts_string = `tts --text "${fileContent}" --model_name "tts_models/multilingual/multi-dataset/xtts_v2"  --out_path ${outPutDir}/audio_dir/${valid_file}.mp3 --speaker_idx '${chosenSpeaker}' --language_idx="en"`
-        }else if (modelName) {
-                console.error(`Speaker Chosen: ${inputSpeaker}`) 
+        } else if (inputSpeaker) {
+                console.error(`Speaker Chosen: ${inputSpeaker}`)
                 tts_string = `tts --text "${fileContent}" --model_name "tts_models/multilingual/multi-dataset/xtts_v2"  --out_path ${outPutDir}/audio_dir/${valid_file}.mp3 --speaker_idx ${inputSpeaker} --language_idx="en"`
         }
         console.log(`COQUI_AI TTS: Started ${valid_file}`)
-        console.log(execSync(tts_string).toString())
+        try {
+                const result = execSync(tts_string, { encoding: 'utf8' })
+                console.log("XTTS worked: ", result)
+        } catch (error) {
+                console.error('Command failed!')
+                console.error('Exit code:', error.status)
+                console.error('Stdout:', error.stdout?.toString())
+                console.error('Stderr:', error.stderr?.toString())
+                process.exit(1)
+        }
         console.log(`COQUI_AI: Audio content written to file: ${valid_file}.mp3`);
 }
 
@@ -129,7 +119,6 @@ const cmd_stacked_vids = `ffmpeg -i ${CONT_DIRS.ytVideos}/Q-TQQE1y68c.webm -t 00
          [0:a]aformat=sample_fmts=fltp:sample_rates=44100:channel_layouts=stereo[audio_top]; 
          anullsrc=cl=stereo:r=44100[audio_silent]; 
          [audio_top][audio_silent]amix=inputs=2[audio]" -map "[out]" -map "[audio]" -c:v libx264 -c:a aac -b:a 192k test.mp4`
-
 
 // Dev FN
 try {
