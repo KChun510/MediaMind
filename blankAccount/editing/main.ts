@@ -1,6 +1,6 @@
 import { selectAllFromVideo, selectAllFromReddit, delVidData, delRedditData, updateVideoData, REDDIT_POST_SCHEMA, VIDEO_SQL_SCHEMA } from '../db_dir/db_actions'
 import { create_story_over_single_video, cut_video, delete_video, delete_reddit_cont, segment_clip } from '../sysCallAPI'
-require('dotenv').config('../.env');
+require('dotenv').config({ path: require('find-config')('.env') })
 
 async function gather_single_story() {
         let story_queue: REDDIT_POST_SCHEMA[] = []
