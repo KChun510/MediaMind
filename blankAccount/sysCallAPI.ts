@@ -104,10 +104,12 @@ export async function tts_coqui(valid_file: string, randomized: boolean, inputSp
                 const result = execSync(tts_string, { encoding: 'utf8' })
                 console.log("XTTS worked: ", result)
         } catch (error) {
+                const cmd_del_txt = `rm ${CONT_DIRS.Reddit_text}/${valid_file}`
                 console.error('Command failed!')
                 console.error('Exit code:', error.status)
                 console.error('Stdout:', error.stdout?.toString())
                 console.error('Stderr:', error.stderr?.toString())
+                execSync(cmd_del_txt)
                 process.exit(1)
         }
         console.log(`COQUI_AI: Audio content written to file: ${valid_file}.mp3`);
