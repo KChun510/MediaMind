@@ -18,6 +18,7 @@ enum subReddits {
 	CRAZY_STORIES = 'crazystories',
 	DRAMA = 'SubredditDrama',
 	TECH_SUPPORT = 'talesfromtechsupport',
+	STORIES = 'stories',
 }
 
 const byteSize = (outStr: string) => new Blob([outStr]).size
@@ -74,7 +75,7 @@ async function create_metaData(input: { valid_file: string, text_cont: string })
 
 
 (async function() {
-	const reddit_post = await POST_Get_Reddit_Post(subReddits.DRAMA, 1)
+	const reddit_post = await POST_Get_Reddit_Post(subReddits.STORIES, 1)
 	const invalid_post = await pullAllInvRedditIDs()
 	//	const reddit_post = (await POST_Get_Reddit_Post('nosleep', 4))
 	for (const post of reddit_post) {
