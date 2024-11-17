@@ -18,6 +18,7 @@ enum subReddits {
 	CRAZY_STORIES = 'crazystories',
 	DRAMA = 'SubredditDrama',
 	TECH_SUPPORT = 'talesfromtechsupport',
+	STORIES = 'stories',
 }
 
 const byteSize = (outStr: string) => new Blob([outStr]).size
