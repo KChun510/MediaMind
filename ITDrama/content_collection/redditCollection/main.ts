@@ -74,7 +74,7 @@ async function create_metaData(input: { valid_file: string, text_cont: string })
 
 async function punctuateText(input: string) {
 	const proper_text = await openai.chat.completions.create({
-		messages: [{ role: "system", content: "The user will input a text entry. Your job is it add proper punctuation and remove any non english words/ strings that don't correlate with a word and add a shocking hook as the first sentace. Output strictly text, and remove any double and single quotes. " },
+		messages: [{ role: "system", content: "The user will input a text entry. Your job is it add proper punctuation and remove any non english words/ strings that don't correlate with a word. Add a shocking hook as the first sentace. Output strictly text, MOST IMPORTANT remove all double and single quotes." },
 		{ role: "user", content: `Here is the entry: "${input}"` }],
 		model: "gpt-4o-mini",
 	})
