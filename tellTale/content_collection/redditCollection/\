@@ -2,7 +2,6 @@ import { OpenAI } from "openai"
 import { POST_Get_Reddit_Post } from './redditAPI'
 import { appendRedditPost, appendInvalidID, pullAllInvRedditIDs } from '../../db_dir/db_actions'
 import { writeMetaData } from '../../sysCallAPI'
-import * as util from 'util'
 import * as fs from 'fs'
 require('dotenv').config({ path: require('find-config')('.env') })
 
@@ -18,6 +17,7 @@ enum subReddits {
 	CRAZY_STORIES = 'crazystories',
 	DRAMA = 'SubredditDrama',
 	TECH_SUPPORT = 'talesfromtechsupport',
+	STORIES = 'stories',
 }
 
 const byteSize = (outStr: string) => new Blob([outStr]).size
@@ -36,7 +36,7 @@ function chunkFile(postID: string, postTitle: string, data: string) {
 	let currStr = ""
 	let partNumber = 1
 	let currSize = 0
-	const min = 4500
+	let min = 4500
 
 	console.log(postID + " Is being chuncked into parts.")
 	for (let i = 0; i < data.length; i++) {
@@ -74,7 +74,7 @@ async function create_metaData(input: { valid_file: string, text_cont: string })
 
 async function punctuateText(input: string) {
 	const proper_text = await openai.chat.completions.create({
-		messages: [{ role: "system", content: "The user will input a text entry. Your job is it add proper punctuation and remove any non english words/ strings that don't correlate with a word and add a shocking hook as the first sentace. Output strictly text, and remove any double and single quotes. " },
+		messages: [{ role: "system", content: "The user will input a text entry. Your job is it add proper punctuation and remove any non english words/ strings that don't correlate with a word. Also add a one liner opener/ hook aboout this entry, make sure that the chook is shocking. Output the properly punctuated text with the hook being the first sentance of the output. MOST IMPORTANT THING make sure that is a single valid JS string" },
 		{ role: "user", content: `Here is the entry: "${input}"` }],
 		model: "gpt-4o-mini",
 	})
@@ -83,7 +83,7 @@ async function punctuateText(input: string) {
 }
 
 (async function() {
-	const reddit_post = await POST_Get_Reddit_Post(subReddits.TECH_SUPPORT, 1)
+	const reddit_post = await POST_Get_Reddit_Post(subReddits.STORIES, 1)
 	const invalid_post = await pullAllInvRedditIDs()
 	//	const reddit_post = (await POST_Get_Reddit_Post('nosleep', 4))
 	for (const post of reddit_post) {
@@ -91,6 +91,7 @@ async function punctuateText(input: string) {
 		if (!invalid_post.includes(data.postID)) {
 			create_metaData({ valid_file: data.postID, text_cont: data.text })
 			appendInvalidID({ postID: data.postID })
+			// If using GCP change this back to 5k.
 			const proper_text = await punctuateText(data.text)
 			if (byteSize(data.text) >= 5000) {
 				chunkFile(data.postID, data.postTitle, proper_text)

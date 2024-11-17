@@ -2,7 +2,6 @@ import { OpenAI } from "openai"
 import { POST_Get_Reddit_Post } from './redditAPI'
 import { appendRedditPost, appendInvalidID, pullAllInvRedditIDs } from '../../db_dir/db_actions'
 import { writeMetaData } from '../../sysCallAPI'
-import * as util from 'util'
 import * as fs from 'fs'
 require('dotenv').config({ path: require('find-config')('.env') })
 
@@ -37,7 +36,7 @@ function chunkFile(postID: string, postTitle: string, data: string) {
 	let currStr = ""
 	let partNumber = 1
 	let currSize = 0
-	const min = 4500
+	let min = 4500
 
 	console.log(postID + " Is being chuncked into parts.")
 	for (let i = 0; i < data.length; i++) {
@@ -73,6 +72,15 @@ async function create_metaData(input: { valid_file: string, text_cont: string })
 	writeMetaData(input.valid_file, metaContent ?? "")
 }
 
+async function punctuateText(input: string) {
+	const proper_text = await openai.chat.completions.create({
+		messages: [{ role: "system", content: "The user will input a text entry. Your job is it add proper punctuation and remove any non english words/ strings that don't correlate with a word and add a shocking hook as the first sentace. Output strictly text, and remove any double and single quotes. " },
+		{ role: "user", content: `Here is the entry: "${input}"` }],
+		model: "gpt-4o-mini",
+	})
+
+	return proper_text.choices[0].message.content ?? "No text was output from openAI"
+}
 
 (async function() {
 	const reddit_post = await POST_Get_Reddit_Post(subReddits.STORIES, 1)
@@ -83,11 +91,13 @@ async function create_metaData(input: { valid_file: string, text_cont: string })
 		if (!invalid_post.includes(data.postID)) {
 			create_metaData({ valid_file: data.postID, text_cont: data.text })
 			appendInvalidID({ postID: data.postID })
+			// If using GCP change this back to 5k.
+			const proper_text = await punctuateText(data.text)
 			if (byteSize(data.text) >= 5000) {
-				chunkFile(data.postID, data.postTitle, data.text)
+				chunkFile(data.postID, data.postTitle, proper_text)
 			} else {
 				const filePath = `./reddit_content_format/input_content/text_storys/${data.postID}.txt`
-				writeTxtFile(filePath, data.text)
+				writeTxtFile(filePath, proper_text)
 				appendRedditPost({ postID: data.postID, postTitle: data.postTitle })
 			}
 		}
