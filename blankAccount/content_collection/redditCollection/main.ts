@@ -64,7 +64,7 @@ function chunkFile(postID: string, postTitle: string, data: string) {
 
 async function create_metaData(input: { valid_file: string, text_cont: string }) {
 	const meta_data = await openai.chat.completions.create({
-		messages: [{ role: "system", content: "You are tasked with analyzing text, creating a one sentance description in a entertaining tone of the text and a list of popular hashtags about the text. You output the single sentance, then seperated by a new line you list the hashtags together seperated by one space between each one." },
+		messages: [{ role: "system", content: "You are tasked with analyzing text, creating a one sentance description in a entertaining and genuine tone of the text and a list of (4-6) popular hashtags about the text. You output the single sentance, then seperated by a new line you list the hashtags together seperated by one space between each one." },
 		{ role: "user", content: `Here is the text analyze: ${input.text_cont}` }],
 		model: "gpt-4o-mini",
 	});
