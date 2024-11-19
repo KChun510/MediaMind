@@ -91,7 +91,7 @@ export async function tts_coqui(valid_file: string, randomized: boolean, inputSp
         let tts_string = ""
 
         if (randomized) {
-                const chosenSpeaker = avail_speakers[getRandomInt(0, 57)]
+                const chosenSpeaker = avail_speakers[getRandomInt(0, avail_speakers.length - 1)]
                 console.error(`Speaker Chosen: ${chosenSpeaker}`)
                 tts_string = `tts --text "${fileContent}" --model_name "tts_models/multilingual/multi-dataset/xtts_v2"  --out_path ${outPutDir}/audio_dir/${valid_file}.mp3 --speaker_idx '${chosenSpeaker}' --language_idx="en"`
         } else if (inputSpeaker) {

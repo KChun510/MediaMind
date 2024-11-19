@@ -78,8 +78,7 @@ async function punctuateText(input: string) {
 		{ role: "user", content: `Here is the entry: "${input}"` }],
 		model: "gpt-4o-mini",
 	})
-
-	return proper_text.choices[0].message.content ?? "No text was output from openAI"
+	return (proper_text.choices[0].message.content)?.replace(/"/g, ' ') ?? "No text was output from openAI"
 }
 
 (async function() {
