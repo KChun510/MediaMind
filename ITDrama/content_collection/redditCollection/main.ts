@@ -82,7 +82,7 @@ async function punctuateText(input: string) {
 }
 
 (async function() {
-	const reddit_post = await POST_Get_Reddit_Post(subReddits.STORIES, 1)
+	const reddit_post = await POST_Get_Reddit_Post(subReddits.TECH_SUPPORT, 1)
 	const invalid_post = await pullAllInvRedditIDs()
 	//	const reddit_post = (await POST_Get_Reddit_Post('nosleep', 4))
 	for (const post of reddit_post) {
