@@ -3,7 +3,7 @@ const fs = require('fs')
 const util = require('util')
 const OpenAI = require("openai")
 import { updateRedditPost } from "../../../db_dir/db_actions"
-import { tts_coqui } from "../../../sysCallAPI"
+import { tts_coqui } from "../../../syscallAPI.ts"
 require('dotenv').config({ path: require('find-config')('.env') })
 
 const gcpClient = new textToSpeech.TextToSpeechClient()

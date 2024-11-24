@@ -2,6 +2,7 @@ import { OpenAI } from "openai"
 import { POST_Get_Reddit_Post } from './redditAPI'
 import { appendRedditPost, appendInvalidID, pullAllInvRedditIDs } from '../../db_dir/db_actions'
 import { writeMetaData } from '../../sysCallAPI'
+import * as util from 'util'
 import * as fs from 'fs'
 require('dotenv').config({ path: require('find-config')('.env') })
 
@@ -17,7 +18,7 @@ enum subReddits {
 	CRAZY_STORIES = 'crazystories',
 	DRAMA = 'SubredditDrama',
 	TECH_SUPPORT = 'talesfromtechsupport',
-	STORIES = 'stories',
+	STORIES = 'stories'
 }
 
 const byteSize = (outStr: string) => new Blob([outStr]).size
@@ -36,7 +37,7 @@ function chunkFile(postID: string, postTitle: string, data: string) {
 	let currStr = ""
 	let partNumber = 1
 	let currSize = 0
-	let min = 4500
+	const min = 4500
 
 	console.log(postID + " Is being chuncked into parts.")
 	for (let i = 0; i < data.length; i++) {
@@ -61,7 +62,6 @@ function chunkFile(postID: string, postTitle: string, data: string) {
 	appendRedditPost({ postID: chunkedPostID, postTitle: postTitle })
 }
 
-
 async function create_metaData(input: { valid_file: string, text_cont: string }) {
 	const meta_data = await openai.chat.completions.create({
 		messages: [{ role: "system", content: "You are tasked with analyzing text, creating a one sentance description in a entertaining and genuine tone of the text and a list of (4-6) popular hashtags about the text. You output the single sentance, then seperated by a new line you list the hashtags together seperated by one space between each one." },
@@ -74,7 +74,7 @@ async function create_metaData(input: { valid_file: string, text_cont: string })
 
 async function punctuateText(input: string) {
 	const proper_text = await openai.chat.completions.create({
-		messages: [{ role: "system", content: "The user will input a text entry. Your job is it add proper punctuation and remove any non english words/ strings that don't correlate with a word. Add a jaw dropping hook as the first sentace. Output strictly text, MOST IMPORTANT remove all double and single quotes. " },
+		messages: [{ role: "system", content: "The user will input a text entry. Your job is it add proper punctuation and remove any non english words/ strings that don't correlate with a word and add a shocking hook as the first sentace. Output strictly text, and remove any double and single quotes. " },
 		{ role: "user", content: `Here is the entry: "${input}"` }],
 		model: "gpt-4o-mini",
 	})
@@ -102,3 +102,4 @@ async function punctuateText(input: string) {
 		}
 	}
 }())
+
