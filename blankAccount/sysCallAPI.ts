@@ -33,6 +33,17 @@ export function create_story_over_single_video(rPostId: string, ytVideoId: strin
         console.log(execSync(cmd_story_over_single_video2).toString())
 }
 
+export function create_twoVids_OneStory(rPostId: string, ytVideoId1: string, ytVideoId2: string) {
+        const cmd_twoVids_OneStory = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId1}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId2}.mp4 -i ${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3 -i ${CONT_DIRS.Reddit_srt}/${rPostId}.txt.srt \
+        -filter_complex "[0:v]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[subtop]; \
+        [1:v]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[subbottom]; \
+        [subtop][subbottom]vstack[stacked]; \
+        [stacked]subtitles=${CONT_DIRS.Reddit_srt}/${rPostId}.txt.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=10'[out]" \
+        -map "[out]" -map 2:a -c:v libx264 -c:a aac -b:a 192k -shortest ${CONT_DIRS.prodVidAndStory}${rPostId}.mp4`;
+
+        console.log(execSync(cmd_twoVids_OneStory, { encoding: 'utf-8' }).toString())
+}
+
 export function cut_video(startTime: string, videoID: string) {
         const inputFile = `${CONT_DIRS.ytVideos}/${videoID}.mp4`;
         const outputFile = `${CONT_DIRS.ytVideos}/${videoID}_cut.mp4`; // Use a different output filename
@@ -113,6 +124,16 @@ export async function tts_coqui(valid_file: string, randomized: boolean, inputSp
         console.log(`COQUI_AI: Audio content written to file: ${valid_file}.mp3`);
 }
 
+
+export async function downloadYTVideo() {
+        // If you want to change the type of video being downloaded, go to TS script direclty
+        const cmd_string1 = `cd ../content_collection/ytCollection`
+        const cmd_string2 = "sh ./downloadNoRestrict.sh"
+        console.log("Downloading extra video")
+        console.log(execSync(`pwd`, { encoding: 'utf-8' }).toString())
+        console.log(execSync(`${cmd_string1} && ${cmd_string2}`, { encoding: 'utf-8' }).toString())
+}
+
 const cmd_stacked_vids = `ffmpeg -i ${CONT_DIRS.ytVideos}/Q-TQQE1y68c.webm -t 00:00:10 -i ${CONT_DIRS.ytVideos}/si0Lp1SLHXg.webm -t 00:00:10 -filter_complex "[0]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[top]; 
          [1]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[bottom]; 
          [top][bottom]vstack,scale=1080:1920[out]; 
@@ -122,7 +143,6 @@ const cmd_stacked_vids = `ffmpeg -i ${CONT_DIRS.ytVideos}/Q-TQQE1y68c.webm -t 00
 
 // Dev FN
 try {
-        //        console.log(CONT_DIR)
 } catch (e) {
         console.error(e)
 }
