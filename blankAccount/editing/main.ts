@@ -1,5 +1,5 @@
 import { selectAllFromVideo, selectAllFromReddit, delVidData, delRedditData, updateVideoData, REDDIT_POST_SCHEMA, VIDEO_SQL_SCHEMA } from '../db_dir/db_actions'
-import { create_story_over_single_video, cut_video, delete_video, delete_reddit_cont, segment_clip } from '../sysCallAPI'
+import { create_story_over_single_video, cut_video, delete_video, delete_reddit_cont, segment_clip, downloadYTVideo, create_twoVids_OneStory } from '../sysCallAPI'
 require('dotenv').config({ path: require('find-config')('.env') })
 
 async function gather_single_story() {
@@ -74,7 +74,8 @@ function redditCleanUp(postID: string) {
         delete_reddit_cont(postID)
 }
 
-(async function() {
+
+async function singleVidPlusStory() {
         let videoQ_limit = 1
         const storyQ = await gather_single_story()
         let videoQ = await selectAllFromVideo(videoQ_limit)
@@ -102,10 +103,11 @@ function redditCleanUp(postID: string) {
                 console.error(`story ${storyQTime}, video: ${videoQTime}`)
         }
 
-        console.log("\nVideo Editing begun. \n")
+        console.log("\nVideo Editing begun. \nFormat: singleVid singleStory")
         let currVideoTime = videoTime([videoQ[0]])
         let currStoryTime = 0
         let currVideoIndex = 0
+        // The following logic gets complicated because it allows for mutliple videos to be used for a single story.
         for (const part of storyQ) {
                 try {
                         currStoryTime = storyTime([part])
@@ -137,6 +139,110 @@ function redditCleanUp(postID: string) {
         }
         console.log(storyQ)
         console.log(videoQ)
+}
+
+
+async function twoVidsPlusStory() {
+        const storyQ = await gather_single_story()
+        const storyQTime = storyTime(storyQ)
+
+        let globalVideoQ = await selectAllFromVideo(10)
+        let globalVideoQLog: string[] = []
+
+        let video1: VIDEO_SQL_SCHEMA = { videoID: "", videoLen: "", videoName: "" }
+        let video1Time = 0;
+
+        let video2: VIDEO_SQL_SCHEMA = { videoID: "", videoLen: "", videoName: "" }
+        let video2Time = 0;
+
+        while (video1Time < storyQTime) {
+
+                while (videoTime([globalVideoQ[0]]) < storyQTime || globalVideoQ.length < 1) {
+                        if (globalVideoQ.length < 1) {
+                                await downloadYTVideo()
+                                globalVideoQ = await selectAllFromVideo(10)
+                        } else if (videoTime([globalVideoQ[0]]) < storyQTime) {
+                                videoCleanUp(globalVideoQ[0].videoID)
+                                await downloadYTVideo()
+                                globalVideoQ = await selectAllFromVideo(10)
+                        }
+                }
+
+                globalVideoQ.reverse()
+                const valid_video = globalVideoQ.pop()
+                if (valid_video) {
+                        video1 = valid_video
+                        globalVideoQLog.push(valid_video.videoID)
+                        video1Time = videoTime([video1])
+                }
+                globalVideoQ.reverse()
+        }
+
+        while (video2Time < storyQTime) {
+                while (videoTime([globalVideoQ[0]]) < storyQTime || globalVideoQ.length < 1) {
+
+                        if (globalVideoQ.length < 1) {
+                                await downloadYTVideo()
+                                globalVideoQ = (await selectAllFromVideo(10)).filter(obj => !(obj.videoID in globalVideoQ));
+                        } else if (videoTime([globalVideoQ[0]]) < storyQTime) {
+                                videoCleanUp(globalVideoQ[0].videoID)
+                                await downloadYTVideo()
+                                globalVideoQ = (await selectAllFromVideo(10)).filter(obj => !(obj.videoID in globalVideoQ));
+                        }
+                }
+
+                globalVideoQ.reverse()
+                const valid_video = globalVideoQ.pop()
+                if (valid_video) {
+                        video2 = valid_video
+                        globalVideoQLog.push(valid_video.videoID)
+                        video2Time = videoTime([video2])
+                }
+                globalVideoQ.reverse()
+        }
+
+        console.log("\nVideo Editing begun. \nFormat: TwoVids One Story")
+        let currStoryTime = 0
+        for (const part of storyQ) {
+                try {
+                        currStoryTime = storyTime([part])
+                        // Needed, logic deletes un-useable video
+                        if (part.postID) {
+                                // Updade the current video time (i.e: VieoTime - StoryTime)
+                                updateTime(video1, currStoryTime)
+                                updateTime(video2, currStoryTime)
+                                create_twoVids_OneStory(part.postID, video1.videoID, video2.videoID)
+                                segment_clip(part.postID, 50)
+                                updateVideoData({ videoLen: video1.videoLen, videoID: video1.videoID, videoName: video1.videoName })
+                                updateVideoData({ videoLen: video2.videoLen, videoID: video2.videoID, videoName: video2.videoName })
+
+                                // Need to cut our video, after clip was made ( No overlapping content )
+                                cut_video(part.postLen ?? '00:00:00', video1.videoID)
+                                cut_video(part.postLen ?? '00:00:00', video2.videoID)
+                                redditCleanUp(part.postID)
+                                console.log(`Clip made! ${part.postID}`)
+                        }
+                } catch (e) {
+                        console.error(`There was a E, while editing video: ${video1.videoID} & ${video2.videoID} with post: ${part.postID}, \n e code of: ${e} `)
+                }
+        }
+}
+
+function getRandomInt(min: number, max: number) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+(async function() {
+        switch (getRandomInt(1, 1)) {
+                case 0:
+                        singleVidPlusStory()
+                        break
+                case 1:
+                        twoVidsPlusStory()
+                        break
+        }
 })()
 
 
