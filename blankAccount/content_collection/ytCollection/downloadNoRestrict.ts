@@ -14,8 +14,8 @@ function videoTime(videoData: VIDEO_SQL_SCHEMA[]): number {
 }
 
 (async function() {
-    // Max for now is 10 mins
-    const maxVideoTime = 600
+    // Max is 30 mins
+    const maxVideoTime = 1800
     const minVideoTime = 240
     let totalVideoTime = 0
     const outPutPath = `${process.env.CONT_DIR}/youTube_cont`
