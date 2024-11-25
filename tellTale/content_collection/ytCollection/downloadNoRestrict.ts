@@ -14,8 +14,8 @@ function videoTime(videoData: VIDEO_SQL_SCHEMA[]): number {
 }
 
 (async function() {
-    // Max for now is 10 mins
-    const maxVideoTime = 600
+    // Max is 30 mins
+    const maxVideoTime = 1800
     const minVideoTime = 240
     let totalVideoTime = 0
     const outPutPath = `${process.env.CONT_DIR}/youTube_cont`
@@ -28,7 +28,6 @@ function videoTime(videoData: VIDEO_SQL_SCHEMA[]): number {
         const oAuthToken = await authorize(JSON.parse(content))
         while (totalVideoTime <= maxVideoTime) {
             try {
-                //const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "First Person Shooter or forza gameplay HD", videoLicense: "any", results: 10 })
                 const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "gameplay hd no commentary", videoLicense: "any", results: 10, videoDuration: "long" })
                 const videoDetails = await getVideoDetails(oAuthToken, vidIdRes)
                 for (const video of videoDetails ?? []) {

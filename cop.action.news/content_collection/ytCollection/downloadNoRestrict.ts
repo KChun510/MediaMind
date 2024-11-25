@@ -68,8 +68,8 @@ async function create_metaData(input: { valid_file: string }) {
 }
 
 (async function() {
-    // Max for now is 10 mins
-    const maxVideoTime = 600
+    // Max is 30 mins
+    const maxVideoTime = 1800
     const minVideoTime = 240
     let totalVideoTime = 0
     const outPutPath = `${process.env.CONT_DIR}/youTube_cont`
@@ -82,7 +82,6 @@ async function create_metaData(input: { valid_file: string }) {
         const oAuthToken = await authorize(JSON.parse(content))
         while (totalVideoTime <= maxVideoTime) {
             try {
-                //const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "First Person Shooter or forza gameplay HD", videoLicense: "any", results: 10 })
                 const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "police footage", videoLicense: "any", results: 10, videoDuration: "long" })
                 const videoDetails = await getVideoDetails(oAuthToken, vidIdRes)
                 for (const video of videoDetails ?? []) {
