@@ -13,7 +13,8 @@ const CONT_DIRS = {
         Reddit_text: `../content_collection/redditCollection/reddit_content_format/input_content/text_storys`,
         ytVideos: `${CONT_DIR}/youTube_cont/videos`,
         ytSrt: `${CONT_DIR}/youTube_cont/srt`,
-        prodVidAndStory: `${CONT_DIR}/prod_vids/single_vid_plus_reddit/`
+        prodVidAndStory: `${CONT_DIR}/prod_vids/single_vid_plus_reddit/`,
+        prodVidPlusSub: `${CONT_DIR}/prod_vids/video_plus_sub/`,
 }
 
 export function writeMetaData(rPostID: string, textCont: string) {
@@ -26,11 +27,34 @@ export function writeMetaData(rPostID: string, textCont: string) {
         })
 }
 
-export function create_story_over_single_video(rPostId: string, ytVideoId: string) {
-        const cmd_story_over_single_video = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3 -i ${CONT_DIRS.Reddit_srt}/${rPostId}.txt.srt -c:v libx264 -c:a aac -b:a 192k -vf "scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(1080-iw)/2:(1920-ih)/2,subtitles=${CONT_DIRS.Reddit_srt}/${rPostId}.txt.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=2,BorderStyle=1,Alignment=2,MarginV=50'" -map 0:v -map 1:a -shortest -y ${CONT_DIRS.prodVidAndStory}${rPostId}.mp4`;
+export function writeMetaData_alt(rPostID: string, textCont: string) {
+        fs.writeFile(`${CONT_DIRS.prodVidPlusSub}${rPostID}.txt`, textCont, (err) => {
+                if (err) {
+                        console.error('Error writing file:', err)
+                } else {
+                        console.log(`MetaData created for: ${rPostID}`)
+                }
+        })
+}
 
-        const cmd_story_over_single_video2 = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3 -i ${CONT_DIRS.Reddit_srt}/${rPostId}.txt.srt -c:v libx264 -c:a aac -b:a 192k -vf "scale=-1:1920:force_original_aspect_ratio=decrease,crop=1080:1920,subtitles=${CONT_DIRS.Reddit_srt}/${rPostId}.txt.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=10'" -map 0:v -map 1:a -shortest -y ${CONT_DIRS.prodVidAndStory}${rPostId}.mp4`;
-        console.log(execSync(cmd_story_over_single_video2).toString())
+export function create_story_over_single_video(rPostId: string, ytVideoId: string) {
+        const cmd_story_over_single_video = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3 -i ${CONT_DIRS.Reddit_srt}/${rPostId}.txt.srt \ -c:v libx264 -c:a aac -b:a 192k \ -vf "scale=-1:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,subtitles=${CONT_DIRS.Reddit_srt}/${rPostId}.txt.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=10'" \ -map 0:v -map 1:a -shortest -y ${CONT_DIRS.prodVidAndStory}${rPostId}.mp4
+`;
+        console.log(execSync(cmd_story_over_single_video).toString())
+}
+
+
+export function create_srt_over_video(ytVideoId: string) {
+        const cmd_string = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -vf "scale=-1:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,subtitles=${CONT_DIRS.ytSrt}/${ytVideoId}.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=10'" -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`;
+
+        const cmd_string_noSub = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -vf "scale=1080:-1:force_original_aspect_ratio=decrease,pad=1080:1920:(1080-iw)/2:(1920-ih)/2" -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`
+
+        const cmd_string_sub = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -vf "scale=1080:-1:force_original_aspect_ratio=decrease,pad=1080:1920:(1080-iw)/2:(1920-ih)/2,subtitles=${CONT_DIRS.ytSrt}/${ytVideoId}.txt.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=10'" -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`;
+
+        const cmd_string_sub2 = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -filter_complex "[0:v]scale=1080:-1:force_original_aspect_ratio=decrease[padded];[1:v]format=rgb24,scale=1080:1920,boxblur=20:10[blurred];[blurred][padded]overlay=(W-w)/2:(H-h)/2[subtitled];[subtitled]subtitles=${CONT_DIRS.ytSrt}/${ytVideoId}.txt.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=10'" -map "[subtitled]" -map 0:a -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`;
+
+        console.log(execSync(cmd_string_sub2, { encoding: 'utf-8' }).toString())
+
 }
 
 export function create_twoVids_OneStory(rPostId: string, ytVideoId1: string, ytVideoId2: string) {
@@ -61,7 +85,7 @@ export function cut_video(startTime: string, videoID: string) {
 }
 
 export function delete_video(ytVideoId: string) {
-        const cmd_string = `rm ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4`
+        const cmd_string = `rm ${CONT_DIRS.ytVideos}/${ytVideoId}.*`
         console.log(execSync(cmd_string).toString())
 }
 
@@ -87,6 +111,20 @@ export function segment_clip(redditId: string, seconds: number) {
         const del_string = `rm ${CONT_DIRS.prodVidAndStory}/${redditId}.mp4`
         execSync(`${seg_string} && ${del_string}`)
         console.log(`Video of ID: ${redditId}, has been segmented.`)
+}
+
+
+
+export function segment_clip_alt(youTubeId: string, seconds: number) {
+        if (seconds === 0) {
+                return
+        }
+        const secs = seconds.toString()
+
+        const seg_string = `ffmpeg -i ${CONT_DIRS.prodVidPlusSub}/${youTubeId}.mp4 -f segment -segment_time ${secs} -c:v libx264 -c:a aac -map 0 -reset_timestamps 1 ${CONT_DIRS.prodVidPlusSub}/${youTubeId}%03d.mp4`;
+        const del_string = `rm ${CONT_DIRS.prodVidPlusSub}/${youTubeId}.mp4`
+        execSync(`${seg_string} && ${del_string}`)
+        console.log(`Video of ID: ${youTubeId}, has been segmented.`)
 }
 
 function getRandomInt(min: number, max: number) {
@@ -134,30 +172,6 @@ export async function downloadYTVideo() {
         console.log(execSync(`${cmd_string1} && ${cmd_string2}`, { encoding: 'utf-8' }).toString())
 }
 
-export async function convertToMp4() {
-        const cmd_string = `
-    for file in "${CONT_DIR}/youTube_cont/videos/"*.{webm,mkv}; do
-        echo "Processing: \$file"
-        if [[ -f "\$file" ]]; then
-            # Determine the output file name
-            output_file="\${file%.*}.mp4"  # Correct substitution in bash
-            
-            # Convert to .mp4
-            ffmpeg -i "\$file" -crf 1 -c:v libx264 -b:v 1500k -c:a aac -b:a 192k "\$output_file"
-            
-            # Check if the conversion was successful before deleting
-            if [[ \$? -eq 0 ]]; then
-                # Delete the old .webm or .mkv file
-                rm "\$file"
-                echo "Deleted: \$file"
-            else
-                echo "Failed to convert: \$file"
-            fi
-        fi
-    done
-`; console.log(execSync(`bash -c "${cmd_string}"`, { encoding: 'utf-8' }).toString());
-}
-
 const cmd_stacked_vids = `ffmpeg -i ${CONT_DIRS.ytVideos}/Q-TQQE1y68c.webm -t 00:00:10 -i ${CONT_DIRS.ytVideos}/si0Lp1SLHXg.webm -t 00:00:10 -filter_complex "[0]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[top]; 
          [1]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[bottom]; 
          [top][bottom]vstack,scale=1080:1920[out]; 
@@ -167,7 +181,6 @@ const cmd_stacked_vids = `ffmpeg -i ${CONT_DIRS.ytVideos}/Q-TQQE1y68c.webm -t 00
 
 // Dev FN
 try {
-        convertToMp4()
 } catch (e) {
         console.error(e)
 }
