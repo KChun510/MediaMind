@@ -29,7 +29,7 @@ function videoTime(videoData: VIDEO_SQL_SCHEMA[]): number {
         while (totalVideoTime <= maxVideoTime) {
             try {
                 //const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "First Person Shooter or forza gameplay HD", videoLicense: "any", results: 10 })
-                const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "gameplay hd no commentary", videoLicense: "any", results: 10 })
+                const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "gameplay hd no commentary", videoLicense: "any", results: 10, videoDuration: "long" })
                 const videoDetails = await getVideoDetails(oAuthToken, vidIdRes)
                 for (const video of videoDetails ?? []) {
                     const videoCommand = `yt-dlp --sub-lang "en.*" --embed-subs --no-overwrites https://www.youtube.com/watch?v=${video.videoID} -o "${outPutPath}/videos/${video.videoID}"`

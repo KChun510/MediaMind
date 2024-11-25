@@ -134,30 +134,6 @@ export async function downloadYTVideo() {
         console.log(execSync(`${cmd_string1} && ${cmd_string2}`, { encoding: 'utf-8' }).toString())
 }
 
-export async function convertToMp4() {
-        const cmd_string = `
-    for file in "${CONT_DIR}/youTube_cont/videos/"*.{webm,mkv}; do
-        echo "Processing: \$file"
-        if [[ -f "\$file" ]]; then
-            # Determine the output file name
-            output_file="\${file%.*}.mp4"  # Correct substitution in bash
-            
-            # Convert to .mp4
-            ffmpeg -i "\$file" -crf 1 -c:v libx264 -b:v 1500k -c:a aac -b:a 192k "\$output_file"
-            
-            # Check if the conversion was successful before deleting
-            if [[ \$? -eq 0 ]]; then
-                # Delete the old .webm or .mkv file
-                rm "\$file"
-                echo "Deleted: \$file"
-            else
-                echo "Failed to convert: \$file"
-            fi
-        fi
-    done
-`; console.log(execSync(`bash -c "${cmd_string}"`, { encoding: 'utf-8' }).toString());
-}
-
 const cmd_stacked_vids = `ffmpeg -i ${CONT_DIRS.ytVideos}/Q-TQQE1y68c.webm -t 00:00:10 -i ${CONT_DIRS.ytVideos}/si0Lp1SLHXg.webm -t 00:00:10 -filter_complex "[0]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[top]; 
          [1]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[bottom]; 
          [top][bottom]vstack,scale=1080:1920[out]; 
@@ -167,7 +143,6 @@ const cmd_stacked_vids = `ffmpeg -i ${CONT_DIRS.ytVideos}/Q-TQQE1y68c.webm -t 00
 
 // Dev FN
 try {
-        convertToMp4()
 } catch (e) {
         console.error(e)
 }

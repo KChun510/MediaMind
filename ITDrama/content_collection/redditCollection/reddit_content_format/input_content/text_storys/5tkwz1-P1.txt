@@ -1,0 +1,26 @@
+In an industry where machines can make or break a business, a complacent IT manager nearly sunk a multimillion dollar production line. 
+
+A few years back, I was working in a manufacturing company as an IT manager. Like many industries, we had a number of machines with embedded computer systems. For convenience, we called these production machines, because they produce products. By and large, these PCs are just normal desktop PCs that have several data acquisition cards connected to a PLC or a second network card connected to an Ethernet-capable PLC. Invariably, these PCs are purchased and configured when the production machine is commissioned and then just left as is until the production machine is retired. In some cases, this can be as long as several years. 
+
+Please bear in mind that this is years inside a dusty, hot factory environment. I have been in manufacturing environments before, and this concept is not new to me. Thanks to several lessons learned in the past, I make it my business to understand these PCs inside and out. I like to keep them on a tight refresh cycle or, when it’s not practical (in the case of archaic hardware or software), keep as many spares as possible. Also, regular backups are important; you just have to understand that unlike a normal PC, it can be difficult to do and plan it well in advance. More often than not, these PCs aren't IT's responsibility—they fall under engineering or facilities. Even so, these departments understand that IT runs just about every other PC in the business and welcome any advice or assistance that IT can provide. Finally, these PCs are usually tightly integrated into a production machine, and failure of the PC means the machine stops.
+
+And so we have today’s characters: Airzone, me, the new IT manager; TooExpensive, the facilities manager. He’s in charge of maintaining the site, including all of these production machines. He’s paranoid about people trying to take his job, so he guards all his responsibilities jealously and doesn’t communicate anything lest they get the drop on his efforts. Oh, and he has a fixation about not spending company money—even to the point of shafting the lawn-mowing guy out of a few hours pay—hence the name. 
+
+VPO is the Vice President of Operations, the factory boss—no-nonsense sort of guy. OldBoy is a retired employee whose name implies he was in the job for many years. I’m new, but in my first few weeks, I’ve already had several run-ins with TooExpensive. I’m a fairly relaxed guy, but I have no qualms about letting someone dig their own grave and fall into it. In the case of TooExpensive, I’d be happy to lend him my shovel. My pet peeve was when organizing new network drops; I would always run a double when a single was needed. We’re paying working-at-heights money already, and a double drop is material cost only. Adding a second drop cost should be a no-brainer. He invariably countermanded all my orders and insisted on singles. 
+
+Weeks later, I’d have to call the electrician in again to install the second drop, at another major cost. There was also the time he was getting upset because I was holding up a project of his. Well, sorry, if you're running a project that requires multiple network ports, you’d better talk to the IT guys before the day of installation. Not only will you not have drops, you won't have switch ports. If you didn’t budget for them or advise far enough in advance for me to plan, then you can wait until I get around to it. Failure to plan is not an emergency.
+
+You could see that we didn’t exactly gel together well, which brings us to these production machines, and the PCs nested within. Every attempt on my part to try and document or even understand them was shut down by TooExpensive. 
+
+Me: Hardware and software specifications? 
+TooExpensive: That’s my job, get lost. 
+Me: Startup and shutdown procedures? 
+TooExpensive: That’s my job, get lost. 
+Me: Backup? 
+TooExpensive: That’s my job, get lost. 
+Me: Emergency contacts? 
+TooExpensive: That’s my job, get lost.
+
+You get the picture. It resulted in a strong and terse email from TooExpensive to leave everything alone. He had all the documentation, contacts, backups, and didn’t need or want my meddling, and I was not to touch any production machine's PC under any circumstance.
+
+Fast forward a few months, and I’m helping one of the factory workers on their area’s shared PC. It’s located right next to one of these production machines. The machine itself was nearly an 
