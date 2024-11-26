@@ -34,7 +34,6 @@ function storyTime(storyData: REDDIT_POST_SCHEMA[]): number {
 }
 
 function videoTime(videoData: VIDEO_SQL_SCHEMA[]): number {
-        console.log(videoData)
         let total_sec = 0
         for (const obj of videoData) {
                 const [hours, minutes, seconds] = obj.videoLen.split(':').map(Number)
