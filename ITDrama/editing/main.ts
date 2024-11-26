@@ -34,6 +34,7 @@ function storyTime(storyData: REDDIT_POST_SCHEMA[]): number {
 }
 
 function videoTime(videoData: VIDEO_SQL_SCHEMA[]): number {
+        console.log(videoData)
         let total_sec = 0
         for (const obj of videoData) {
                 const [hours, minutes, seconds] = obj.videoLen.split(':').map(Number)
@@ -156,8 +157,7 @@ async function twoVidsPlusStory() {
         let video2Time = 0;
 
         while (video1Time < storyQTime) {
-
-                while (videoTime([globalVideoQ[0]]) < storyQTime || globalVideoQ.length < 1) {
+                while (globalVideoQ.length < 1 || videoTime([globalVideoQ[0]]) < storyQTime) {
                         if (globalVideoQ.length < 1) {
                                 await downloadYTVideo()
                                 globalVideoQ = await selectAllFromVideo(10)
@@ -167,7 +167,6 @@ async function twoVidsPlusStory() {
                                 globalVideoQ = await selectAllFromVideo(10)
                         }
                 }
-
                 globalVideoQ.reverse()
                 const valid_video = globalVideoQ.pop()
                 if (valid_video) {
@@ -179,7 +178,7 @@ async function twoVidsPlusStory() {
         }
 
         while (video2Time < storyQTime) {
-                while (videoTime([globalVideoQ[0]]) < storyQTime || globalVideoQ.length < 1) {
+                while (globalVideoQ.length < 1 || videoTime([globalVideoQ[0]]) < storyQTime) {
 
                         if (globalVideoQ.length < 1) {
                                 await downloadYTVideo()

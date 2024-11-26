@@ -156,7 +156,7 @@ async function twoVidsPlusStory() {
         let video2Time = 0;
 
         while (video1Time < storyQTime) {
-                while (videoTime([globalVideoQ[0]]) < storyQTime || globalVideoQ.length < 1) {
+                while (globalVideoQ.length < 1 || videoTime([globalVideoQ[0]]) < storyQTime) {
                         console.log("Made it past")
                         if (globalVideoQ.length < 1) {
                                 await downloadYTVideo()
@@ -179,7 +179,7 @@ async function twoVidsPlusStory() {
         }
 
         while (video2Time < storyQTime) {
-                while (videoTime([globalVideoQ[0]]) < storyQTime || globalVideoQ.length < 1) {
+                while (globalVideoQ.length < 1 || videoTime([globalVideoQ[0]]) < storyQTime) {
 
                         if (globalVideoQ.length < 1) {
                                 await downloadYTVideo()

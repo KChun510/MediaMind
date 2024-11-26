@@ -1,0 +1,58 @@
+You won't believe the absurdity of this IT support call! This actually happened a couple of weeks ago. As context, I work an out-of-hours IT desk, supporting multiple businesses after their IT teams leave for the day. It’s 8 PM when I get a call from my least favorite client. We have no system access and very little documentation, and their calls are renowned for being a pain to handle.
+
+An extremely affluent-sounding British guy is on the line. 
+
+Me: Service desk, how can I help you?  
+EA: Oh, hello. I'm not able to print.  
+Me: Okay, any error messages? Any signs of life from the printer?  
+EA: Now hold on, I'm not a computer person, so you'll need to use simple terms.  
+Me: What happens when you try to print?  
+EA: Nothing happens, that’s why I’m calling you.  
+Me: Do you see any messages appear on the screen when trying to print?  
+EA: No.
+
+I have a particularly low tolerance for callers who are unable to provide basic details, and this guy was also very condescending.  
+
+Me: Is your printer turned on? Can you see any lights?  
+EA: Of course.  
+Me: Can you walk me through what you generally do to print something?  
+EA: I'm not a computer person, so you’ll need to be more clear.  
+Me: Tell me how you’d usually print.  
+EA: Look here, I don’t really understand what you’re asking me.  
+Me: What would you usually do to print?  
+EA: I don’t understand you.  
+
+Me: Okay, sir, I’d like to connect remotely to your computer so I can see what’s on the screen. Is that okay?  
+EA: This is all very complicated. I’m not sure what you want to do.  
+Me: I’d like to access your computer so I can see what’s wrong.  
+EA: I’m sorry, can you explain that more clearly?  
+Me: I’m not sure how much clearer I can actually be. I need to remotely connect to try and fix this for you.  
+EA: Look, this is terribly unfriendly for people who aren’t technically savvy like myself. Why can’t you fix this?  
+Me: I’m trying to help you, but you haven’t provided much detail on the issue. I suggest I remotely connect to take a look myself.  
+EA: I’m not familiar with these technical terms. This is very hard. I don’t understand why we have you people if you can’t help those who aren’t technically savvy.  
+Me: I’m trying to help; however, as it’s out of hours, our scope is limited. I need to remotely connect to see what’s going on. I understand you’re not technically savvy, but we expect a certain level of knowledge from users to provide our support service after hours. I can ask that the main service desk calls you back in the morning if you'd prefer.  
+EA: No, look, this is very important, and I need this fixed. How do you get on my screen?  
+Me: Firstly, I need you to open a web browser or just go to Google.  
+EA: I just use this for email. What on earth is a web browser?  
+Me: Do you use Google?  
+EA: Yes, of course I do.  
+Me: Okay, please go to Google... we spend a painful amount of time getting the remote support working.  
+Me: Thank you. I’m now connected. I’m going to take a look at the printer setup now.  
+Me: I see the printer is reporting not connected. Can you check to make sure it’s plugged in, please? 
+
+I Google the model number, and this is an old Epson printer that uses USB only. At this point, I’ve had enough of this caller's ineptness.  
+
+EA: But I don’t know HOW!  
+Me: I’m sorry. I really can’t help you with this part. You’re the one physically located with the computer and the printer. Go to the printer and make sure any wires coming from it are plugged into the PC.  
+EA: OK. 
+
+Several minutes later, I hear the unmistakable sound of a device being connected in Windows.  
+
+Me: Okay, the printer is now showing as connected, so it looks like the plug was disconnected. Please try printing again.  
+
+EA navigates to Outlook, opens an email about discounted camping products, and proceeds to print it off.  
+
+Me: I can hear the printer in the background, so it looks like we’re good now.  
+EA: Yes, it’s working, but you didn’t help me at all.  
+
+EA was such a pain. He also left the remote session running in the background, so I spent the next half an hour inconspicuously moving his mouse each time he tried to click something before I got bored and disconnected.

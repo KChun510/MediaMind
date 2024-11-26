@@ -157,7 +157,7 @@ async function twoVidsPlusStory() {
 
         while (video1Time < storyQTime) {
 
-                while (videoTime([globalVideoQ[0]]) < storyQTime || globalVideoQ.length < 1) {
+                while (globalVideoQ.length < 1 || videoTime([globalVideoQ[0]]) < storyQTime) {
                         if (globalVideoQ.length < 1) {
                                 await downloadYTVideo()
                                 globalVideoQ = await selectAllFromVideo(10)
@@ -179,8 +179,7 @@ async function twoVidsPlusStory() {
         }
 
         while (video2Time < storyQTime) {
-                while (videoTime([globalVideoQ[0]]) < storyQTime || globalVideoQ.length < 1) {
-
+                while (globalVideoQ.length < 1 || videoTime([globalVideoQ[0]]) < storyQTime) {
                         if (globalVideoQ.length < 1) {
                                 await downloadYTVideo()
                                 globalVideoQ = (await selectAllFromVideo(10)).filter(obj => !(obj.videoID in globalVideoQ));
