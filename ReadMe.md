@@ -47,11 +47,9 @@ Current Design of editing algorithm:
 
 
 ### Dev Notes:
-1. Need to add a "Catchy Hook but Appropiate" at the begining of all stories.
-    - Using openAI API
-2. Split our content into neiches, each neiche has it's own account.
-3. Find a better TTS service, free if optional.
-4. Auto-post, save this for last some human intervention needed.
+1. cop.action.news, TTS is bumping our openAI API usage to .08 cents a day. I.e: 30 bucks a year.
+    - Options: Use the YT subtitles, or remove -or- Use a free TTS model.
+2. Auto-post, save this for last some human intervention needed.
 
 
 ### Future Works:
@@ -65,4 +63,4 @@ Current Design of editing algorithm:
 2. break accounts into objects / own personas!!
 
 
-<sub><sup>Updated: 11/13/24</sup></sub>
+<sub><sup>Updated: 11/26/24</sup></sub>
