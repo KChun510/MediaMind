@@ -181,11 +181,11 @@ async function twoVidsPlusStory() {
 
                         if (globalVideoQ.length < 1) {
                                 await downloadYTVideo()
-                                globalVideoQ = (await selectAllFromVideo(10)).filter(obj => !(obj.videoID in globalVideoQ));
+                                globalVideoQ = (await selectAllFromVideo(10)).filter(obj => !(obj.videoID in globalVideoQLog));
                         } else if (videoTime([globalVideoQ[0]]) < storyQTime) {
                                 videoCleanUp(globalVideoQ[0].videoID)
                                 await downloadYTVideo()
-                                globalVideoQ = (await selectAllFromVideo(10)).filter(obj => !(obj.videoID in globalVideoQ));
+                                globalVideoQ = (await selectAllFromVideo(10)).filter(obj => !(obj.videoID in globalVideoQLog));
                         }
                 }
 
@@ -233,7 +233,7 @@ function getRandomInt(min: number, max: number) {
 }
 
 (async function() {
-        switch (getRandomInt(0, 1)) {
+        switch (getRandomInt(1, 1)) {
                 case 0:
                         singleVidPlusStory()
                         break
