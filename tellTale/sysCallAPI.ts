@@ -41,7 +41,15 @@ export function create_twoVids_OneStory(rPostId: string, ytVideoId1: string, ytV
         [stacked]subtitles=${CONT_DIRS.Reddit_srt}/${rPostId}.txt.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=10'[out]" \
         -map "[out]" -map 2:a -c:v libx264 -c:a aac -b:a 192k -shortest ${CONT_DIRS.prodVidAndStory}${rPostId}.mp4`;
 
-        console.log(execSync(cmd_twoVids_OneStory, { encoding: 'utf-8' }).toString())
+        const cmd_twoVids_OneStory2 = `ffmpeg -y -i ${CONT_DIRS.ytVideos}/${ytVideoId1}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId2}.mp4 -i ${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3 -i ${CONT_DIRS.Reddit_srt}/${rPostId}.txt.srt \
+        -filter_complex "[0:v]scale=iw*0.9:-1,crop=1080:960:(in_w-1080)/2:(in_h-960)/2[subtop]; \
+        [1:v]scale=iw*0.9:-1,crop=1080:960:(in_w-1080)/2:(in_h-960)/2[subbottom]; \
+        [subtop][subbottom]vstack[stacked]; \
+        [stacked]subtitles=${CONT_DIRS.Reddit_srt}/${rPostId}.txt.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=10'[out]" \
+        -map "[out]" -map 2:a -c:v libx264 -c:a aac -b:a 192k -shortest ${CONT_DIRS.prodVidAndStory}${rPostId}.mp4`
+
+
+        console.log(execSync(cmd_twoVids_OneStory2, { encoding: 'utf-8' }).toString())
 }
 
 export function cut_video(startTime: string, videoID: string) {
