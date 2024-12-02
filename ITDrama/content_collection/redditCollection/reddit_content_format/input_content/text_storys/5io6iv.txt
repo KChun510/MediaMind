@@ -1,0 +1,13 @@
+Imagine this: a simple oversight spirals into a chaos that nearly shuts down an entire company. 
+
+It worked for a small IT company providing website, email servers, and web software. The interlocutors were me, the boss of the client company, and the co-boss who was also the boss's mother. After a few years of collaboration with the client, our accountant came to me, saying that the client hadn't paid the monthly fee for their website and mail server. Sometimes clients forget to set up automatic transfers when they change banks, or their accountant goes on vacation and forgets to inform someone to do it. 
+
+So I called them to understand what happened. I said,  Hi, it’s me from IT. We haven't received your transfer from last month. Is there a problem?  Mom replied,  I don't know what those fees are. I won’t pay for it.  I explained,  These fees are for your website and your mail server.  Mom insisted,  We don’t use it. I don’t want it. I won’t pay for it.  
+
+I replied,  Okay, you do not have to be this rude.  We sent a registered letter with recorded delivery stating that if they did not pay by the end of next month, we would have to shut down all their services. After a month passed with still no transfer, we shut everything off. 
+
+Sure enough, minutes later, we received a call from the boss. He said,  My emails stopped working. You have to fix this, please.  I explained,  Yes, we shut off your server because you haven't paid your monthly fees for the last two months.  The boss exclaimed,  What? But Mom is in charge of all the suppliers; she should have paid you.  I clarified,  No, she told us that you did not need our services and did not want to pay for it.  
+
+The boss stated,  She is crazy! We take care of all our invoices and contracts by emails. Without them, we may as well close the company. I will personally take care of paying you from now on. But please restart the server.  
+
+So we did, and minutes later, one of his employees was at our door with a check for the last two months and the upcoming one. From that point on, he always paid us on time.

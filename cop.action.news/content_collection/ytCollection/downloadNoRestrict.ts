@@ -85,20 +85,22 @@ async function create_metaData(input: { valid_file: string }) {
                 const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "police footage", videoLicense: "any", results: 10, videoDuration: "long" })
                 const videoDetails = await getVideoDetails(oAuthToken, vidIdRes)
                 for (const video of videoDetails ?? []) {
-                    const videoCommand = `yt-dlp --sub-lang "en.*" --no-overwrites https://www.youtube.com/watch?v=${video.videoID} -o "${outPutPath}/videos/${video.videoID}"`
-                    const subtitleCommand = `ffmpe:g -i ${outPutPath}/videos/${video.videoID}.* -map 0:s:0? ${outPutPath}/srt/${video.videoID}`
+                    const videoCommand = `yt-dlp --write-sub --write-auto-sub --sub-lang "en.*" --embed-subs --force-overwrites https://www.youtube.com/watch?v=${video.videoID} -o "${outPutPath}/videos/${video.videoID}.%(ext)s"`
+
+                    const subtitleCommand = `ffmpeg -y -i "${outPutPath}/videos/${video.videoID}.mp4" -map 0:s:0? "${outPutPath}/srt/${video.videoID}.srt"`
+
                     const currVidTime = videoTime([video])
                     if (totalVideoTime >= maxVideoTime) {
                         return
                     }
                     else if (currVidTime >= minVideoTime && currVidTime <= maxVideoTime) {
-                        appendVideoItem({ videoID: video.videoID, videoLen: video.videoLen, videoName: video.videoName })
                         appendInvVidID(video.videoID)
                         console.log(`Downloaded videoID: ${video.videoID}, Len: ${video.videoLen}`)
                         console.log(execSync(videoCommand, { encoding: 'utf-8' }).toString())
                         console.log(execSync('./convert_to_mp4.sh', { encoding: 'utf-8' }).toString())
-                        await speech_to_text(video.videoID)
+                        console.log(execSync(subtitleCommand, { encoding: 'utf-8' }).toString())
                         await create_metaData({ valid_file: video.videoID })
+                        appendVideoItem({ videoID: video.videoID, videoLen: video.videoLen, videoName: video.videoName })
                         totalVideoTime += currVidTime
                     } else {
                         appendInvVidID(video.videoID)

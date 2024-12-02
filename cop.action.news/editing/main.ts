@@ -231,8 +231,8 @@ async function clipPlusSrt() {
         console.log("Editiing begun:\nFormat: singleVid Plus Srt")
         try {
                 const video = await selectAllFromVideo(1)
-                await create_srt_over_video(video[0].videoID)
-                await segment_clip_alt(video[0].videoID, 50)
+                create_srt_over_video(video[0].videoID)
+                segment_clip_alt(video[0].videoID, 50)
                 videoCleanUp(video[0].videoID)
                 console.log(`Clip made: ${video[0].videoID}`)
         } catch (e) {
