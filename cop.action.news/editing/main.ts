@@ -156,8 +156,8 @@ async function twoVidsPlusStory() {
         let video2Time = 0;
 
         while (video1Time < storyQTime) {
-
                 while (globalVideoQ.length < 1 || videoTime([globalVideoQ[0]]) < storyQTime) {
+                        console.log("Made it past")
                         if (globalVideoQ.length < 1) {
                                 await downloadYTVideo()
                                 globalVideoQ = await selectAllFromVideo(10)
@@ -179,11 +179,12 @@ async function twoVidsPlusStory() {
         }
 
         while (video2Time < storyQTime) {
-                while (globalVideoQ.length < 1 || videoTime([globalVideoQ[0]]) < storyQTime) {
+                while (globalVideoQ.length < 1 || (videoTime([globalVideoQ[0]]) < storyQTime || globalVideoQ[0].videoID in globalVideoQLog)) {
+
                         if (globalVideoQ.length < 1) {
                                 await downloadYTVideo()
                                 globalVideoQ = (await selectAllFromVideo(10)).filter(obj => !(obj.videoID in globalVideoQLog));
-                        } else if (videoTime([globalVideoQ[0]]) < storyQTime) {
+                        } else if (videoTime([globalVideoQ[0]]) < storyQTime || globalVideoQ[0].videoID in globalVideoQLog) {
                                 videoCleanUp(globalVideoQ[0].videoID)
                                 await downloadYTVideo()
                                 globalVideoQ = (await selectAllFromVideo(10)).filter(obj => !(obj.videoID in globalVideoQLog));
@@ -226,7 +227,6 @@ async function twoVidsPlusStory() {
                 }
         }
 }
-
 async function clipPlusSrt() {
         console.log("Editiing begun:\nFormat: singleVid Plus Srt")
         try {
