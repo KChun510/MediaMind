@@ -140,7 +140,6 @@ export async function speed_up_audio(input: { valid_file: string, rate: string }
         } catch (e) {
                 console.error("Error in speeding up the mp3")
         }
-
 }
 
 export async function downloadYTVideo() {
@@ -164,4 +163,3 @@ try {
 } catch (e) {
         console.error(e)
 }
-
