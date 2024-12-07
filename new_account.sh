@@ -1,3 +1,4 @@
+#!/bin/bash
 CONT_DIR="/mnt/md0/work_station/content_for_system"
 read -p "Name of new Account: " name
 read -p $'What kind of account: \n1) Text_based \n2) Video_based\nEnter your option: ' accountType
