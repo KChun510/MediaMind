@@ -85,8 +85,11 @@ export function create_twoVids_OneStory(rPostId: string, ytVideoId1: string, ytV
 export function create_twoVids_OneMain(input: { ytVideoId1: string, ytVideoId2: string }) {
         const cmd_twoVids_OneMain = `ffmpeg -i ${CONT_DIRS.ytVideos}/${input.ytVideoId1}.mp4 -i ${CONT_DIRS.ytVideos}/${input.ytVideoId2}.mp4 -filter_complex "[0:v]scale=w=1080:h=640:force_original_aspect_ratio=decrease,pad=1080:640:(ow-iw)/2:(oh-ih)/2:black[top];[1:v]scale=w=1080:h=1280:force_original_aspect_ratio=decrease,pad=1080:1280:(ow-iw)/2:(oh-ih)/2:black[bottom];[top][bottom]vstack[output]" -map "[output]" -map 0:a -c:v libx264 -crf 23 -preset veryfast -c:a aac -b:a 128k -shortest ${CONT_DIRS.prodTwoVidOneMain}/${input.ytVideoId1}.mp4`
 
+        const cmd_twoVids_OneMain1 = `ffmpeg -y -i ${CONT_DIRS.ytVideos}/${input.ytVideoId1}.mp4 -i ${CONT_DIRS.ytVideos}/${input.ytVideoId2}.mp4 -filter_complex "[0:v]scale=w=1080:h=640:force_original_aspect_ratio=decrease,pad=1080:640:(ow-iw)/2:(oh-ih)/2:black[top];[1:v]scale=w=1080:h=1280:force_original_aspect_ratio=increase,crop=w=1080:h=1280[bottom];[top][bottom]vstack[output]" -map "[output]" -map 0:a -c:v libx264 -crf 23 -preset veryfast -c:a aac -b:a 128k -shortest ${CONT_DIRS.prodTwoVidOneMain}/${input.ytVideoId1}.mp4`;
+
+
         try {
-                console.log(execSync(cmd_twoVids_OneMain, { encoding: 'utf-8' }).toString())
+                console.log(execSync(cmd_twoVids_OneMain1, { encoding: 'utf-8' }).toString())
         } catch (e) {
                 console.error(`Error while editing: ${e}`)
         }
@@ -145,6 +148,18 @@ export function segment_clip_alt(youTubeId: string, seconds: number) {
 
         const seg_string = `ffmpeg -i ${CONT_DIRS.prodVidPlusSub}/${youTubeId}.mp4 -f segment -segment_time ${secs} -c:v libx264 -c:a aac -map 0 -reset_timestamps 1 ${CONT_DIRS.prodVidPlusSub}/${youTubeId}%03d.mp4`;
         const del_string = `rm ${CONT_DIRS.prodVidPlusSub}/${youTubeId}.mp4`
+        execSync(`${seg_string} && ${del_string}`)
+        console.log(`Video of ID: ${youTubeId}, has been segmented.`)
+}
+
+export function segment_clip_twoVids_oneMain(youTubeId: string, seconds: number) {
+        if (seconds === 0) {
+                return
+        }
+        const secs = seconds.toString()
+
+        const seg_string = `ffmpeg -i ${CONT_DIRS.prodTwoVidOneMain}/${youTubeId}.mp4 -f segment -segment_time ${secs} -c:v libx264 -c:a aac -map 0 -reset_timestamps 1 ${CONT_DIRS.prodTwoVidOneMain}/${youTubeId}%03d.mp4`;
+        const del_string = `rm ${CONT_DIRS.prodTwoVidOneMain}/${youTubeId}.mp4`
         execSync(`${seg_string} && ${del_string}`)
         console.log(`Video of ID: ${youTubeId}, has been segmented.`)
 }

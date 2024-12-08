@@ -1,5 +1,5 @@
 import { selectAllFromMainVideo, selectAllFromVideo, selectAllFromReddit, delMainVidData, delVidData, delRedditData, updateVideoData, REDDIT_POST_SCHEMA, VIDEO_SQL_SCHEMA } from '../db_dir/db_actions'
-import { create_story_over_single_video, cut_video, delete_video, delete_reddit_cont, segment_clip, segment_clip_alt, downloadYTVideo, create_twoVids_OneStory, create_srt_over_video, create_twoVids_OneMain } from '../sysCallAPI'
+import { create_story_over_single_video, cut_video, delete_video, delete_reddit_cont, segment_clip, segment_clip_alt, segment_clip_twoVids_oneMain, downloadYTVideo, create_twoVids_OneStory, create_srt_over_video, create_twoVids_OneMain } from '../sysCallAPI'
 require('dotenv').config({ path: require('find-config')('.env') })
 
 async function gather_single_story() {
@@ -250,9 +250,7 @@ async function twoVids_oneMain() {
         }
 
         while (video2Time < video1Time) {
-                if (video2 !== undefined) {
-                        videoCleanUp(video2.videoID)
-                }
+                videoCleanUp(video2.videoID)
                 await downloadYTVideo()
                 video2 = (await selectAllFromVideo(10))[0]
                 video2Time = videoTime([video2])
@@ -264,7 +262,7 @@ async function twoVids_oneMain() {
                 // Updade the current video time (i.e: Video2Time - video1Time)
                 updateTime(video2, video1Time)
                 create_twoVids_OneMain({ ytVideoId1: video1.videoID, ytVideoId2: video2.videoID })
-                segment_clip_alt(video1.videoID, 50)
+                segment_clip_twoVids_oneMain(video1.videoID, 50)
                 updateVideoData({ videoLen: video2.videoLen, videoID: video2.videoID, videoName: video2.videoName })
 
                 // Need to cut our video, after clip was made ( No overlapping content )
