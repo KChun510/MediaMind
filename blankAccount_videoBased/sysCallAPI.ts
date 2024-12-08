@@ -148,6 +148,17 @@ export function segment_clip_alt(youTubeId: string, seconds: number) {
         execSync(`${seg_string} && ${del_string}`)
         console.log(`Video of ID: ${youTubeId}, has been segmented.`)
 }
+export function segment_clip_twoVidsOneMain(youTubeId: string, seconds: number) {
+        if (seconds === 0) {
+                return
+        }
+        const secs = seconds.toString()
+
+        const seg_string = `ffmpeg -i ${CONT_DIRS.prodTwoVidOneMain}/${youTubeId}.mp4 -f segment -segment_time ${secs} -c:v libx264 -c:a aac -map 0 -reset_timestamps 1 ${CONT_DIRS.prodTwoVidOneMain}/${youTubeId}%03d.mp4`;
+        const del_string = `rm ${CONT_DIRS.prodTwoVidOneMain}/${youTubeId}.mp4`
+        execSync(`${seg_string} && ${del_string}`)
+        console.log(`Video of ID: ${youTubeId}, has been segmented.`)
+}
 
 function getRandomInt(min: number, max: number) {
         min = Math.ceil(min);
