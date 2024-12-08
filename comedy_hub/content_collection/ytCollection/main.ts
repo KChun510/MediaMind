@@ -83,7 +83,7 @@ async function create_metaData_fromTitle(input: { videoID: string, videoTitle: s
     // Max is 30 mins
     //    const maxVideoTime = 1800
     const maxVideoTime = 600
-    const minVideoTime = 240
+    const minVideoTime = 120
     let totalVideoTime = 0
     const outPutPath = `${process.env.CONT_DIR}/youTube_cont`
     fs.readFile('client_secret.json', 'utf8', async function processClientSecrets(err, content) {
