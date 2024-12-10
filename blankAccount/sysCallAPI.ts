@@ -104,17 +104,17 @@ function getRandomInt(min: number, max: number) {
 
 export async function tts_coqui(valid_file: string, randomized: boolean, inputSpeaker: string | null = null) {
         const avail_speakers = ['Claribel Dervla', 'Daisy Studious', 'Gracie Wise', 'Tammie Ema', 'Alison Dietlinde', 'Ana Florence', 'Annmarie Nele', 'Asya Anara', 'Brenda Stern', 'Gitta Nikolina', 'Henriette Usha', 'Sofia Hellen', 'Tammy Grit', 'Tanja Adelina', 'Vjollca Johnnie', 'Andrew Chipper', 'Badr Odhiambo', 'Dionisio Schuyler', 'Royston Min', 'Viktor Eka', 'Abrahan Mack', 'Adde Michal', 'Baldur Sanjin', 'Craig Gutsy', 'Damien Black', 'Ilkin Urbano', 'Kazuhiko Atallah', 'Ludvig Milivoj', 'Suad Qasim', 'Torcull Diarmuid', 'Viktor Menelaos', 'Zacharie Aimilios', 'Nova Hogarth', 'Maja Ruoho', 'Uta Obando', 'Lidiya Szekeres', 'Szofi Granger', 'Camilla Holmström', 'Lilya Stainthorpe', 'Zofija Kendrick', 'Narelle Moon', 'Barbora MacLean', 'Alexandra Hisakawa', 'Alma María', 'Rosemary Okafor', 'Ige Behringer', 'Filip Traverse', 'Damjan Chapman', 'Wulf Carlevaro', 'Aaron Dreschner', 'Kumar Dahl', 'Eugenio Mataracı', 'Ferran Simen', 'Xavier Hayasaka', 'Marcos Rudaski']
-        const outPutDir = `${process.env.CONT_DIR}/reddit_cont`
+        const outPutDir = CONT_DIRS.Reddit_audio
         const fileContent = await readFile(`./input_content/text_storys/${valid_file}`, 'utf8');
         let tts_string = ""
 
         if (randomized) {
                 const chosenSpeaker = avail_speakers[getRandomInt(0, avail_speakers.length - 1)]
                 console.error(`Speaker Chosen: ${chosenSpeaker}`)
-                tts_string = `tts --text "${fileContent}" --model_name "tts_models/multilingual/multi-dataset/xtts_v2"  --out_path ${outPutDir}/audio_dir/${valid_file}.mp3 --speaker_idx '${chosenSpeaker}' --language_idx="en"`
+                tts_string = `tts --text "${fileContent}" --model_name "tts_models/multilingual/multi-dataset/xtts_v2"  --out_path ${outPutDir}/${valid_file}.mp3 --speaker_idx '${chosenSpeaker}' --language_idx="en"`
         } else if (inputSpeaker) {
                 console.error(`Speaker Chosen: ${inputSpeaker}`)
-                tts_string = `tts --text "${fileContent}" --model_name "tts_models/multilingual/multi-dataset/xtts_v2"  --out_path ${outPutDir}/audio_dir/${valid_file}.mp3 --speaker_idx ${inputSpeaker} --language_idx="en"`
+                tts_string = `tts --text "${fileContent}" --model_name "tts_models/multilingual/multi-dataset/xtts_v2"  --out_path ${outPutDir}/${valid_file}.mp3 --speaker_idx ${inputSpeaker} --language_idx="en"`
         }
         console.log(`COQUI_AI TTS: Started ${valid_file}`)
         try {
@@ -131,6 +131,16 @@ export async function tts_coqui(valid_file: string, randomized: boolean, inputSp
         console.log(`COQUI_AI: Audio content written to file: ${valid_file}.mp3`);
 }
 
+export async function speed_up_audio(input: { valid_file: string, rate: string }) {
+        const temp_name = "temp_file"
+        const cmd_file_rename = `mv ${CONT_DIRS.Reddit_audio}/${input.valid_file}.mp3 ${CONT_DIRS.Reddit_audio}/${temp_name}.mp3`
+        const cmd_string = `ffmpeg -y -i ${CONT_DIRS.Reddit_audio}/${temp_name}.mp3 -filter:a "atempo=${input.rate}" -vn -b:a 192k ${CONT_DIRS.Reddit_audio}/${input.valid_file}.mp3`
+        try {
+                execSync(`${cmd_file_rename} && ${cmd_string}`, { encoding: 'utf-8' })
+        } catch (e) {
+                console.error("Error in speeding up the mp3")
+        }
+}
 
 export async function downloadYTVideo() {
         // If you want to change the type of video being downloaded, go to TS script direclty
@@ -153,4 +163,3 @@ try {
 } catch (e) {
         console.error(e)
 }
-

@@ -1,9 +1,28 @@
+#!/bin/bash
 CONT_DIR="/mnt/md0/work_station/content_for_system"
 read -p "Name of new Account: " name
+read -p $'What kind of account: \n1) Text_based \n2) Video_based\nEnter your option: ' accountType
+
+case $accountType in 
+	1)
+		cp -r blankAccount ./$name
+		;;
+	2)
+		cp -r blankAccount_videoBased ./$name
+		;;
+	*)
+		echo "Not a valid option: $accountType"
+		exit 1
+		;;
+esac
+
 mkdir $CONT_DIR/$name
 mkdir $CONT_DIR/$name/reddit_cont $CONT_DIR/$name/reddit_cont/audio_dir $CONT_DIR/$name/reddit_cont/srt_dir
 mkdir $CONT_DIR/$name/youTube_cont $CONT_DIR/$name/youTube_cont/srt $CONT_DIR/$name/youTube_cont/videos
 mkdir $CONT_DIR/$name/prod_vids $CONT_DIR/$name/prod_vids/single_vid_plus_reddit
-cp -r blankAccount ./$name
+mkdir $CONT_DIR/$name/prod_vids $CONT_DIR/$name/prod_vids/video_plus_sub
+mkdir $CONT_DIR/$name/prod_vids $CONT_DIR/$name/prod_vids/twoVids_oneMain
+ 
+
 printf "OPENAI_API_KEY=''\nCONT_DIR='$CONT_DIR/$name'" > ./$name/.env
 printf "Dont forget upload:\n1) .env file\n2) client-secret.json\n3) crontTab\n4) Change sub-reddit"

@@ -132,6 +132,17 @@ export async function tts_coqui(valid_file: string, randomized: boolean, inputSp
         console.log(`COQUI_AI: Audio content written to file: ${valid_file}.mp3`);
 }
 
+export async function speed_up_audio(input: { valid_file: string, rate: string }) {
+        const temp_name = "temp_file"
+        const cmd_file_rename = `mv ${CONT_DIRS.Reddit_audio}/${input.valid_file}.mp3 ${CONT_DIRS.Reddit_audio}/${temp_name}.mp3`
+        const cmd_string = `ffmpeg -y -i ${CONT_DIRS.Reddit_audio}/${temp_name}.mp3 -filter:a "atempo=${input.rate}" -vn -b:a 192k ${CONT_DIRS.Reddit_audio}/${input.valid_file}.mp3`
+        try {
+                execSync(`${cmd_file_rename} && ${cmd_string}`, { encoding: 'utf-8' })
+        } catch (e) {
+                console.error("Error in speeding up the mp3")
+        }
+
+}
 
 export async function downloadYTVideo() {
         // If you want to change the type of video being downloaded, go to TS script direclty

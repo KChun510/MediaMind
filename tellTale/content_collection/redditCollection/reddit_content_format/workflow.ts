@@ -3,7 +3,7 @@ const fs = require('fs')
 const util = require('util')
 const OpenAI = require("openai")
 import { updateRedditPost } from "../../../db_dir/db_actions"
-import { tts_coqui } from "../../../sysCallAPI"
+import { tts_coqui, speed_up_audio } from "../../../sysCallAPI"
 require('dotenv').config({ path: require('find-config')('.env') })
 
 const gcpClient = new textToSpeech.TextToSpeechClient()
@@ -125,6 +125,7 @@ async function speech_to_text(valid_file: string) {
     for (let i = 0; i < valid_files.length; i++) {
         // Put the dir creating file here, + write text file of # and des
         await tts_coqui(valid_files[i], true)
+        await speed_up_audio({ valid_file: valid_files[i], rate: "1.2" })
         // await text_to_speech(valid_files[i])
         await speech_to_text(valid_files[i])
     }
