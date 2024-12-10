@@ -16,12 +16,11 @@ case $accountType in
 		;;
 esac
 
-mkdir $CONT_DIR/$name
-mkdir $CONT_DIR/$name/reddit_cont $CONT_DIR/$name/reddit_cont/audio_dir $CONT_DIR/$name/reddit_cont/srt_dir
-mkdir $CONT_DIR/$name/youTube_cont $CONT_DIR/$name/youTube_cont/srt $CONT_DIR/$name/youTube_cont/videos
-mkdir $CONT_DIR/$name/prod_vids $CONT_DIR/$name/prod_vids/single_vid_plus_reddit
-mkdir $CONT_DIR/$name/prod_vids $CONT_DIR/$name/prod_vids/video_plus_sub
-mkdir $CONT_DIR/$name/prod_vids $CONT_DIR/$name/prod_vids/twoVids_oneMain
+mkdir -p $CONT_DIR/$name/reddit_cont $CONT_DIR/$name/reddit_cont/audio_dir $CONT_DIR/$name/reddit_cont/srt_dir
+mkdir -p $CONT_DIR/$name/youTube_cont $CONT_DIR/$name/youTube_cont/srt $CONT_DIR/$name/youTube_cont/videos
+mkdir -p $CONT_DIR/$name/prod_vids $CONT_DIR/$name/prod_vids/single_vid_plus_reddit
+mkdir -p $CONT_DIR/$name/prod_vids $CONT_DIR/$name/prod_vids/video_plus_sub
+mkdir -p $CONT_DIR/$name/prod_vids $CONT_DIR/$name/prod_vids/twoVids_oneMain
  
 
 printf "OPENAI_API_KEY=''\nCONT_DIR='$CONT_DIR/$name'" > ./$name/.env
