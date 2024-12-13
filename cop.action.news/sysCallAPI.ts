@@ -1,13 +1,16 @@
 import { execSync } from 'child_process'
-import { delRedditData } from './db_dir/db_actions'
+import { delRedditData, getVideoData } from './db_dir/db_actions'
+import { OpenAI } from "openai"
 import * as util from 'util'
 import fs from 'fs';
-const readFile = util.promisify(fs.readFile)
 require('dotenv').config({ path: require('find-config')('.env') })
 
+const readFile = util.promisify(fs.readFile)
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 const CONT_DIR = process.env.CONT_DIR
 
 const CONT_DIRS = {
+        overlay_png: `${CONT_DIR}/overlay_png`,
         Reddit_audio: `${CONT_DIR}/reddit_cont/audio_dir`,
         Reddit_srt: `${CONT_DIR}/reddit_cont/srt_dir`,
         Reddit_text: `../content_collection/redditCollection/reddit_content_format/input_content/text_storys`,
@@ -15,6 +18,7 @@ const CONT_DIRS = {
         ytSrt: `${CONT_DIR}/youTube_cont/srt`,
         prodVidAndStory: `${CONT_DIR}/prod_vids/single_vid_plus_reddit/`,
         prodVidPlusSub: `${CONT_DIR}/prod_vids/video_plus_sub/`,
+        prodTwoVidOneMain: `${CONT_DIR}/prod_vids/twoVids_oneMain/`,
 }
 
 export function writeMetaData(rPostID: string, textCont: string) {
@@ -172,6 +176,52 @@ export async function downloadYTVideo() {
         console.log("Downloading extra video")
         console.log(execSync(`pwd`, { encoding: 'utf-8' }).toString())
         console.log(execSync(`${cmd_string1} && ${cmd_string2}`, { encoding: 'utf-8' }).toString())
+}
+
+export async function create_png_overlay(input: { ytVideoID: string }) {
+        const videoObj = await getVideoData({ videoID: input.ytVideoID })
+
+        const overlay_text = (await openai.chat.completions.create({
+                messages: [{ role: "system", content: "You will be given a video a video title. With this video title I want you to create a single sentance/ new headline. IMPORTANT: Max character len of 50, including spaces " },
+                { role: "user", content: `The video title: ${videoObj.videoName}` }],
+                model: "gpt-4o-mini"
+        })).choices[0].message.content
+
+        const broken_text = overlay_text?.replace(/"/g, "").split(" ");
+
+        let line_len = 0
+        let formatted_text: string[] = []
+        let curr_line: string = ""
+        broken_text?.forEach(word => {
+                if (line_len + word.length >= 42) {
+                        formatted_text.push(`${curr_line.slice(0, -1)}`)
+                        curr_line = "" + word + " "
+                        line_len = 0
+                } else {
+                        curr_line += `${word} `
+                        line_len += curr_line.length
+                }
+        })
+        formatted_text.push(`${curr_line.slice(0, -1)}`)
+
+        const quotedArgs = [input.ytVideoID, ...formatted_text.map(text => `"${text}"`)]
+
+        const command = `../custom_shellScripts/headline_png.sh ${quotedArgs.join(' ')}`
+
+        console.log(execSync(command, { encoding: 'utf-8' }).toString())
+}
+
+export async function create_png_video(ytVideoId: string) {
+        await create_png_overlay({ ytVideoID: ytVideoId })
+        // Note: At 2.2 scaling we have a max character length of 39 per line.
+        //
+        const png_scaling_factor = "2.2"
+        // (1-0), smaller value = higher on screen, larger value = lower
+        const y_placment = ".1"
+
+        const cmd_with_png_overlay = `ffmpeg -y -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.overlay_png}/${ytVideoId}.png -filter_complex "[0:v]scale=1080:-1:force_original_aspect_ratio=decrease[padded];[1:v]format=rgb24,scale=1080:1920,boxblur=20:10[blurred];[blurred][padded]overlay=(W-w)/2:(H-h)/2[backgrounded];[2:v]scale=iw*${png_scaling_factor}:ih*${png_scaling_factor}[scaled_png];[backgrounded][scaled_png]overlay=(W-w)/2:H*${y_placment}[overlayed]" -map "[overlayed]" -map 0:a -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`;
+
+        execSync(cmd_with_png_overlay, { encoding: 'utf-8', maxBuffer: 1024 * 1024 * 10 })
 }
 
 const cmd_stacked_vids = `ffmpeg -i ${CONT_DIRS.ytVideos}/Q-TQQE1y68c.webm -t 00:00:10 -i ${CONT_DIRS.ytVideos}/si0Lp1SLHXg.webm -t 00:00:10 -filter_complex "[0]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[top]; 

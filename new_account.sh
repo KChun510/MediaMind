@@ -16,6 +16,7 @@ case $accountType in
 		;;
 esac
 
+mkdir -p $CONT_DIR/$name/overlay_png
 mkdir -p $CONT_DIR/$name/reddit_cont $CONT_DIR/$name/reddit_cont/audio_dir $CONT_DIR/$name/reddit_cont/srt_dir
 mkdir -p $CONT_DIR/$name/youTube_cont $CONT_DIR/$name/youTube_cont/srt $CONT_DIR/$name/youTube_cont/videos
 mkdir -p $CONT_DIR/$name/prod_vids $CONT_DIR/$name/prod_vids/single_vid_plus_reddit
