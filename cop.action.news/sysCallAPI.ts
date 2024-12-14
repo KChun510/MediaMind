@@ -174,8 +174,7 @@ export async function downloadYTVideo() {
         const cmd_string1 = `cd ../content_collection/ytCollection`
         const cmd_string2 = "sh ./downloadNoRestrict.sh"
         console.log("Downloading extra video")
-        console.log(execSync(`pwd`, { encoding: 'utf-8' }).toString())
-        console.log(execSync(`${cmd_string1} && ${cmd_string2}`, { encoding: 'utf-8' }).toString())
+        execSync(`${cmd_string1} && ${cmd_string2}`, { encoding: 'utf-8' })
 }
 
 export async function create_png_overlay(input: { ytVideoID: string }) {
