@@ -1,5 +1,5 @@
 import { selectAllFromVideo, selectAllFromReddit, delVidData, delRedditData, updateVideoData, REDDIT_POST_SCHEMA, VIDEO_SQL_SCHEMA } from '../db_dir/db_actions'
-import { create_story_over_single_video, cut_video, delete_video, delete_reddit_cont, segment_clip, downloadYTVideo, create_twoVids_OneStory } from '../sysCallAPI'
+import { create_story_over_single_video, cut_video, delete_video, delete_reddit_cont, segment_clip, downloadYTVideo, create_twoVids_OneStory, create_png_video } from '../sysCallAPI'
 require('dotenv').config({ path: require('find-config')('.env') })
 
 async function gather_single_story() {
@@ -224,6 +224,19 @@ async function twoVidsPlusStory() {
                 } catch (e) {
                         console.error(`There was a E, while editing video: ${video1.videoID} & ${video2.videoID} with post: ${part.postID}, \n e code of: ${e} `)
                 }
+        }
+}
+
+async function clipWithPngOverLay() {
+        console.log("Editiing begun:\nFormat: singleVid Plus overlay")
+        try {
+                const video = await selectAllFromVideo(1)
+                await create_png_video(video[0].videoID)
+                segment_clip(video[0].videoID, 50)
+                videoCleanUp(video[0].videoID)
+                console.log(`Clip made: ${video[0].videoID}`)
+        } catch (e) {
+                console.error(`Error while editing: ${e}`)
         }
 }
 
