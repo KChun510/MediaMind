@@ -250,7 +250,9 @@ async function twoVids_oneMain() {
         }
 
         while (video2Time < video1Time) {
-                videoCleanUp(video2.videoID)
+                if (video2 !== undefined) {
+                        videoCleanUp(video2.videoID)
+                }
                 await downloadYTVideo()
                 video2 = (await selectAllFromVideo(10))[0]
                 video2Time = videoTime([video2])
