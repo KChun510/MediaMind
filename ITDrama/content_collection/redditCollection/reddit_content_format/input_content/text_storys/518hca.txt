@@ -1,0 +1,21 @@
+You won't believe the chaos that ensued during my summer internship as an IT Admin. So, to give you some context, I was a student back then, and during summer, I managed to get an internship as an IT Admin. The work was quite nice; I was doing helpdesk tasks but also working with servers and involved in SAP deployment. Anyway, supporting users was one of my tasks. The company was from the automotive sector—airbags and seatbelts—and I was working in a production plant connected with the offices, so I had to support both facilities.
+
+One time, I received a call that was unusual, as we always reminded users to write tickets, which we responded to in real-time, so it took a maximum of five minutes before I contacted the incident submitter. The call was more or less like this:  For goodness' sake, what are you doing with the scanners? The whole line has stopped, and we are completely blocked now. We can't do anything without them; they’re not working and showing errors.  It was an older lady, a production leader, who looked a lot like Shrek after a car accident.
+
+The line was about a 10-minute walk from my office, so I stayed on the phone while I walked there.  Okay, tell me what is going on. Calm down,  I said.  YOU ARE MESSING WITH THE SYSTEMS AGAIN! YOU SHOULD ALL BE FIRED! GOD DAMMIT, I AM WRITING TO YOUR MANAGER AS SOON AS IT IS FIXED!  
+
+I replied,  Please calm down, we haven't done anything with this since January.  It was August.  YEAH SURE, YOU NEVER ADMIT TO A MISTAKE!  At this point, I was already thinking about different ways to handle the situation, but still played it cool.
+
+I finally arrived at the line and asked her to hand me a scanner. Everyone from the production line was standing there with crossed arms, looking at me as if to say,  Here you go, you messed up, so fix it.  The leader said,  Oh, here you are, now make it work after you messed up. 
+
+Basically, the scanner was just something like a Windows PDA with a scanning module—nothing fancy. All she had to do was power it up, type her username and password, and it was ready to go; it was all about scanning the barcodes of airbag parts. So, I took the scanner and looked at the screen, then back at her, then back at the screen. 
+
+ Were you asked to change the password recently?  I inquired.  YES! WHAT KIND OF QUESTION IS THAT? WE DON’T HAVE TIME FOR SUCH NONSENSE!  
+
+ Because the screen says that you have typed the wrong password three times, and you are always reminded that after this, the scanner blocks for ten minutes. By the way, you have backup scanners, so why didn’t you use them? You messed up, not me. And it’s not okay to talk like that to any employee of the company, so I will surely report it to your manager—we have call recording enabled on our mobiles.  We didn’t, but she could never know.
+
+ Ugh... ummm, emmm.  “Yeah, bye.” 
+
+I told the story to her manager, and she apologized to the whole IT team, brought some cheap cookies from the store, and basically pretended to be sorry. Still, IT was the most hated group in the company, but I guess that's the way things are. 
+
+I expected a few upvotes at most, but it seems the story has exploded beyond my expectations, and it’s not even the best of my stories.
