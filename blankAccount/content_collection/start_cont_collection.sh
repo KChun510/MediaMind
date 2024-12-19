@@ -15,7 +15,7 @@ echo 'YouTube videos has begun.'
 cd '../../ytCollection'
 npx tsx 'main.ts'
 # Need to convert all to mp4
-for file in "${CONT_DIR}/youTube_cont/videos/"*.{webm,mkv}; do
+for file in "${CONT_DIR}/youTube_cont/video_dir/"*.{webm,mkv}; do
     echo "Processing: $file"
     if [[ -f "$file" ]]; then
         # Determine the output file name
