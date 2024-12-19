@@ -10,12 +10,11 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 const CONT_DIR = process.env.CONT_DIR
 
 const CONT_DIRS = {
-        overlay_png: `${CONT_DIR}/overlay_png`,
         Reddit_audio: `${CONT_DIR}/reddit_cont/audio_dir`,
-        Reddit_srt: `${CONT_DIR}/reddit_cont/srt_dir`,
+        Reddit_sub: `${CONT_DIR}/reddit_cont/sub_dir`,
         Reddit_text: `../content_collection/redditCollection/reddit_content_format/input_content/text_storys`,
-        ytVideos: `${CONT_DIR}/youTube_cont/videos`,
-        ytSrt: `${CONT_DIR}/youTube_cont/srt`,
+        ytVideos: `${CONT_DIR}/youTube_cont/video_dir`,
+        ytSub: `${CONT_DIR}/youTube_cont/sub_dir`,
         prodVidAndStory: `${CONT_DIR}/prod_vids/single_vid_plus_reddit/`,
         prodVidPlusSub: `${CONT_DIR}/prod_vids/video_plus_sub/`,
         prodTwoVidOneMain: `${CONT_DIR}/prod_vids/twoVids_oneMain/`,
@@ -42,33 +41,33 @@ export function writeMetaData_alt(rPostID: string, textCont: string) {
 }
 
 export function create_story_over_single_video(rPostId: string, ytVideoId: string) {
-        const cmd_story_over_single_video = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3 -i ${CONT_DIRS.Reddit_srt}/${rPostId}.txt.srt \ -c:v libx264 -c:a aac -b:a 192k \ -vf "scale=-1:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,subtitles=${CONT_DIRS.Reddit_srt}/${rPostId}.txt.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=10'" \ -map 0:v -map 1:a -shortest -y ${CONT_DIRS.prodVidAndStory}${rPostId}.mp4
+        const cmd_story_over_single_video = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3 -i ${CONT_DIRS.Reddit_sub}/${rPostId}.txt.srt \ -c:v libx264 -c:a aac -b:a 192k \ -vf "scale=-1:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,subtitles=${CONT_DIRS.Reddit_sub}/${rPostId}.txt.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=10'" \ -map 0:v -map 1:a -shortest -y ${CONT_DIRS.prodVidAndStory}${rPostId}.mp4
 `;
         console.log(execSync(cmd_story_over_single_video).toString())
 }
 
 
 export function create_srt_over_video(ytVideoId: string) {
-        const cmd_string_sub = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -filter_complex "[0:v]scale=1080:-1:force_original_aspect_ratio=decrease[padded];[1:v]format=rgb24,scale=1080:1920,boxblur=20:10[blurred];[blurred][padded]overlay=(W-w)/2:(H-h)/2[overlayed];[overlayed]subtitles=${CONT_DIRS.ytSrt}/${ytVideoId}.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=2'[subtitled]" -map "[subtitled]" -map 0:a -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`
+        const cmd_string_sub = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -filter_complex "[0:v]scale=1080:-1:force_original_aspect_ratio=decrease[padded];[1:v]format=rgb24,scale=1080:1920,boxblur=20:10[blurred];[blurred][padded]overlay=(W-w)/2:(H-h)/2[overlayed];[overlayed]subtitles=${CONT_DIRS.ytSub}/${ytVideoId}.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=2'[subtitled]" -map "[subtitled]" -map 0:a -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`
 
-        const cmd_string_sub2 = `ffmpeg -y -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -filter_complex "[0:v]scale=1080:-1:force_original_aspect_ratio=decrease[padded];[1:v]format=rgb24,scale=1080:1920,boxblur=20:10[blurred];[blurred][padded]overlay=(W-w)/2:(H-h)/2[overlayed];[overlayed]subtitles=${CONT_DIRS.ytSrt}/${ytVideoId}.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=2'[subtitled]" -map "[subtitled]" -map 0:a -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`;
+        const cmd_string_sub2 = `ffmpeg -y -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -filter_complex "[0:v]scale=1080:-1:force_original_aspect_ratio=decrease[padded];[1:v]format=rgb24,scale=1080:1920,boxblur=20:10[blurred];[blurred][padded]overlay=(W-w)/2:(H-h)/2[overlayed];[overlayed]subtitles=${CONT_DIRS.ytSub}/${ytVideoId}.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=2'[subtitled]" -map "[subtitled]" -map 0:a -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`;
 
         execSync(cmd_string_sub2, { encoding: 'utf-8', maxBuffer: 1024 * 1024 * 10 })
 }
 
 export function create_twoVids_OneStory(rPostId: string, ytVideoId1: string, ytVideoId2: string) {
-        const cmd_twoVids_OneStory = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId1}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId2}.mp4 -i ${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3 -i ${CONT_DIRS.Reddit_srt}/${rPostId}.txt.srt \
+        const cmd_twoVids_OneStory = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId1}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId2}.mp4 -i ${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3 -i ${CONT_DIRS.Reddit_sub}/${rPostId}.txt.srt \
         -filter_complex "[0:v]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[subtop]; \
         [1:v]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[subbottom]; \
         [subtop][subbottom]vstack[stacked]; \
-        [stacked]subtitles=${CONT_DIRS.Reddit_srt}/${rPostId}.txt.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=10'[out]" \
+        [stacked]subtitles=${CONT_DIRS.Reddit_sub}/${rPostId}.txt.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=10'[out]" \
         -map "[out]" -map 2:a -c:v libx264 -c:a aac -b:a 192k -shortest ${CONT_DIRS.prodVidAndStory}${rPostId}.mp4`;
 
-        const cmd_twoVids_OneStory2 = `ffmpeg -y -i ${CONT_DIRS.ytVideos}/${ytVideoId1}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId2}.mp4 -i ${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3 -i ${CONT_DIRS.Reddit_srt}/${rPostId}.txt.srt \
+        const cmd_twoVids_OneStory2 = `ffmpeg -y -i ${CONT_DIRS.ytVideos}/${ytVideoId1}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId2}.mp4 -i ${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3 -i ${CONT_DIRS.Reddit_sub}/${rPostId}.txt.srt \
         -filter_complex "[0:v]scale=iw*0.9:-1,crop=1080:960:(in_w-1080)/2:(in_h-960)/2[subtop]; \
         [1:v]scale=iw*0.9:-1,crop=1080:960:(in_w-1080)/2:(in_h-960)/2[subbottom]; \
         [subtop][subbottom]vstack[stacked]; \
-        [stacked]subtitles=${CONT_DIRS.Reddit_srt}/${rPostId}.txt.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=10'[out]" \
+        [stacked]subtitles=${CONT_DIRS.Reddit_sub}/${rPostId}.txt.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=10'[out]" \
         -map "[out]" -map 2:a -c:v libx264 -c:a aac -b:a 192k -shortest ${CONT_DIRS.prodVidAndStory}${rPostId}.mp4`
 
         //console.log(execSync(cmd_twoVids_OneStory2, { encoding: 'utf-8' }).toString())
@@ -99,7 +98,7 @@ export function delete_video(ytVideoId: string) {
 
 export function delete_reddit_cont(postID: string) {
         // Del Srt file
-        const cmd_string1 = `rm ${CONT_DIRS.Reddit_srt}/${postID}*`
+        const cmd_string1 = `rm ${CONT_DIRS.Reddit_sub}/${postID}*`
         // Del audio file
         const cmd_string2 = `rm ${CONT_DIRS.Reddit_audio}/${postID}*`
         // Del OG text file
