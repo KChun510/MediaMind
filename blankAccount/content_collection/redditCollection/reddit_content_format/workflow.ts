@@ -114,7 +114,7 @@ async function speech_to_text(valid_file: string) {
 
     updateRedditPost({ postLen: time_stamp, postID: valid_file.slice(0, valid_file.length - 4) })
 
-    await writeFile(`${outPutDir}/srt_dir/${valid_file}.srt`, srt_string, 'utf8');
+    await writeFile(`${outPutDir}/sub_dir/${valid_file}.srt`, srt_string, 'utf8');
     console.log(`Transcription made, file: ${valid_file}`);
 }
 
