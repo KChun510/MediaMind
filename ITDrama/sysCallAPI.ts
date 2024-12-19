@@ -8,6 +8,7 @@ require('dotenv').config({ path: require('find-config')('.env') })
 const CONT_DIR = process.env.CONT_DIR
 
 const CONT_DIRS = {
+        overlay_png: `${CONT_DIR}/overlay_png`,
         Reddit_audio: `${CONT_DIR}/reddit_cont/audio_dir`,
         Reddit_sub: `${CONT_DIR}/reddit_cont/sub_dir`,
         Reddit_text: `../content_collection/redditCollection/reddit_content_format/input_content/text_storys`,
