@@ -44,7 +44,7 @@ async function DownloadNotNeeded(): Promise<boolean> {
                 const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "cop footage", videoLicense: "any", results: 10 })
                 const videoDetails = await getVideoDetails(oAuthToken, vidIdRes)
                 for (const video of videoDetails ?? []) {
-                    const videoCommand = `yt-dlp --write-sub --write-auto-sub --sub-lang "en.*" --no-overwrites https://www.youtube.com/watch?v=${video.videoID} -o "${outPutPath}/videos/${video.videoID}"`
+                    const videoCommand = `yt-dlp --write-sub --write-auto-sub --sub-lang "en.*" --no-overwrites https://www.youtube.com/watch?v=${video.videoID} -o "${outPutPath}/video_dir/${video.videoID}"`
                     const currVidTime = videoTime([video])
                     if (totalVideoTime >= maxVideoTime) {
                         return

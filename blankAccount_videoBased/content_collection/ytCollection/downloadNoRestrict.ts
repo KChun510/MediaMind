@@ -36,10 +36,10 @@ function formatTime(time: { secs: number, miliSec: string }): string {
 }
 
 async function speech_to_text(valid_file: string) {
-    console.log(execSync(`ffmpeg -i ${outPutDir}/youTube_cont/videos/${valid_file}.mp4 -vn -acodec libmp3lame -ab 192k -ar 44100 ${outPutDir}/youTube_cont/videos/${valid_file}.mp3 `, { encoding: 'utf-8' }).toString())
+    console.log(execSync(`ffmpeg -i ${outPutDir}/youTube_cont/video_dir/${valid_file}.mp4 -vn -acodec libmp3lame -ab 192k -ar 44100 ${outPutDir}/youTube_cont/video_dir/${valid_file}.mp3 `, { encoding: 'utf-8' }).toString())
 
     const transcription = await openai.audio.transcriptions.create({
-        file: fs.createReadStream(`${outPutDir}/youTube_cont/videos/${valid_file}.mp3`),
+        file: fs.createReadStream(`${outPutDir}/youTube_cont/video_dir/${valid_file}.mp3`),
         model: "whisper-1",
         response_format: "verbose_json",
         timestamp_granularities: ["word"]
@@ -85,9 +85,9 @@ async function create_metaData(input: { valid_file: string }) {
                 const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "HD Gameplay", videoLicense: "any", results: 10, videoDuration: "long" })
                 const videoDetails = await getVideoDetails(oAuthToken, vidIdRes)
                 for (const video of videoDetails ?? []) {
-                    const videoCommand = `yt-dlp --write-sub --write-auto-sub --sub-lang "en.*" --embed-subs --force-overwrites https://www.youtube.com/watch?v=${video.videoID} -o "${outPutPath}/videos/${video.videoID}.%(ext)s"`
+                    const videoCommand = `yt-dlp --write-sub --write-auto-sub --sub-lang "en.*" --embed-subs --force-overwrites https://www.youtube.com/watch?v=${video.videoID} -o "${outPutPath}/video_dir/${video.videoID}.%(ext)s"`
 
-                    const subtitleCommand = `ffmpeg -y -i "${outPutPath}/videos/${video.videoID}.mp4" -map 0:s:0? "${outPutPath}/srt/${video.videoID}.srt"`
+                    const subtitleCommand = `ffmpeg -y -i "${outPutPath}/video_dir/${video.videoID}.mp4" -map 0:s:0? "${outPutPath}/srt/${video.videoID}.srt"`
 
                     const currVidTime = videoTime([video])
                     if (totalVideoTime >= maxVideoTime) {
