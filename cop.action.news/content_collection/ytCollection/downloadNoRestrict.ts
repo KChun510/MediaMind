@@ -80,7 +80,7 @@ async function create_metaData(input: { videoID: string, videoName: string }) {
         const oAuthToken = await authorize(JSON.parse(content))
         while (totalVideoTime <= maxVideoTime) {
             try {
-                const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "police footage news", videoLicense: "any", results: 10, videoDuration: "long" })
+                const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "police footage news", videoLicense: "any", results: 50, videoDuration: "long" })
                 const videoDetails = await getVideoDetails(oAuthToken, vidIdRes)
                 for (const video of videoDetails ?? []) {
                     const videoCommand = `yt-dlp --write-sub --write-auto-sub --sub-lang "en.*" --embed-subs --force-overwrites https://www.youtube.com/watch?v=${video.videoID} -o "${outPutPath}/video_dir/${video.videoID}.%(ext)s"`
@@ -94,7 +94,7 @@ async function create_metaData(input: { videoID: string, videoName: string }) {
                     else if (currVidTime >= minVideoTime && currVidTime <= maxVideoTime) {
                         appendInvVidID(video.videoID)
                         console.log(`Downloaded videoID: ${video.videoID}, Len: ${video.videoLen}`)
-                        console.log(execSync(videoCommand, { encoding: 'utf-8' }).toString())
+                        execSync(videoCommand, { encoding: 'utf-8' })
                         console.log(execSync('./convert_to_mp4.sh', { encoding: 'utf-8' }).toString())
                         //console.log(execSync(subtitleCommand, { encoding: 'utf-8' }).toString())
                         await create_metaData({ videoID: video.videoID, videoName: video.videoName })

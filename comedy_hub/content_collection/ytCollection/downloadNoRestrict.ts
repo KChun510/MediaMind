@@ -82,7 +82,7 @@ async function create_metaData(input: { valid_file: string }) {
         const oAuthToken = await authorize(JSON.parse(content))
         while (totalVideoTime <= maxVideoTime) {
             try {
-                const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "HD Gameplay", videoLicense: "any", results: 10, videoDuration: "long" })
+                const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "HD Gameplay", videoLicense: "any", results: 50, videoDuration: "long" })
                 const videoDetails = await getVideoDetails(oAuthToken, vidIdRes)
                 for (const video of videoDetails ?? []) {
                     const videoCommand = `yt-dlp --write-sub --write-auto-sub --sub-lang "en.*" --embed-subs --force-overwrites https://www.youtube.com/watch?v=${video.videoID} -o "${outPutPath}/video_dir/${video.videoID}.%(ext)s"`
