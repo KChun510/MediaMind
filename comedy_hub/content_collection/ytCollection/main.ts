@@ -95,7 +95,7 @@ async function create_metaData_fromTitle(input: { videoID: string, videoTitle: s
         const oAuthToken = await authorize(JSON.parse(content))
         while (totalVideoTime <= maxVideoTime) {
             try {
-                const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "Key and Peele", videoLicense: "any", results: 10, videoDuration: "any" })
+                const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "Key and Peele", videoLicense: "any", results: 50, videoDuration: "any" })
                 const videoDetails = await getVideoDetails(oAuthToken, vidIdRes)
                 for (const video of videoDetails ?? []) {
                     const videoCommand = `yt-dlp --write-sub --write-auto-sub --sub-lang "en.*" --embed-subs --force-overwrites https://www.youtube.com/watch?v=${video.videoID} -o "${outPutPath}/videos/${video.videoID}.%(ext)s"`
