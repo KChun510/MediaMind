@@ -3,7 +3,8 @@ const fs = require('fs')
 const util = require('util')
 const OpenAI = require("openai")
 import { updateRedditPost } from "../../../db_dir/db_actions"
-import { tts_coqui, speed_up_audio } from "../../../syscallAPI"
+import { tts_coqui, speed_up_audio } from "../../../sysCallAPI"
+import { convert_to_ass } from "../../convert_to_ass"
 require('dotenv').config({ path: require('find-config')('.env') })
 
 const gcpClient = new textToSpeech.TextToSpeechClient()
@@ -82,7 +83,10 @@ function parse_transcript(trans: string): string {
 }
 
 function formatTime(time: { secs: number, miliSec: string }): string {
-    const miliSec = time.miliSec ? time.miliSec.slice(0, 3) : "000"
+    let miliSec = time.miliSec ? time.miliSec.slice(0, 3) : "000"
+    if (miliSec.length === 1) {
+        miliSec = `${miliSec}00`
+    }
     const hoursReturn = Math.floor(time.secs / 3600);
     const minutesReturn = Math.floor((time.secs % 3600) / 60);
     const secsReturn = time.secs % 60;
@@ -115,6 +119,8 @@ async function speech_to_text(valid_file: string) {
     updateRedditPost({ postLen: time_stamp, postID: valid_file.slice(0, valid_file.length - 4) })
 
     await writeFile(`${outPutDir}/sub_dir/${valid_file}.srt`, srt_string, 'utf8');
+    await convert_to_ass({ valid_file: valid_file, effect_type: 'random', content_type: 'reddit' })
+
     console.log(`Transcription made, file: ${valid_file}`);
 }
 

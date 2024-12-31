@@ -1,14 +1,15 @@
 #!/bin/bash
-CONT_DIR=/Users/westcoasttoast/Desktop/content_for_system
+CONT_DIR="/home/toastycommand/Desktop/testing_suite_auto_cont/content_for_system/"
+#CONT_DIR=/Users/westcoasttoast/Desktop/content_for_system
 read -p "Name of new Account: " name
 read -p $'What kind of account: \n1) Text_based \n2) Video_based\nEnter your option: ' accountType
 
 case $accountType in 
 	1)
-		cp -r blankAccount ./$name
+		cp -r blankAccount/. ./$name
 		;;
 	2)
-		cp -r blankAccount_videoBased ./$name
+		cp -r blankAccount_videoBased/. ./$name
 		;;
 	*)
 		echo "Not a valid option: $accountType"
