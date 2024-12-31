@@ -218,10 +218,6 @@ export const delVidData = (videoID: string) => {
 	});
 };
 
-
-
-
-
 export const updateVideoData = (arg: VIDEO_SQL_SCHEMA) => {
 	const updateSql = `UPDATE ${TABLE_NAMES.video_cont} SET videoLen = ? where videoID = ?`
 	db.run(updateSql, [arg.videoLen, arg.videoID], function(err: Error | null) {
@@ -232,6 +228,20 @@ export const updateVideoData = (arg: VIDEO_SQL_SCHEMA) => {
 		}
 	})
 }
+
+export const getVideoData = async (input: { videoID: string }): Promise<VIDEO_SQL_SCHEMA> => {
+	return new Promise((resolve, reject) => {
+		const getSql = `SELECT * FROM ${TABLE_NAMES.video_cont} WHERE videoID = ?`;
+		db.get(getSql, [input.videoID], (err: Error | null, row: any) => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve(row);
+			}
+		})
+	})
+}
+
 // Dev F(n)
 /*
 (async function() {
