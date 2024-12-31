@@ -5,10 +5,10 @@ read -p $'What kind of account: \n1) Text_based \n2) Video_based\nEnter your opt
 
 case $accountType in 
 	1)
-		cp -r blankAccount ./$name
+		cp -r blankAccount/. ./$name
 		;;
 	2)
-		cp -r blankAccount_videoBased ./$name
+		cp -r blankAccount_videoBased/. ./$name
 		;;
 	*)
 		echo "Not a valid option: $accountType"
