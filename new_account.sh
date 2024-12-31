@@ -1,6 +1,5 @@
 #!/bin/bash
-CONT_DIR="/home/toastycommand/Desktop/testing_suite_auto_cont/content_for_system/"
-#CONT_DIR=/Users/westcoasttoast/Desktop/content_for_system
+CONT_DIR=/Users/westcoasttoast/Desktop/content_for_system
 read -p "Name of new Account: " name
 read -p $'What kind of account: \n1) Text_based \n2) Video_based\nEnter your option: ' accountType
 
