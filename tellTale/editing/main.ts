@@ -247,7 +247,7 @@ function getRandomInt(min: number, max: number) {
 }
 
 (async function() {
-        switch (getRandomInt(1, 1)) {
+        switch (getRandomInt(0, 1)) {
                 case 0:
                         singleVidPlusStory()
                         break
