@@ -2,7 +2,6 @@ import * as fs from 'fs'
 import * as readline from 'readline'
 import * as path from 'path'
 import { execSync, exec } from 'child_process'
-import { randomInt } from 'crypto'
 require('dotenv').config({ path: require('find-config')('.env') })
 
 enum effect_names {
@@ -102,7 +101,7 @@ export async function convert_to_ass(input: { valid_file: string, effect_type: s
 	let cont_dir = ""
 
 	if (input.effect_type === effect_names.random) {
-		const effectNumb = randomInt(0, 1)
+		const effectNumb = getRandomInt(0, 1)
 		if (effectNumb === 0) {
 			input.effect_type = effect_names.fadeIn_fadeOut
 		} else if (effectNumb === 1) {
