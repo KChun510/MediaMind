@@ -38,7 +38,8 @@ export function create_story_over_single_video(rPostId: string, ytVideoId: strin
 }
 
 export function create_twoVids_OneStory(rPostId: string, ytVideoId1: string, ytVideoId2: string) {
-        const cmd_twoVids_OneStory = `ffmpeg -y -i "${CONT_DIRS.ytVideos}/${ytVideoId1}.mp4" -i "${CONT_DIRS.ytVideos}/${ytVideoId2}.mp4" -i "${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3" -filter_complex "[0:v]scale=1080:960:force_original_aspect_ratio=increase,crop=1080:960[subtop];[1:v]scale=1080:960:force_original_aspect_ratio=increase,crop=1080:960[subbottom];[subtop][subbottom]vstack[stacked];[stacked]ass=${CONT_DIRS.Reddit_sub}/${rPostId}.ass[stacked_with_subs]" -map "[stacked_with_subs]" -map 2:a -c:v libx264 -c:a aac -b:a 192k -preset fast -crf 23 -shortest "${CONT_DIRS.prodVidAndStory}/${rPostId}.mp4"`
+
+        const cmd_twoVids_OneStory = `ffmpeg -y -i "${CONT_DIRS.ytVideos}/${ytVideoId1}.mp4" -i "${CONT_DIRS.ytVideos}/${ytVideoId2}.mp4" -i "${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3" -filter_complex "[0:v]scale=1080:960:force_original_aspect_ratio=increase,crop=1080:960[top];[1:v]scale=1080:960:force_original_aspect_ratio=increase,crop=1080:960[bottom];[top][bottom]vstack[stacked];[stacked]split=2[main][blur];[blur]crop=1080:30:0:950,boxblur=luma_radius=10:luma_power=2:chroma_radius=7:chroma_power=2[feathered];[main][feathered]overlay=0:950:shortest=1[blended];[blended]ass=${CONT_DIRS.Reddit_sub}/${rPostId}.ass[stacked_with_subs]" -map "[stacked_with_subs]" -map 2:a -c:v libx264 -c:a aac -b:a 192k -preset fast -crf 23 -shortest "${CONT_DIRS.prodVidAndStory}/${rPostId}.mp4"`
 
         console.log(execSync(cmd_twoVids_OneStory, { encoding: 'utf-8' }).toString())
 }
