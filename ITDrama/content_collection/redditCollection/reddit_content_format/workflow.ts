@@ -69,8 +69,8 @@ async function text_to_speech(valid_file: string) {
     // Write audio file to audio_dir
     await writeFile(`${outPutDir}/audio_dir/${valid_file}.mp3`, response.audioContent, 'binary');
     console.log(`Audio content written to file: ${valid_file}.mp3`);
-
 }
+
 // Used for SRT output from openAI
 function parse_transcript(trans: string): string {
     const transcript = trans.split("\n")
