@@ -14,13 +14,8 @@ const CONT_DIRS = {
         Reddit_audio: `${CONT_DIR}/reddit_cont/audio_dir`,
         Reddit_sub: `${CONT_DIR}/reddit_cont/sub_dir`,
         Reddit_text: `../content_collection/redditCollection/reddit_content_format/input_content/text_storys`,
-<<<<<<< HEAD
-        ytVideos: `${CONT_DIR}/youTube_cont/videos`,
-        ytSrt: `${CONT_DIR}/youTube_cont/srt`,
-=======
         ytVideos: `${CONT_DIR}/youTube_cont/video_dir`,
         ytSub: `${CONT_DIR}/youTube_cont/sub_dir`,
->>>>>>> main
         prodVidAndStory: `${CONT_DIR}/prod_vids/single_vid_plus_reddit/`,
         prodVidPlusSub: `${CONT_DIR}/prod_vids/video_plus_sub/`,
         prodTwoVidOneMain: `${CONT_DIR}/prod_vids/twoVids_oneMain/`,

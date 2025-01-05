@@ -4,6 +4,7 @@ const util = require('util')
 const OpenAI = require("openai")
 import { updateRedditPost } from "../../../db_dir/db_actions"
 import { tts_coqui, speed_up_audio } from "../../../sysCallAPI"
+import { convert_to_ass } from "../../convert_to_ass"
 require('dotenv').config({ path: require('find-config')('.env') })
 
 const gcpClient = new textToSpeech.TextToSpeechClient()
@@ -68,8 +69,8 @@ async function text_to_speech(valid_file: string) {
     // Write audio file to audio_dir
     await writeFile(`${outPutDir}/audio_dir/${valid_file}.mp3`, response.audioContent, 'binary');
     console.log(`Audio content written to file: ${valid_file}.mp3`);
-
 }
+
 // Used for SRT output from openAI
 function parse_transcript(trans: string): string {
     const transcript = trans.split("\n")
@@ -82,7 +83,10 @@ function parse_transcript(trans: string): string {
 }
 
 function formatTime(time: { secs: number, miliSec: string }): string {
-    const miliSec = time.miliSec ? time.miliSec.slice(0, 3) : "000"
+    let miliSec = time.miliSec ? time.miliSec.slice(0, 3) : "000"
+    if (miliSec.length === 1) {
+        miliSec = `${miliSec}00`
+    }
     const hoursReturn = Math.floor(time.secs / 3600);
     const minutesReturn = Math.floor((time.secs % 3600) / 60);
     const secsReturn = time.secs % 60;
@@ -114,7 +118,9 @@ async function speech_to_text(valid_file: string) {
 
     updateRedditPost({ postLen: time_stamp, postID: valid_file.slice(0, valid_file.length - 4) })
 
-    await writeFile(`${outPutDir}/srt_dir/${valid_file}.srt`, srt_string, 'utf8');
+    await writeFile(`${outPutDir}/sub_dir/${valid_file}.srt`, srt_string, 'utf8');
+    await convert_to_ass({ valid_file: valid_file, effect_type: 'random', content_type: 'reddit' })
+
     console.log(`Transcription made, file: ${valid_file}`);
 }
 
@@ -123,7 +129,6 @@ async function speech_to_text(valid_file: string) {
     const valid_files = await valid_input_files(listed_files)
     console.log(`${valid_files.length} files, to be processed.`)
     for (let i = 0; i < valid_files.length; i++) {
-        // Put the dir creating file here, + write text file of # and des
         await tts_coqui(valid_files[i], true)
         await speed_up_audio({ valid_file: valid_files[i], rate: "1.2" })
         // await text_to_speech(valid_files[i])

@@ -1,7 +1,7 @@
 import { authorize, getVideosByKeyWords, getVideoDetails } from './gcpYtAPI'
 import { writeMetaData, writeMetaData_alt } from '../../sysCallAPI'
 import * as fs from 'fs'
-import { appendVideoItem, appendInvVidID, VIDEO_SQL_SCHEMA } from '../../db_dir/db_actions'
+import { appendVideoItem, appendInvVidID, getVideoData, VIDEO_SQL_SCHEMA } from '../../db_dir/db_actions'
 import { execSync } from 'child_process'
 import { OpenAI } from "openai"
 import * as util from 'util'
@@ -36,10 +36,10 @@ function formatTime(time: { secs: number, miliSec: string }): string {
 }
 
 async function speech_to_text(valid_file: string) {
-    console.log(execSync(`ffmpeg -i ${outPutDir}/youTube_cont/videos/${valid_file}.mp4 -vn -acodec libmp3lame -ab 192k -ar 44100 ${outPutDir}/youTube_cont/videos/${valid_file}.mp3 `, { encoding: 'utf-8' }).toString())
+    console.log(execSync(`ffmpeg -i ${outPutDir}/youTube_cont/video_dir/${valid_file}.mp4 -vn -acodec libmp3lame -ab 192k -ar 44100 ${outPutDir}/youTube_cont/video_dir/${valid_file}.mp3 `, { encoding: 'utf-8' }).toString())
 
     const transcription = await openai.audio.transcriptions.create({
-        file: fs.createReadStream(`${outPutDir}/youTube_cont/videos/${valid_file}.mp3`),
+        file: fs.createReadStream(`${outPutDir}/youTube_cont/video_dir/${valid_file}.mp3`),
         model: "whisper-1",
         response_format: "verbose_json",
         timestamp_granularities: ["word"]
@@ -55,16 +55,14 @@ async function speech_to_text(valid_file: string) {
     console.log(`Transcription made, file: ${valid_file}`);
 }
 
-async function create_metaData(input: { valid_file: string }) {
-    const srtContent = await readFile(`${outPutDir}/youTube_cont/srt/${input.valid_file}.srt`, 'utf8');
-
+async function create_metaData(input: { videoID: string, videoName: string }) {
     const meta_data = await openai.chat.completions.create({
-        messages: [{ role: "system", content: "You are tasked with analyzing text, creating a one sentance description in a entertaining and genuine tone of the text and a list of (4-6) popular hashtags about the text. You output the single sentance, then seperated by a new line you list the hashtags together seperated by one space between each one." },
-        { role: "user", content: `Here is the text analyze: ${srtContent}` }],
+        messages: [{ role: "system", content: "You are tasked with analyzing a video title, creating a one sentance description in a entertaining and genuine tone of the text and a list of (4-6) popular hashtags about the text. You output the single sentance, then seperated by a new line you list the hashtags together seperated by one space between each one." },
+        { role: "user", content: `Here is the video title: ${input.videoName}` }],
         model: "gpt-4o-mini",
     });
     const metaContent = meta_data.choices[0].message.content
-    writeMetaData_alt(input.valid_file, metaContent ?? "")
+    writeMetaData_alt(input.videoID, metaContent ?? "")
 }
 
 (async function() {
@@ -85,9 +83,9 @@ async function create_metaData(input: { valid_file: string }) {
                 const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "police footage news", videoLicense: "any", results: 50, videoDuration: "long" })
                 const videoDetails = await getVideoDetails(oAuthToken, vidIdRes)
                 for (const video of videoDetails ?? []) {
-                    const videoCommand = `yt-dlp --write-sub --write-auto-sub --sub-lang "en.*" --embed-subs --force-overwrites https://www.youtube.com/watch?v=${video.videoID} -o "${outPutPath}/videos/${video.videoID}.%(ext)s"`
+                    const videoCommand = `yt-dlp --write-sub --write-auto-sub --sub-lang "en.*" --embed-subs --force-overwrites https://www.youtube.com/watch?v=${video.videoID} -o "${outPutPath}/video_dir/${video.videoID}.%(ext)s"`
 
-                    const subtitleCommand = `ffmpeg -y -i "${outPutPath}/videos/${video.videoID}.mp4" -map 0:s:0? "${outPutPath}/srt/${video.videoID}.srt"`
+                    const subtitleCommand = `ffmpeg -y -i "${outPutPath}/video_dir/${video.videoID}.mp4" -map 0:s:0? "${outPutPath}/srt/${video.videoID}.srt"`
 
                     const currVidTime = videoTime([video])
                     if (totalVideoTime >= maxVideoTime) {
@@ -96,10 +94,10 @@ async function create_metaData(input: { valid_file: string }) {
                     else if (currVidTime >= minVideoTime && currVidTime <= maxVideoTime) {
                         appendInvVidID(video.videoID)
                         console.log(`Downloaded videoID: ${video.videoID}, Len: ${video.videoLen}`)
-                        console.log(execSync(videoCommand, { encoding: 'utf-8' }).toString())
+                        execSync(videoCommand, { encoding: 'utf-8' })
                         console.log(execSync('./convert_to_mp4.sh', { encoding: 'utf-8' }).toString())
-                        console.log(execSync(subtitleCommand, { encoding: 'utf-8' }).toString())
-                        await create_metaData({ valid_file: video.videoID })
+                        //console.log(execSync(subtitleCommand, { encoding: 'utf-8' }).toString())
+                        await create_metaData({ videoID: video.videoID, videoName: video.videoName })
                         appendVideoItem({ videoID: video.videoID, videoLen: video.videoLen, videoName: video.videoName })
                         totalVideoTime += currVidTime
                     } else {
