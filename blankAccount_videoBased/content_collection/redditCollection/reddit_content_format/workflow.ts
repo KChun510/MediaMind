@@ -82,7 +82,10 @@ function parse_transcript(trans: string): string {
 }
 
 function formatTime(time: { secs: number, miliSec: string }): string {
-    const miliSec = time.miliSec ? time.miliSec.slice(0, 3) : "000"
+    let miliSec = time.miliSec ? time.miliSec.slice(0, 3) : "000"
+    if (miliSec.length === 1) {
+        miliSec = `${miliSec}00`
+    }
     const hoursReturn = Math.floor(time.secs / 3600);
     const minutesReturn = Math.floor((time.secs % 3600) / 60);
     const secsReturn = time.secs % 60;

@@ -37,28 +37,16 @@ export function writeMetaData(rPostID: string, textCont: string) {
 }
 
 export function create_story_over_single_video(rPostId: string, ytVideoId: string) {
-        const cmd_story_over_single_video = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3 -i ${CONT_DIRS.Reddit_sub}/${rPostId}.txt.srt -c:v libx264 -c:a aac -b:a 192k -vf "scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(1080-iw)/2:(1920-ih)/2,subtitles=${CONT_DIRS.Reddit_sub}/${rPostId}.txt.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=2,BorderStyle=1,Alignment=2,MarginV=50'" -map 0:v -map 1:a -shortest -y ${CONT_DIRS.prodVidAndStory}${rPostId}.mp4`;
+        const cmd_story_over_single_video = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3 -i ${CONT_DIRS.Reddit_sub}/${rPostId}.ass -c:v libx264 -c:a aac -b:a 192k -vf "scale=-1:1920:force_original_aspect_ratio=decrease,crop=1080:1920,subtitles=${CONT_DIRS.Reddit_sub}/${rPostId}.ass" -map 0:v -map 1:a -shortest -y ${CONT_DIRS.prodVidAndStory}${rPostId}.mp4`;
 
-        const cmd_story_over_single_video2 = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3 -i ${CONT_DIRS.Reddit_sub}/${rPostId}.txt.srt -c:v libx264 -c:a aac -b:a 192k -vf "scale=-1:1920:force_original_aspect_ratio=decrease,crop=1080:1920,subtitles=${CONT_DIRS.Reddit_sub}/${rPostId}.txt.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=10'" -map 0:v -map 1:a -shortest -y ${CONT_DIRS.prodVidAndStory}${rPostId}.mp4`;
-        console.log(execSync(cmd_story_over_single_video2).toString())
+        console.log(execSync(cmd_story_over_single_video).toString())
 }
 
 export function create_twoVids_OneStory(rPostId: string, ytVideoId1: string, ytVideoId2: string) {
-        const cmd_twoVids_OneStory = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId1}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId2}.mp4 -i ${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3 -i ${CONT_DIRS.Reddit_sub}/${rPostId}.txt.srt \
-        -filter_complex "[0:v]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[subtop]; \
-        [1:v]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[subbottom]; \
-        [subtop][subbottom]vstack[stacked]; \
-        [stacked]subtitles=${CONT_DIRS.Reddit_sub}/${rPostId}.txt.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=10'[out]" \
-        -map "[out]" -map 2:a -c:v libx264 -c:a aac -b:a 192k -shortest ${CONT_DIRS.prodVidAndStory}${rPostId}.mp4`;
 
-        const cmd_twoVids_OneStory2 = `ffmpeg -y -i ${CONT_DIRS.ytVideos}/${ytVideoId1}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId2}.mp4 -i ${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3 -i ${CONT_DIRS.Reddit_sub}/${rPostId}.txt.srt \
-        -filter_complex "[0:v]scale=iw*0.9:-1,crop=1080:960:(in_w-1080)/2:(in_h-960)/2[subtop]; \
-        [1:v]scale=iw*0.9:-1,crop=1080:960:(in_w-1080)/2:(in_h-960)/2[subbottom]; \
-        [subtop][subbottom]vstack[stacked]; \
-        [stacked]subtitles=${CONT_DIRS.Reddit_sub}/${rPostId}.txt.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=10'[out]" \
-        -map "[out]" -map 2:a -c:v libx264 -c:a aac -b:a 192k -shortest ${CONT_DIRS.prodVidAndStory}${rPostId}.mp4`
+        const cmd_twoVids_OneStory = `ffmpeg -y -i "${CONT_DIRS.ytVideos}/${ytVideoId1}.mp4" -i "${CONT_DIRS.ytVideos}/${ytVideoId2}.mp4" -i "${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3" -filter_complex "[0:v]scale=1080:960:force_original_aspect_ratio=increase,crop=1080:960[top];[1:v]scale=1080:960:force_original_aspect_ratio=increase,crop=1080:960[bottom];[top][bottom]vstack[stacked];[stacked]split=2[main][blur];[blur]crop=1080:30:0:950,boxblur=luma_radius=10:luma_power=2:chroma_radius=7:chroma_power=2[feathered];[main][feathered]overlay=0:950:shortest=1[blended];[blended]ass=${CONT_DIRS.Reddit_sub}/${rPostId}.ass[stacked_with_subs]" -map "[stacked_with_subs]" -map 2:a -c:v libx264 -c:a aac -b:a 192k -preset fast -crf 23 -shortest "${CONT_DIRS.prodVidAndStory}/${rPostId}.mp4"`
 
-        console.log(execSync(cmd_twoVids_OneStory2, { encoding: 'utf-8' }).toString())
+        console.log(execSync(cmd_twoVids_OneStory, { encoding: 'utf-8' }).toString())
 }
 
 export function cut_video(startTime: string, videoID: string) {
