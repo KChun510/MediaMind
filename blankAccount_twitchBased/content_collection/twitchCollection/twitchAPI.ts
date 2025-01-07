@@ -1,5 +1,5 @@
 import fs from 'fs'
-import * as dotenv from 'dotenv';
+import * as dotenv from 'dotenv'
 dotenv.config()
 
 const clientID = process.env.CLIENT_ID ?? ""
@@ -104,6 +104,9 @@ async function getClips(input: { accessToken: string, broadID?: string | undefin
 				method: "GET",
 				headers: new Headers({ Authorization: `Bearer ${input.accessToken}`, 'Client-Id': clientID })
 			}).then((responce) => responce.json())
+
+			console.log(responce)
+
 
 			const data = responce.data
 			nextPage = responce.pagination.cursor
