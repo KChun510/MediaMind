@@ -75,14 +75,17 @@ async function getAccessToken() {
 
 /*--- The Start of different Twitch End Points/ Write your own request ---*/
 
-async function getUsers(accessToken: string) {
+async function getUsers(input: { clientID: string }) {
+	const accessToken = await getAccessToken()
 	return (await fetch('https://api.twitch.tv/helix/users?login=kaicenat', {
 		method: "GET",
-		headers: new Headers({ Authorization: `Bearer ${accessToken}`, 'Client-Id': clientID }),
+		headers: new Headers({ Authorization: `Bearer ${accessToken}`, 'Client-Id': input.clientID }),
 	})).json()
 }
 
-async function getClips(input: { accessToken: string, broadID?: string | undefined, gameID?: string | undefined } = { accessToken: "", broadID: undefined, gameID: undefined }) {
+export async function getClips(input: { broadID?: string | undefined, gameID?: string | undefined } = { broadID: undefined, gameID: undefined }) {
+	const accessToken = await getAccessToken()
+
 	let urlParam = ''
 	if (input.gameID === undefined && input.broadID !== undefined) {
 		urlParam = `https://api.twitch.tv/helix/clips?broadcaster_id=${input.broadID}`
@@ -101,11 +104,8 @@ async function getClips(input: { accessToken: string, broadID?: string | undefin
 		while (validVideoLog === undefined || validVideoLog.length < 10) {
 			const responce: any = await fetch(urlParam + "&after=" + nextPage, {
 				method: "GET",
-				headers: new Headers({ Authorization: `Bearer ${input.accessToken}`, 'Client-Id': clientID })
+				headers: new Headers({ Authorization: `Bearer ${accessToken}`, 'Client-Id': clientID })
 			}).then((responce) => responce.json())
-
-			console.log(responce)
-
 
 			const data = responce.data
 			nextPage = responce.pagination.cursor
@@ -127,9 +127,6 @@ async function getClips(input: { accessToken: string, broadID?: string | undefin
 }
 
 (async function main() {
-	const accessToken = await getAccessToken()
-	//console.log(await getUsers(accessToken))
-	const clips = await getClips({ accessToken: accessToken, broadID: "641972806" })
+	const clips = await getClips({ broadID: "641972806" })
 	console.log(clips)
 })()
-
