@@ -1,6 +1,5 @@
 import fs from 'fs'
-import * as dotenv from 'dotenv'
-dotenv.config()
+require('dotenv').config({ path: require('find-config')('.env') })
 
 const clientID = process.env.CLIENT_ID ?? ""
 const clientSecret = process.env.CLIENT_SECRET ?? ""
