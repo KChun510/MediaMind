@@ -1,5 +1,5 @@
 import { selectAllFromMainVideo, selectAllFromVideo, selectAllFromReddit, delMainVidData, delVidData, delRedditData, updateVideoData, REDDIT_POST_SCHEMA, VIDEO_SQL_SCHEMA } from '../db_dir/db_actions'
-import { create_story_over_single_video, cut_video, delete_video, delete_reddit_cont, segment_clip, segment_clip_alt, segment_clip_twoVidsOneMain, downloadYTVideo, create_twoVids_OneStory, create_srt_over_video, create_twoVids_OneMain, create_png_video } from '../sysCallAPI'
+import { single_video_self_layered, create_story_over_single_video, cut_video, delete_video, delete_reddit_cont, segment_clip, segment_clip_alt, segment_clip_twoVidsOneMain, downloadYTVideo, create_twoVids_OneStory, create_srt_over_video, create_twoVids_OneMain, create_png_video } from '../sysCallAPI'
 require('dotenv').config({ path: require('find-config')('.env') })
 
 async function gather_single_story() {
@@ -303,6 +303,19 @@ async function clipWithPngOverLay() {
         }
 }
 
+async function create_single_self_layered() {
+        console.log("Editiing begun:\nFormat: singleVid self layered")
+        try {
+                const video = await selectAllFromMainVideo(1)
+                await single_video_self_layered(video[0].videoID)
+                segment_clip_alt(video[0].videoID, 50)
+                mainVideoCleanUp(video[0].videoID)
+                console.log(`Clip made: ${video[0].videoID}`)
+        } catch (e) {
+                console.error(`Error while editing: ${e}`)
+        }
+}
+
 function getRandomInt(min: number, max: number) {
         min = Math.ceil(min);
         max = Math.floor(max);
@@ -310,7 +323,7 @@ function getRandomInt(min: number, max: number) {
 }
 
 (async function() {
-        switch (getRandomInt(3, 3)) {
+        switch (getRandomInt(5, 5)) {
                 case 0:
                         singleVidPlusStory()
                         break
@@ -325,6 +338,9 @@ function getRandomInt(min: number, max: number) {
                         break
                 case 4:
                         clipWithPngOverLay()
+                        break
+                case 5:
+                        create_single_self_layered()
                         break
         }
 })()

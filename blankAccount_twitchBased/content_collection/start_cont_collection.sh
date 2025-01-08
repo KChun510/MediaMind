@@ -1,9 +1,9 @@
 #!/bin/bash
 source ../.env
 
-# Script to download YT videos
-echo 'YouTube videos has begun.'
-cd './ytCollection'
+# Script to download twitch
+echo 'Twitch clips has begun.'
+cd './twitchCollection/'
 npx tsx 'main.ts'
 
 

@@ -1,7 +1,7 @@
 #!/bin/bash
-CONT_DIR=/Users/westcoasttoast/Desktop/content_for_system
+CONT_DIR=/home/toastycommand/Desktop/content_for_system
 read -p "Name of new Account: " name
-read -p $'What kind of account: \n1) Text_based \n2) Video_based\nEnter your option: ' accountType
+read -p $'What kind of account: \n1) Text_based \n2) Video_based \n3) Twitch_based\nEnter your option: ' accountType
 
 case $accountType in 
 	1)
@@ -9,6 +9,9 @@ case $accountType in
 		;;
 	2)
 		cp -r blankAccount_videoBased/. ./$name
+		;;
+	3)
+		cp -r blankAccount_twitchBased/. ./$name
 		;;
 	*)
 		echo "Not a valid option: $accountType"
@@ -22,5 +25,4 @@ mkdir -p $CONT_DIR/$name/prod_vids $CONT_DIR/$name/prod_vids/single_vid_plus_red
 mkdir -p $CONT_DIR/$name/prod_vids $CONT_DIR/$name/prod_vids/video_plus_sub
 mkdir -p $CONT_DIR/$name/prod_vids $CONT_DIR/$name/prod_vids/twoVids_oneMain
  
-
-printf "OPENAI_API_KEY=''\nCONT_DIR='$CONT_DIR/$name'" > ./$name/.env
+printf "OPENAI_API_KEY=''\nCONT_DIR='$CONT_DIR/$name'\nCLIENT_ID=''\nCLIENT_SECRET=''" > ./$name/.env

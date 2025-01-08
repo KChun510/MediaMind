@@ -79,10 +79,15 @@ async function create_metaData_fromTitle(input: { videoID: string, videoTitle: s
 	writeMetaData_twoVids_oneMain(input.videoID, metaContent ?? "")
 }
 
-function formatTimeFromSeconds(seconds: string) {
-	const splitSec = seconds.split(".")
-	const sec = seconds[0]
-	const mili = seconds[1]
+function formatTimeFromSeconds(seconds: number) {
+	const second_str = String(seconds)
+	const splitSec = second_str.split(".")
+	const sec = Number(splitSec[0])
+	if (sec >= 60) {
+		return "00:01:00"
+	} else {
+		return `00:00:${sec}`
+	}
 }
 
 type twitchClip = {
@@ -97,54 +102,38 @@ function getClipDetails(clipRes: twitchClip[]) {
 	for (const clipObj of clipRes) {
 		const clipID = clipObj.id
 		const clipName = clipObj.title
-		const length = await formatTimeFromSeconds(clipObj.duration)
+		const length = formatTimeFromSeconds(clipObj.duration)
+		clipLog.push({ videoID: clipID, videoLen: length, videoName: clipName })
 	}
+
+	return clipLog
 }
 
 (async function() {
-	// Max is 30 mins
-	//    const maxVideoTime = 1800
 	const maxVideoTime = 600
-	const minVideoTime = 120
-	let totalVideoTime = 0
+	const minVideoTime = 5
 	const outPutPath = `${process.env.CONT_DIR}/youTube_cont`
-	fs.readFile('client_secret.json', 'utf8', async function processClientSecrets(err, content) {
-		if (err) {
-			console.log('Error loading client secret file: ' + err);
-			return;
-		}
-		// Authorize a client with the loaded credentials, then call the YouTube API.
-		while (totalVideoTime <= maxVideoTime) {
-			try {
-				const vidIdRes = await getClips({ broadID: "641972806" })
+	try {
+		const vidIdRes = await getClips({ validClips: 1, broadID: "641972806" })
+		const videoDetails = getClipDetails(vidIdRes)
 
-				//const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "Key and Peele", videoLicense: "any", results: 50, videoDuration: "any" })
-				//const videoDetails = await getVideoDetails(oAuthToken, vidIdRes)
-				for (const video of videoDetails ?? []) {
-					const videoCommand = `yt-dlp --write-sub --write-auto-sub --sub-lang "en.*" --embed-subs --force-overwrites https://www.youtube.com/watch?v=${video.videoID} -o "${outPutPath}/video_dir/${video.videoID}.%(ext)s"`
-
-					const currVidTime = videoTime([video])
-					if (totalVideoTime >= maxVideoTime) {
-						return
-					}
-					else if (currVidTime >= minVideoTime && currVidTime <= maxVideoTime) {
-						appendInvVidID(video.videoID)
-						console.log(`Downloaded videoID: ${video.videoID}, Len: ${video.videoLen}`)
-						console.log(execSync(videoCommand, { encoding: 'utf-8' }).toString())
-						console.log(execSync('./convert_to_mp4.sh', { encoding: 'utf-8' }).toString())
-						await create_metaData_fromTitle({ videoID: video.videoID, videoTitle: video.videoName })
-						appendMainVideoItem({ videoID: video.videoID, videoLen: video.videoLen, videoName: video.videoName })
-						totalVideoTime += currVidTime
-					} else {
-						appendInvVidID(video.videoID)
-					}
-				}
-			} catch (e) {
-				console.log(`\n Quitting download exec: ${e}  \n`)
-				return
+		for (const video of videoDetails ?? []) {
+			const videoCommand = `yt-dlp https://clips.twitch.tv/${video.videoID} -o "${outPutPath}/video_dir/${video.videoID}.%(ext)s"`
+			const currVidTime = videoTime([video])
+			if (currVidTime >= minVideoTime && currVidTime <= maxVideoTime) {
+				appendInvVidID(video.videoID)
+				console.log(`Downloaded videoID: ${video.videoID}, Len: ${video.videoLen}`)
+				console.log(execSync(videoCommand, { encoding: 'utf-8' }).toString())
+				await create_metaData_fromTitle({ videoID: video.videoID, videoTitle: video.videoName })
+				appendMainVideoItem({ videoID: video.videoID, videoLen: video.videoLen, videoName: video.videoName })
+			} else {
+				appendInvVidID(video.videoID)
 			}
 		}
-	});
+	} catch (e) {
+		console.log(`\n Quitting download exec: ${e}  \n`)
+		return
+	}
 })()
 
 

@@ -254,6 +254,11 @@ export async function create_png_video(ytVideoId: string) {
         execSync(cmd_with_png_overlay, { encoding: 'utf-8', maxBuffer: 1024 * 1024 * 10 })
 }
 
+export async function single_video_self_layered(ytVideoId: string) {
+        const cmd = `ffmpeg -y -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -filter_complex "[0:v]scale=1920:1080:force_original_aspect_ratio=intra[foreground];[0:v]scale=1920:1080,boxblur=20:10[background];[background][foreground]overlay=0:0[overlayed]" -map "[overlayed]" -map 0:a -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`;
+        execSync(cmd, { encoding: 'utf-8', maxBuffer: 1024 * 1024 * 10 })
+}
+
 const cmd_stacked_vids = `ffmpeg -i ${CONT_DIRS.ytVideos}/Q-TQQE1y68c.webm -t 00:00:10 -i ${CONT_DIRS.ytVideos}/si0Lp1SLHXg.webm -t 00:00:10 -filter_complex "[0]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[top]; 
          [1]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[bottom]; 
          [top][bottom]vstack,scale=1080:1920[out]; 

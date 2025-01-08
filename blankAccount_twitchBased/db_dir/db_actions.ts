@@ -76,6 +76,7 @@ export const appendVideoItem = (arg: VIDEO_SQL_SCHEMA) => {
 
 export const appendMainVideoItem = (arg: VIDEO_SQL_SCHEMA) => {
 	const insertSql = `INSERT INTO ${TABLE_NAMES.mainVideo_cont} (videoID, videoLen, videoName) VALUES (?, ?, ?)`;
+	console.log(arg)
 	db.run(insertSql, [arg.videoID, arg.videoLen, arg.videoName], function(err: Error | null) {
 		if (err) {
 			console.log(err.message);
@@ -196,7 +197,7 @@ export const getTotalVideoTime = (): Promise<number | Error> => {
 	})
 }
 
-export const getInvVideoIds = () => {
+export const getInvVideoIds = (): Promise<string[]> => {
 	return new Promise((res, rej) => {
 		db.all(`SELECT * FROM ${TABLE_NAMES.invalid_videos}`, (err, rows: { videoID: string }[]) => {
 			if (err) {

@@ -1,5 +1,6 @@
 import fs from 'fs'
 require('dotenv').config({ path: require('find-config')('.env') })
+import { getInvVideoIds } from '../../db_dir/db_actions'
 
 const clientID = process.env.CLIENT_ID ?? ""
 const clientSecret = process.env.CLIENT_SECRET ?? ""
@@ -83,8 +84,9 @@ async function getUsers(input: { clientID: string }) {
 	})).json()
 }
 
-export async function getClips(input: { broadID?: string | undefined, gameID?: string | undefined } = { broadID: undefined, gameID: undefined }) {
+export async function getClips(input: { validClips: number, broadID?: string | undefined, gameID?: string | undefined } = { validClips: 1, broadID: undefined, gameID: undefined }) {
 	const accessToken = await getAccessToken()
+	const invClips = await getInvVideoIds()
 
 	let urlParam = ''
 	if (input.gameID === undefined && input.broadID !== undefined) {
@@ -101,7 +103,7 @@ export async function getClips(input: { broadID?: string | undefined, gameID?: s
 	let validVideoLog: any[] = []
 
 	try {
-		while (validVideoLog === undefined || validVideoLog.length < 10) {
+		while (validVideoLog === undefined || validVideoLog.length < input.validClips) {
 			const responce: any = await fetch(urlParam + "&after=" + nextPage, {
 				method: "GET",
 				headers: new Headers({ Authorization: `Bearer ${accessToken}`, 'Client-Id': clientID })
@@ -110,12 +112,10 @@ export async function getClips(input: { broadID?: string | undefined, gameID?: s
 			const data = responce.data
 			nextPage = responce.pagination.cursor
 
-			const validVideos = data.filter((obj: any) => obj.video_id !== '');
-
 			for (const obj of data) {
-				if (validVideoLog.length >= 10) {
+				if (validVideoLog.length >= input.validClips) {
 					break
-				} else if (obj.video_id !== '') {
+				} else if (obj.video_id !== '' && !invClips.includes(obj.id)) {
 					validVideoLog.push(obj)
 				}
 			}
@@ -125,8 +125,11 @@ export async function getClips(input: { broadID?: string | undefined, gameID?: s
 		throw new Error(`E getting clips: ${e}`)
 	}
 }
+/*
+(async function() {
+	const vidIdRes = await getClips({ validClips: 1, broadID: "641972806" })
+	console.log(vidIdRes)
 
-(async function main() {
-	const clips = await getClips({ broadID: "641972806" })
-	console.log(clips)
-})()
+}())
+*/
+
