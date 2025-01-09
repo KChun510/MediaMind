@@ -1,5 +1,6 @@
 .env
 client_secret.json
+./blankAccount_twitchBased/content_collection/twitchCollection/twitch_clientSecret.json
 content_collection/redditCollection/reddit_content_format/input_content/
 content_collection/redditCollection/reddit_content_format/invalid_files/
 content_collection/redditCollection/reddit_content_format/input_content/text_storys
