@@ -76,7 +76,6 @@ export const appendVideoItem = (arg: VIDEO_SQL_SCHEMA) => {
 
 export const appendMainVideoItem = (arg: VIDEO_SQL_SCHEMA) => {
 	const insertSql = `INSERT INTO ${TABLE_NAMES.mainVideo_cont} (videoID, videoLen, videoName) VALUES (?, ?, ?)`;
-	console.log(arg)
 	db.run(insertSql, [arg.videoID, arg.videoLen, arg.videoName], function(err: Error | null) {
 		if (err) {
 			console.log(err.message);

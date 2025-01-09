@@ -76,7 +76,7 @@ async function create_metaData_fromTitle(input: { videoID: string, videoTitle: s
 		model: "gpt-4o-mini",
 	});
 	const metaContent = meta_data.choices[0].message.content
-	writeMetaData_twoVids_oneMain(input.videoID, metaContent ?? "")
+	writeMetaData_VidPlusSub(input.videoID, metaContent ?? "")
 }
 
 function formatTimeFromSeconds(seconds: number) {
