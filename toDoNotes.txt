@@ -1,0 +1,6 @@
+Account: famous.twitch.collection
+- Improve Hashtags and text desctiption
+- Randomly select Different twitch users
+- And pass the user + video name into chat gpt.
+
+

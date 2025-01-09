@@ -79,6 +79,17 @@ async function create_metaData_fromTitle(input: { videoID: string, videoTitle: s
 	writeMetaData_VidPlusSub(input.videoID, metaContent ?? "")
 }
 
+async function create_metaData_fromText(input: { videoID: string, videoTitle: string, creatorName: string }) {
+
+	const meta_data = await openai.chat.completions.create({
+		messages: [{ role: "system", content: "You are tasked with analyzing a twitch video title with the twitch creators name, creating a one sentance description in a entertaining tone of the text and a list of (4-6) popular hashtags about the text. You output the single sentance, then seperated by a new line you list the hashtags together seperated by one space between each one." },
+		{ role: "user", content: `Here is video title: ${input.videoTitle}, and here is the creator name: ${input.creatorName}` }],
+		model: "gpt-4o-mini",
+	});
+	const metaContent = meta_data.choices[0].message.content
+	writeMetaData_VidPlusSub(input.videoID, metaContent ?? "")
+}
+
 function formatTimeFromSeconds(seconds: number) {
 	const second_str = String(seconds)
 	const splitSec = second_str.split(".")
@@ -105,16 +116,40 @@ function getClipDetails(clipRes: twitchClip[]) {
 		const length = formatTimeFromSeconds(clipObj.duration)
 		clipLog.push({ videoID: clipID, videoLen: length, videoName: clipName })
 	}
-
 	return clipLog
+}
+
+enum twitchCreators {
+	"Kai Cenat" = "641972806",
+	"Jason the ween" = "107117952",
+	"Lacy" = "494543675",
+	"Caseoh" = "267160288",
+}
+
+function selectStreamer(): { streamer: string, id: string } {
+	const min = Math.ceil(1);
+	const max = Math.floor(Object.keys(twitchCreators).length);
+	switch (Math.floor(Math.random() * (max - min + 1)) + min) {
+		case 1:
+			return { streamer: "Kai Cenat", id: twitchCreators['Kai Cenat'] }
+		case 2:
+			return { streamer: "Jason the ween", id: twitchCreators['Jason the ween'] }
+		case 3:
+			return { streamer: "Lacy", id: twitchCreators['Lacy'] }
+		case 4:
+			return { streamer: "Caseoh", id: twitchCreators['Caseoh'] }
+		default:
+			return { streamer: "", id: "" }
+	}
 }
 
 (async function() {
 	const maxVideoTime = 600
 	const minVideoTime = 5
 	const outPutPath = `${process.env.CONT_DIR}/youTube_cont`
+	const chosenStreamer = selectStreamer()
 	try {
-		const vidIdRes = await getClips({ validClips: 1, broadID: "641972806" })
+		const vidIdRes = await getClips({ validClips: 1, broadID: chosenStreamer?.id })
 		const videoDetails = getClipDetails(vidIdRes)
 
 		for (const video of videoDetails ?? []) {
@@ -124,7 +159,7 @@ function getClipDetails(clipRes: twitchClip[]) {
 				appendInvVidID(video.videoID)
 				console.log(`Downloaded videoID: ${video.videoID}, Len: ${video.videoLen}`)
 				console.log(execSync(videoCommand, { encoding: 'utf-8' }).toString())
-				await create_metaData_fromTitle({ videoID: video.videoID, videoTitle: video.videoName })
+				await create_metaData_fromText({ videoID: video.videoID, videoTitle: video.videoName, creatorName: chosenStreamer.streamer })
 				appendMainVideoItem({ videoID: video.videoID, videoLen: video.videoLen, videoName: video.videoName })
 			} else {
 				appendInvVidID(video.videoID)
