@@ -248,18 +248,9 @@ export async function create_png_video(ytVideoId: string) {
 }
 
 export async function single_video_self_layered(ytVideoId: string) {
-        const cmd = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -filter_complex "[0:v]scale=1080:-1:force_original_aspect_ratio=decrease[padded];[1:v]scale=1080:1920,boxblur=20:10[blurred];[blurred][padded]overlay=(W-w)/2:(H-h)/2[backgrounded]" -map "[backgrounded]" -map 0:a -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k -aspect 9:16 ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`
+        const cmd = `ffmpeg -y -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ../custom_assets/png_assets/twitch_overlay.png -filter_complex "[0:v]scale=1080:-1:force_original_aspect_ratio=decrease[padded];[1:v]scale=1080:1920,boxblur=20:10,hue=h=300:s=2:b=0.2[blurred];[blurred][padded]overlay=(W-w)/2:(H-h)/2[backgrounded];[backgrounded][2:v]overlay=(main_w-overlay_w)/2:(main_h-overlay_h)/2+550[final]" -map "[final]" -map 0:a -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k -aspect 9:16 ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`;
 
-        const cmd2 = `ffmpeg -y -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -filter_complex "[0:v]scale=1080:-1:force_original_aspect_ratio=decrease[padded];[1:v]scale=1080:1920,boxblur=20:10,hue=h=300:s=1[blurred];[blurred][padded]overlay=(W-w)/2:(H-h)/2[backgrounded]" -map "[backgrounded]" -map 0:a -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k -aspect 9:16 ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`;
-
-        const cmd3 = `ffmpeg -y -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -filter_complex "[0:v]scale=1080:-1:force_original_aspect_ratio=decrease[padded];[1:v]scale=1080:1920,boxblur=20:10,hue=h=300:s=2:b=0.2[blurred];[blurred][padded]overlay=(W-w)/2:(H-h)/2[backgrounded]" -map "[backgrounded]" -map 0:a -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k -aspect 9:16 ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`;
-
-        const cmd4 = `ffmpeg -y -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -filter_complex "[0:v]scale=1080:-1:force_original_aspect_ratio=decrease[padded];[1:v]scale=1080:1920,boxblur=20:10,hue=h=280:s=3:b=0.25[blurred];[blurred][padded]overlay=(W-w)/2:(H-h)/2[backgrounded]" -map "[backgrounded]" -map 0:a -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k -aspect 9:16 ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`;
-
-
-
-
-        execSync(cmd3, { encoding: 'utf-8', maxBuffer: 1024 * 1024 * 10 })
+        execSync(cmd, { encoding: 'utf-8', maxBuffer: 1024 * 1024 * 10 })
 }
 
 const cmd_stacked_vids = `ffmpeg -i ${CONT_DIRS.ytVideos}/Q-TQQE1y68c.webm -t 00:00:10 -i ${CONT_DIRS.ytVideos}/si0Lp1SLHXg.webm -t 00:00:10 -filter_complex "[0]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[top]; 

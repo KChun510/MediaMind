@@ -1,1 +1,0 @@
-ffmpeg -i ConfidentNiceBurritoPraiseIt-YAH_D-jr2WMR5Xhq000.mp4 -i ~/Desktop/MediaMind/blankAccount_twitchBased/custom_assets/png_assets/twitch_overlay.png -filter_complex "overlay=(main_w-overlay_w)/2:(main_h-overlay_h)/2 + 550" output_video.mp4
