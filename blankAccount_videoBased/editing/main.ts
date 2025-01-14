@@ -260,7 +260,6 @@ async function twoVids_oneMain() {
 
         console.log("\nVideo Editing begun. \nFormat: TwoVids one Main")
         try {
-
                 // Updade the current video time (i.e: Video2Time - video1Time)
                 updateTime(video2, video1Time)
                 create_twoVids_OneMain({ ytVideoId1: video1.videoID, ytVideoId2: video2.videoID })
