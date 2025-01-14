@@ -27,7 +27,7 @@ box_height=40
 siren_height=30
 
 # Path to the siren PNG image (change to your actual file path)
-siren_image="../custom_shellScripts/png_assets/siren.png"  # Replace with actual siren image file
+siren_image="./png_assets/siren.png"  # Replace with actual siren image file
 
 # Resize the siren to the fixed height once
 resized_siren="resized_siren.png"
