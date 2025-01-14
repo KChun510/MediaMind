@@ -229,7 +229,7 @@ export async function create_png_overlay(input: { ytVideoID: string }) {
 
         const quotedArgs = [input.ytVideoID, ...formatted_text.map(text => `"${text}"`)]
 
-        const command = `../custom_shellScripts/headline_png.sh ${quotedArgs.join(' ')}`
+        const command = `../custom_assets/headline_png.sh ${quotedArgs.join(' ')}`
 
         console.log(execSync(command, { encoding: 'utf-8' }).toString())
 }
@@ -248,7 +248,7 @@ export async function create_png_video(ytVideoId: string) {
 }
 
 export async function single_video_self_layered(ytVideoId: string) {
-        const cmd = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -filter_complex "[0:v]scale=1080:-1:force_original_aspect_ratio=decrease[padded];[1:v]scale=1080:1920,boxblur=20:10[blurred];[blurred][padded]overlay=(W-w)/2:(H-h)/2[backgrounded]" -map "[backgrounded]" -map 0:a -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k -aspect 9:16 ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`
+        const cmd = `ffmpeg -y -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ../custom_assets/png_assets/twitch_overlay.png -filter_complex "[0:v]scale=1080:-1:force_original_aspect_ratio=decrease[padded];[1:v]scale=1080:1920,boxblur=20:10,hue=h=300:s=2:b=0.2[blurred];[blurred][padded]overlay=(W-w)/2:(H-h)/2[backgrounded];[backgrounded][2:v]overlay=(main_w-overlay_w)/2:(main_h-overlay_h)/2+550[final]" -map "[final]" -map 0:a -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k -aspect 9:16 ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`;
 
         execSync(cmd, { encoding: 'utf-8', maxBuffer: 1024 * 1024 * 10 })
 }
