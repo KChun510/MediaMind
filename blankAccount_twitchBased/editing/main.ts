@@ -1,5 +1,5 @@
 import { selectAllFromMainVideo, selectAllFromVideo, selectAllFromReddit, delMainVidData, delVidData, delRedditData, updateVideoData, REDDIT_POST_SCHEMA, VIDEO_SQL_SCHEMA } from '../db_dir/db_actions'
-import { single_video_self_layered, create_story_over_single_video, cut_video, delete_video, delete_reddit_cont, segment_clip, segment_clip_alt, segment_clip_twoVidsOneMain, downloadYTVideo, create_twoVids_OneStory, create_srt_over_video, create_twoVids_OneMain, create_png_video } from '../sysCallAPI'
+import { single_video_self_layered, create_story_over_single_video, cut_video, delete_video, delete_reddit_cont, segment_clip, segment_clip_alt, segment_clip_twoVidsOneMain, downloadYTVideo, create_twoVids_OneStory, create_srt_over_video, create_twoVids_OneMain, create_png_video, checkFiles } from '../sysCallAPI'
 require('dotenv').config({ path: require('find-config')('.env') })
 
 async function gather_single_story() {
@@ -143,6 +143,7 @@ async function singleVidPlusStory() {
                         }
                 } catch (e) {
                         console.error(`There was a E, while editing video: ${videoQ[currVideoIndex].videoID} with post: ${part.postID}, \n e code of: ${e} `)
+                        checkFiles({ fileNames: [videoQ[currVideoIndex].videoID] })
                 }
         }
         console.log(storyQ)
@@ -232,6 +233,7 @@ async function twoVidsPlusStory() {
                         }
                 } catch (e) {
                         console.error(`There was a E, while editing video: ${video1.videoID} & ${video2.videoID} with post: ${part.postID}, \n e code of: ${e} `)
+                        checkFiles({ fileNames: [video1.videoID, video2.videoID] })
                 }
         }
 }
@@ -273,46 +275,51 @@ async function twoVids_oneMain() {
                 console.log(`Clip made! ${video1.videoID}`)
         } catch (e) {
                 console.error(`There was a E, while editing video: ${video1.videoID} & ${video2.videoID}\n e code of: ${e} `)
+                checkFiles({ fileNames: [video1.videoID, video2.videoID] })
         }
 
 }
 
 async function clipPlusSrt() {
         console.log("Editiing begun:\nFormat: singleVid Plus Srt")
+        const video = await selectAllFromVideo(1)
         try {
-                const video = await selectAllFromVideo(1)
                 create_srt_over_video(video[0].videoID)
                 segment_clip_alt(video[0].videoID, 50)
                 videoCleanUp(video[0].videoID)
                 console.log(`Clip made: ${video[0].videoID}`)
         } catch (e) {
                 console.error(`Error while editing: ${e}`)
+                checkFiles({ fileNames: [video[0].videoID] })
         }
 }
 
 async function clipWithPngOverLay() {
         console.log("Editiing begun:\nFormat: singleVid Plus overlay")
+        const video = await selectAllFromVideo(1)
+
         try {
-                const video = await selectAllFromVideo(1)
                 await create_png_video(video[0].videoID)
                 segment_clip_alt(video[0].videoID, 50)
                 videoCleanUp(video[0].videoID)
                 console.log(`Clip made: ${video[0].videoID}`)
         } catch (e) {
                 console.error(`Error while editing: ${e}`)
+                checkFiles({ fileNames: [video[0].videoID] })
         }
 }
 
 async function create_single_self_layered() {
         console.log("Editiing begun:\nFormat: singleVid self layered")
+        const video = await selectAllFromMainVideo(1)
         try {
-                const video = await selectAllFromMainVideo(1)
                 await single_video_self_layered(video[0].videoID)
                 segment_clip_alt(video[0].videoID, 50)
                 mainVideoCleanUp(video[0].videoID)
                 console.log(`Clip made: ${video[0].videoID}`)
         } catch (e) {
                 console.error(`Error while editing: ${e}`)
+                checkFiles({ fileNames: [video[0].videoID] })
         }
 }
 
