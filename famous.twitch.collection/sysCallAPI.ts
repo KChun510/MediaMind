@@ -1,5 +1,5 @@
 import { execSync } from 'child_process'
-import { delRedditData, getVideoData } from './db_dir/db_actions'
+import { delRedditData, delVidData, getVideoData } from './db_dir/db_actions'
 import { OpenAI } from "openai"
 import * as util from 'util'
 import fs from 'fs';
@@ -253,12 +253,15 @@ export async function single_video_self_layered(ytVideoId: string) {
         execSync(cmd, { encoding: 'utf-8', maxBuffer: 1024 * 1024 * 10 })
 }
 
-const cmd_stacked_vids = `ffmpeg -i ${CONT_DIRS.ytVideos}/Q-TQQE1y68c.webm -t 00:00:10 -i ${CONT_DIRS.ytVideos}/si0Lp1SLHXg.webm -t 00:00:10 -filter_complex "[0]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[top]; 
-         [1]scale=1080:960, pad=1080:960:(ow-iw)/2:(oh-ih)/2[bottom]; 
-         [top][bottom]vstack,scale=1080:1920[out]; 
-         [0:a]aformat=sample_fmts=fltp:sample_rates=44100:channel_layouts=stereo[audio_top]; 
-         anullsrc=cl=stereo:r=44100[audio_silent]; 
-         [audio_top][audio_silent]amix=inputs=2[audio]" -map "[out]" -map "[audio]" -c:v libx264 -c:a aac -b:a 192k test.mp4`
+export function checkFiles(input: { fileNames: string[] }) {
+        for (const name of input.fileNames) {
+                if (fs.existsSync(`${CONT_DIRS.ytVideos}/${name}`)) {
+                } else {
+                        console.log(`File: ${name} does not exist, Deleting... `);
+                        delVidData(name)
+                }
+        }
+}
 
 // Dev FN
 try {
