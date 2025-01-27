@@ -34,13 +34,13 @@ export function writeMetaData(rPostID: string, textCont: string) {
 export function create_story_over_single_video(rPostId: string, ytVideoId: string) {
         const cmd_story_over_single_video = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3 -i ${CONT_DIRS.Reddit_sub}/${rPostId}.ass -c:v libx264 -c:a aac -b:a 192k -vf "scale=-1:1920:force_original_aspect_ratio=decrease,crop=1080:1920,subtitles=${CONT_DIRS.Reddit_sub}/${rPostId}.ass" -map 0:v -map 1:a -shortest -y ${CONT_DIRS.prodVidAndStory}${rPostId}.mp4`;
 
-        console.log(execSync(cmd_story_over_single_video).toString())
+        execSync(cmd_story_over_single_video)
 }
 
 export function create_twoVids_OneStory(rPostId: string, ytVideoId1: string, ytVideoId2: string) {
         const cmd_twoVids_OneStory = `ffmpeg -y -i "${CONT_DIRS.ytVideos}/${ytVideoId1}.mp4" -i "${CONT_DIRS.ytVideos}/${ytVideoId2}.mp4" -i "${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3" -filter_complex "[0:v]scale=1080:960:force_original_aspect_ratio=increase,crop=1080:960[top];[1:v]scale=1080:960:force_original_aspect_ratio=increase,crop=1080:960[bottom];[top][bottom]vstack[stacked];[stacked]split=2[main][blur];[blur]crop=1080:30:0:950,boxblur=luma_radius=10:luma_power=2:chroma_radius=7:chroma_power=2[feathered];[main][feathered]overlay=0:950:shortest=1[blended];[blended]ass=${CONT_DIRS.Reddit_sub}/${rPostId}.ass[stacked_with_subs]" -map "[stacked_with_subs]" -map 2:a -c:v libx264 -c:a aac -b:a 192k -preset fast -crf 23 -shortest "${CONT_DIRS.prodVidAndStory}/${rPostId}.mp4"`
 
-        console.log(execSync(cmd_twoVids_OneStory, { encoding: 'utf-8' }).toString())
+        execSync(cmd_twoVids_OneStory)
 }
 
 export function cut_video(startTime: string, videoID: string) {
@@ -50,7 +50,7 @@ export function cut_video(startTime: string, videoID: string) {
         const cutCmd = `ffmpeg -y -ss ${startTime} -i ${inputFile} -c copy -avoid_negative_ts make_zero ${outputFile}`;
 
         try {
-                console.log(execSync(cutCmd).toString());
+                execSync(cutCmd)
                 // Replace the original file with the cut file
                 fs.renameSync(outputFile, inputFile);
                 console.log(`Successfully replaced ${inputFile} with ${outputFile}`);
@@ -61,7 +61,7 @@ export function cut_video(startTime: string, videoID: string) {
 
 export function delete_video(ytVideoId: string) {
         const cmd_string = `rm ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4`
-        console.log(execSync(cmd_string).toString())
+        execSync(cmd_string)
 }
 
 export function delete_reddit_cont(postID: string) {
@@ -73,7 +73,7 @@ export function delete_reddit_cont(postID: string) {
         const cmd_string3 = `rm ${CONT_DIRS.Reddit_text}/${postID}*`
 
         console.log(`Reddit CleanUp init: ${postID}`)
-        console.log(execSync(`${cmd_string1} && ${cmd_string2} && ${cmd_string3}`).toString())
+        execSync(`${cmd_string1} && ${cmd_string2} && ${cmd_string3}`)
 }
 
 export function segment_clip(redditId: string, seconds: number) {
@@ -140,7 +140,11 @@ export async function downloadYTVideo() {
         const cmd_string2 = "sh ./downloadNoRestrict.sh"
         console.log("Downloading extra video")
         console.log(execSync(`pwd`, { encoding: 'utf-8' }).toString())
-        console.log(execSync(`${cmd_string1} && ${cmd_string2}`, { encoding: 'utf-8' }).toString())
+        try {
+                execSync(`${cmd_string1} && ${cmd_string2}`)
+        } catch (e) {
+                console.log(`YTDownload failed: `, e)
+        }
 }
 
 

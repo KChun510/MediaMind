@@ -44,7 +44,7 @@ export function writeMetaData_alt(rPostID: string, textCont: string) {
 export function create_story_over_single_video(rPostId: string, ytVideoId: string) {
         const cmd_story_over_single_video = `ffmpeg -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.Reddit_audio}/${rPostId}.txt.mp3 -i ${CONT_DIRS.Reddit_sub}/${rPostId}.txt.srt \ -c:v libx264 -c:a aac -b:a 192k \ -vf "scale=-1:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,subtitles=${CONT_DIRS.Reddit_sub}/${rPostId}.txt.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=10'" \ -map 0:v -map 1:a -shortest -y ${CONT_DIRS.prodVidAndStory}${rPostId}.mp4
 `;
-        console.log(execSync(cmd_story_over_single_video).toString())
+        execSync(cmd_story_over_single_video)
 }
 
 
@@ -53,7 +53,7 @@ export function create_srt_over_video(ytVideoId: string) {
 
         const cmd_string_sub2 = `ffmpeg -y -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -filter_complex "[0:v]scale=1080:-1:force_original_aspect_ratio=decrease[padded];[1:v]format=rgb24,scale=1080:1920,boxblur=20:10[blurred];[blurred][padded]overlay=(W-w)/2:(H-h)/2[overlayed];[overlayed]subtitles=${CONT_DIRS.ytSub}/${ytVideoId}.srt:force_style='FontName=Arial,Bold=1,FontSize=12,PrimaryColour=&H00FFFFFF&,SecondaryColour=&H000000&,Outline=1,BorderStyle=1,Alignment=2'[subtitled]" -map "[subtitled]" -map 0:a -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`;
 
-        execSync(cmd_string_sub2, { encoding: 'utf-8', maxBuffer: 1024 * 1024 * 10 })
+        execSync(cmd_string_sub2)
 }
 
 export function create_twoVids_OneStory(rPostId: string, ytVideoId1: string, ytVideoId2: string) {
@@ -174,7 +174,11 @@ export async function downloadYTVideo() {
         const cmd_string1 = `cd ../content_collection/ytCollection`
         const cmd_string2 = "sh ./downloadNoRestrict.sh"
         console.log("Downloading extra video")
-        execSync(`${cmd_string1} && ${cmd_string2}`, { encoding: 'utf-8' })
+        try {
+                execSync(`${cmd_string1} && ${cmd_string2}`)
+        } catch (e) {
+                console.log(`Yt-download failed: `, e)
+        }
 }
 
 export async function create_png_overlay(input: { ytVideoID: string }) {
