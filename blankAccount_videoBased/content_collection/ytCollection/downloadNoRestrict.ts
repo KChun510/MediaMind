@@ -85,7 +85,8 @@ async function create_metaData(input: { valid_file: string }) {
                 const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "HD Gameplay", videoLicense: "any", results: 50, videoDuration: "long" })
                 const videoDetails = await getVideoDetails(oAuthToken, vidIdRes)
                 for (const video of videoDetails ?? []) {
-                    const videoCommand = `yt-dlp --write-sub --write-auto-sub --sub-lang "en.*" --embed-subs --force-overwrites https://www.youtube.com/watch?v=${video.videoID} -o "${outPutPath}/video_dir/${video.videoID}.%(ext)s"`
+                    const videoCommand = `yt-dlp -f "bv*[height=1080][width=1920][ext=mp4]+ba[ext=m4a]/bv*[width=1280][ext=mp4]/bv*[width=854][ext=mp4]+ba[ext=m4a]/b[ext=mp4]" --write-sub --write-auto-sub --sub-lang "en.*" --embed-subs --force-overwrites -o "${outPutPath}/video_dir/${video.videoID}.%(ext)s" "https://www.youtube.com/watch?v=${video.videoID}"`;
+
 
                     const subtitleCommand = `ffmpeg -y -i "${outPutPath}/video_dir/${video.videoID}.mp4" -map 0:s:0? "${outPutPath}/srt/${video.videoID}.srt"`
 
