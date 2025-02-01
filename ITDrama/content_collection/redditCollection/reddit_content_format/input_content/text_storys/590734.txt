@@ -1,5 +1,0 @@
-You won't believe what happened with the laptop. Last year, the Help Desk received a call from a user complaining that the laptop we issued him would not read DVDs. He was one of those  I'm a very busy and important man, and I don't have time to follow your troubleshooting steps over the phone. Just fix it, dammit  kinds of guys. He said he would get someone to drop off the laptop at our office and pick up a loaner. 
-
-We received the laptop a couple of days later, and there was a note attached saying that now it wasn't even booting into Windows anymore. Sure enough, he was right - it didn't even attempt to load Windows, and instead, we were greeted by the  Non-system disk or disk error  message. It sounded and looked like the PC was trying to boot from the DVD drive instead of the HDD. 
-
-We opened the disk tray and saw the culprit. There was a DVD in there, all right - but it was placed upside down. We flipped the disc over, and he was trying to watch Dumb and Dumber.

@@ -1,0 +1,33 @@
+This is an IT nightmare that spiraled out of control faster than you can say  cybersecurity breach.  Some background information: I work for a corporation where users handle enough information to be able to commit at least a handful of felonies with every little query they touch, which isn't hard to imagine. As such, they have a lot of policies that seem like extreme overkill. On some level, I agree with the attempt; the actual application of the rules, however, borders on insanity, but the attempts aren’t all complete failures.
+
+So, some info you need to know: there's an internal USB connector inside the case. All the external USB ports have physical blocks super glued in, but that's another story I’ve already posted. 
+
+On Friday morning, I was sitting around waiting for something to do when I received a call that a computer couldn't log in. There was no ticket because they couldn’t log in to start one—entirely understandable. The computer requires a network login, so there are several things it could be. Heck, it could just be unplugged and not turning on. You know how users can be. I head up to their cubicle and start checking—everything is plugged in, the computer turns on, but there’s no internet. I switch her network cord with her neighbor's to check the cord, and everything upstream; her neighbor's computer connects with her jack. I log into the local admin account, but there’s no internet connection or network connection at all. I check the device manager, and there’s the problem: the driver for the onboard network is corrupted or something. I can't roll it back either.
+
+Great, this means I need authorization from cybersecurity to use a flash drive, and then I’ll have to tear the computer apart to access a USB port hidden inside the case that isn’t superglued. Now, the key for the case requires my supervisor to sign off on it and give me access to the case lock. I also have to write up the ticket and submit it into the system.
+
+I run down to the IT room, download the driver for her computer, and email it to my boss with a note asking him to put it on a thumb drive. Then I walk over to his desk. 
+
+ Hey boss, I emailed you a network driver I need on a thumb drive. I also need you to submit my authorization form to cybersecurity for the use of a portable storage device.  
+
+So we sent the form off to cybersecurity to authorize the request for USB storage device usage. Time estimated for the work: minutes. Reason: copying network drivers to get the computer back on the network.
+
+Half an hour later, there’s no response. The head of IT calls down to cybersecurity for an estimated time of arrival. A few minutes later, the request comes back as denied. 
+
+Reason: Just email the file.
+
+So we got the biggest idiot ever reviewing the request. She tends to completely drop the ball; before she took the job in cybersecurity, she had neither experience in the field, nor any basic understanding of IT. But it’s okay; she can haphazardly enforce rules she doesn’t understand and spends her day helping users reset their passwords using the password reset tool.
+
+My boss has to call her and explain the situation. After half an hour on the phone, he has to go upstairs to the head of cybersecurity and explain why she’s failing us today. Half an hour later, the approval from cybersecurity comes through to my email, and my boss texts me to grab the form from him along with his spare keys and USB drive.
+
+Now I have both authorization forms, and I return to the woman's desk, but she left a note for me saying she is making a Starbucks run. I power down her computer and turn it on its side to open it and plug in the USB. I’m standing there fiddling with the flash drive when someone yanks it out of my hand, tosses it to the floor, and starts stomping on it.
+
+ What the hell are you doing?  I shout. 
+
+ USB devices are banned,  he replies.
+
+ Whoa, whoa! First of all, I have an authorization form from cybersecurity. Second of all, that’s company property, and third of all, you just destroyed evidence!  I tell the idiot. So, I call my boss, and he’s still in cybersecurity's office as I explain what happened. Cybersecurity overhears this exchange and decides to open a file on the mishandling of suspect data, aka smashing evidence.
+
+Around about 12:00 pm, my boss comes back to the user's desk with a different flash drive, the drivers for the network adapter, and another stack of forms for him to complete the work. 
+
+I spend an hour with cybersecuri
