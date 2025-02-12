@@ -1,0 +1,25 @@
+This jaw-dropping story reveals the absurdity of corporate failures! This tale happened when I first joined my current company, and while I was not the one who had to deal with the problem directly, I overheard the juicy details from my mentor himself. Exactly three days before a major festive celebration, we received a call from a user who was panicking because one of his pieces of equipment had failed, and production had come to a screeching halt. 
+
+Now, I work for a company that services critical process equipment in a country with a distinct western half and eastern half, separated by the sea (this detail is important as we are based in the western half). The client was a major refining plant in the petroleum industry. As we normally do, we went through the usual troubleshooting steps - Did you turn this on? Is this connection active? But the only answer we received from the user was yes, yes, yes, with nothing seemingly wrong. 
+
+This went on for about half an hour when suddenly our boss came in. The client's Head of Production had just called him and was apparently livid. It turned out the machine had been out of order for more than an hour, and production was severely interrupted until the problem was fixed. Panic set in as every hour of interruption meant the client was losing tens of thousands of dollars, and they had the right to sue us for any damages resulting from equipment downtime. The head was not happy that their internal team was unable to fix the problem, and the user was not making any progress by phone.
+
+To resolve the issue, the head demanded that support be provided immediately on-site. Returning to my earlier points - it's the festive season. Traveling was a bit of a problem, but the head insisted that money was not an issue, and they would pay anything for immediate support. Cue M, my mentor, who was handed the unpleasant task of handling the emergency. Immediately, he grabbed his tools and sped off to the airport to catch the next available flight. Simultaneously, his wife packed some clothes for him from home and rushed to deliver them to him at the airport.
+
+Due to the festive season, M had limited flight options, so in the end, he took a business class flight. Upon arriving, M was whisked from the airport by a driver, sent immediately to the refinery, and granted immediate security clearance to enter the plant. At this point, a significant amount of time had passed since we first received the call, and it was well into the night. Greeting him in front of the equipment were the head, the user, and various other senior management personnel, all anxious to see what the problem might be.
+
+M is a guy with no chill, and he was also the one who had originally spoken to the user on the phone. He recounts this part, so I'm paraphrasing him:  So, what is the problem?  M asked,  Wait, let me take a look.  He started going through the normal troubleshooting checklists but stopped almost immediately.  User, are you sure you checked everything I asked you to?  
+
+ Yes, everything, word for word,  the user replied.
+ Are you absolutely sure? 
+ Yes. 
+ Do you remember what was the third thing I asked you to check over the phone? 
+ Why does it matter? Just fix the problem. 
+
+M explained,  The first thing we normally check is to make sure the PC is turned on.  He pointed at the CPU LED indicator.  The second thing we check is to make sure the equipment is on  as he pointed to the machine LED.  The third thing  — he brought his hand to a gas control valve, rotated it, and a loud hiss was heard as the gas line pressurized, and the equipment beeped —  is to make sure the gas is on. 
+
+Everyone in the room was left speechless. M then stated,  I would like to go have dinner now.  After more awkward silence, the head thanked M for his effort and asked the driver to take him somewhere for dinner.
+
+You'd think the story ends here, but there's more. By the time M finished his dinner, it was well past midnight, so he checked into a hotel for the night. The next day, he returned to the airport only to discover that all flights were completely sold out for the next few days due to festive travel. He called my boss to inform him that he was essentially stranded, and my boss coolly replied,  Well M, consider this as having a free holiday paid by the client. 
+
+So M checked into the most luxurious hotel in the area and spent the next few days on vacation before returning to work. In total, we billed the client for thousands of

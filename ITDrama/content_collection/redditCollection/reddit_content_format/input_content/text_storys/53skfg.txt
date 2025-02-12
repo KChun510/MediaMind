@@ -1,0 +1,24 @@
+Prepare yourself for an astounding encounter with workplace absurdity! As some of you will know, I work an out of hours service desk, which provides general IT support to a few different businesses when their normal IT staff have gone home. These businesses are often hundreds of miles away, and my access to their internal systems is usually anywhere from extremely limited to nonexistent. 
+
+This is a gem of a call that I received, typical of the level of confusion we have to deal with. 
+
+Me: Service Desk  
+Caller: I can't get into the building, open the door!  
+Me: I'm sorry, you're calling the IT emergency line. I can't open a door for you; I'm based miles away.  
+Caller: So you can't help me? Why can't you help me?  
+Me: Ma'am, this is an IT emergency line for reporting major system failures or general out of hours IT support. As I've said, I'm not based on site, so I can't open a door for you. This was the building, correct?  
+Caller: Yes, the building.  
+Me: Okay, well, the building closes at 5 PM; it's now 10 PM. That’ll be why it’s locked.  
+Caller: But I'm hosting an important conference call in the meeting room!  
+Me: Have you arranged this with management?  
+Caller: No.  
+Me: Well, Ma'am, if there's no prior arrangement with management, the building will have been locked down by security, as nobody knew you wanted to use the meeting room out of hours.  
+Caller: Why won't you just open the door? Are you stupid?  
+Me: I'm not based on site, as I've already said multiple times. I'm unable to physically open a door from miles away for you. You'll need to speak to your management team for further assistance, as this isn't an IT issue, and we currently have another caller waiting, so I'm afraid I'll have to end this call.  
+Caller: How dare you! You're going to hang up on me? Are you stupid? I'm reporting you!  
+Me: Okay, Ma'am, as I've said, this isn't an IT emergency. You're absolutely free to speak to anyone you wish, however, I'm ending this call now as it’s not IT related, and we have other people in the queue who need assistance. Goodbye.  
+Caller: You...  
+
+For those wondering, this particular business has not provided us with any escalation contacts for their security team. If it's not IT related, we're totally free to drop that call and move on, especially if we have other callers queuing. 
+
+Edit: Wow, RIP inbox! This post really blew up. Glad you liked it; it even featured on a notable platform. Thanks a lot, everyone!

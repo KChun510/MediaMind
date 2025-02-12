@@ -1,0 +1,27 @@
+Prepare to be amazed! Turning tech-illiterate parents into troubleshooting pros is no small feat. Like most of you here, I too have parents who are largely tech-illiterate. But over the last two years, I’ve been making a conscious effort to get my parents, especially my mum, to understand computers better. I'm a big believer in the old saying: give a man a fish, and you'll feed him for a day; teach him how to fish, and he can have food for life. 
+
+So, rather than showing mum how to resolve her every problem, we go through a process of asking,  What do you think is wrong, and how are you going to solve it?  Now admittedly, things do get incredibly frustrating during this process, and it can often take one hour up to two hours to resolve issues. But it has slowly been working. 
+
+So today, mum came to me with a problem, and as usual, seemed to blow it way out of proportion. 
+
+Mum: My phone is broken.  
+Me: What do you mean?  
+Mum: The camera doesn't work.  
+Me: What do you mean exactly?  
+Mum: When I go to the camera app, it says connection cannot be established.  
+Me: So have you tried anything to resolve it?  
+Mum: I turned it off and on again, but that didn't work.  
+Me: Uh huh.  
+Mum: So then I booted the phone into recovery mode.  
+Me: (cue disbelief)  
+Mum: And then I wiped the cache partition.  
+Me: (sustained disbelief)  
+Mum: But when I rebooted the phone, it still didn't work. So I thought the problem might be larger than that.  
+Me: ...  
+Mum: So I went onto several forums, and a lot of other people describing similar problems said it turned out to be a hardware fault.  
+Me: How did you know how to do that?  
+Mum: I googled it.  
+Me: (cue jaw drop) So, I guess your phone is broken.  
+Mum: Yeah, that’s what I told you in the beginning. 
+
+This is the same person who two years ago didn’t even know how to use the volume buttons on her phone—now troubleshooting all on her own. Mum, I am so proud of you. You’ve now been granted admin privileges.

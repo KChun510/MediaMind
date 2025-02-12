@@ -1,0 +1,5 @@
+What if I told you that your computer is on the brink of disaster? I'm not tech support, but I am tech support for my family. My USBs won’t work, and I keep getting this error message. I’ll have a look at it for you. Does a Google search of the error message show you have some PUP software? I'll install Malwarebytes and remove it for you. 
+
+But I don’t want you installing anything on my computer. Okay, I’ll delete them from a Linux Live USB. But the USBs don’t work. No, they only don’t work in Windows. I am going outside of Windows for this. 
+
+No, I don’t trust you; I’ll take it to the repair store. They’re not IT; they’re salesmen. You don’t know what you’re talking about. Surprise, surprise, it was never fixed, and more malware was downloaded by the PUP software to the point where it won’t even boot into Windows. It won’t let me wipe and reinstall.

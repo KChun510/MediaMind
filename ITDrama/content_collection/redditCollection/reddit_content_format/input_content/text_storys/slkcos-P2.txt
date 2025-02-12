@@ -1,7 +1,0 @@
-filling out paperwork about the destruction of a flash drive, giving my statement on the data mishandling, and responding to the accusation of using a USB storage device. 
-
-So, it took several hours and minutes of techs' time, including the head of IT, to reinstall a network driver. Now they have to pay a data recovery specialist—God only knows how much—to try to recover nothing of any value on a flash drive to prove there was nothing malicious on it.
-
-Oh, and I’m on paid leave because they don’t know for certain what’s on that flash drive. Cybersecurity told me that as long as data recovery finds what I said is on it, or can’t find anything, I’m in the clear. If the drive hadn’t been smashed, cybersecurity could have just looked at the USB and checked the contents. It should have taken seconds to do.
-
-Instead, I get to collect paychecks until the data recovery experts figure out the flash drive situation. The good news is that I got to go home early on a Friday. Also, I get a long weekend—maybe I’ll binge-watch Stargate.
