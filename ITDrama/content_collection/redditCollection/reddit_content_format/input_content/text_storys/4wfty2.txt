@@ -1,0 +1,24 @@
+This story will leave you questioning reality in the world of tech support. 
+
+I realized this may not be tech support in the usual sense, but it’s a fun story anyway. A client provided a PSD file that she wanted converted into an HTML file. The PSD was pixels wide. I sliced and diced the file, converted live text where possible, uploaded the HTML page to the server, and provided her with the URL. I then received a frantic email that turned into the following conversation:
+
+Client: This is terrible! Everything is so much bigger. It looks nothing like the PSD I gave you.  
+Me: What do you mean it's so much bigger?  
+Client: It's huge! You have to re-code this so that it matches what I provided.  
+Me: (utterly confused) So that I know exactly what the problem is, could you provide a screenshot of what you’re seeing?  
+Client: (sends a screenshot of Photoshop and Safari side-by-side. They look identical)  
+Me: They actually look the same to me. They should both be pixels wide. I didn't alter the PSD at all.  
+Client: (tech-savvy enough to know how to inspect element in Safari) Okay, yeah, it’s pixels, but why is it so huge? This is unacceptable. I’m going to send this job to someone else to re-code.  
+
+At this point, I had no idea what to say or do. I decided to look at her screenshot again, and this time I noticed her Safari window said. Evidently, the zoom setting on her Safari browser was at, but in the screenshot she sent me, it was scaled down to fit on the screen (which defeats the entire purpose of sending a screenshot to show the discrepancy). 
+
+Me: Can you make sure you’re not zooming in on your Safari browser? Your screenshot looks like that might be the issue.  
+(No reply)
+
+Several hours later, the client emails me again for another project, not mentioning this issue at all.  
+Me: By the way, is that other project approved?  
+Client: Yes.  
+
+No apology or sign of humility. This client does this kind of stuff all the time. I'll never understand how she is smart enough to know about pixel width and analyzing image properties, yet still pulls stunts like this. 
+
+Edit: Wow. Okay, I had like karma in my years on Reddit before this. Now I have over, from one thread in one day. And Reddit Gold! Thanks, guys.

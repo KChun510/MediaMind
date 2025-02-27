@@ -1,0 +1,15 @@
+Back in the Dark Ages, I worked for a medical transcription firm as their SysAdmin. We were doing some cutting-edge IT work to get transcriptions printed at hospitals remotely, using print queues with the modem number hardcoded in. The system would look for queues with anything in them and dial the number if it found something in that queue. It worked really well—until it didn't.
+
+I was the only SysAdmin in this city, so I was on call, averaging just a few hours of sleep per night, trying to catch little catnaps here and there when I could. Anytime something went wrong on the hospital side, I had to go to fix it. A few months after I started, two of the VPs from corporate relocated to my city, as we had the most productive team with the highest profits. The first thing they did was come up with an excuse to fire the current director, then they took over operations themselves.
+
+My job shifted from taking care of our systems to managing the doctors' computers too. I did what I could, but I was also sending out resumes. Then I was told to go to a hospital and see why the printing had stopped. I remember that day vividly; I had not been home for two days and had been going nonstop for hours. I arrived to find someone had unplugged the modem. I plugged it back in, calls started coming in, and jobs began printing.
+
+A doctor approached me and said the VP told him that I would go to his house to work on his home computer. I politely explained to the doctor that I couldn’t do that and that I was heading home to get some sleep. After that, I returned to the office to pick up a few things before heading home.
+
+As soon as I walked through the door, I was escorted straight to the VPs' office, where both VPs and the office manager were present. They started chewing me out, and I couldn't help but laugh. I was the only person in a hundred miles who knew anything about this system. Losing their tempers, they fired me and told me to leave immediately. I simply said thank you and left.
+
+This incident happened on December 13th, my oldest son’s birthday. On my way home, I stopped by a mom-and-pop computer store where I knew some people to drop off a resume. They told me they had no openings right now but would call me when they did. I chatted with a couple of friends while I was there and then headed home. The only thing I was worried about was telling my girlfriend that I got fired.
+
+When I walked through the door, she was at work. I noticed the answering machine blinking, so I hit play. It was the mom-and-pop computer store saying our primary Novell engineer just quit, asking if I was still available. I called them back and let them know I would be there tomorrow. 
+
+That began a much more peaceful career with better pay, rotating on-call, and most weekends and holidays off. By the way, the medical transcription firm imploded. The VPs were fired, and after floundering for about a year, they were bought up by a competing firm.

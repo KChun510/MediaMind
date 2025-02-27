@@ -1,0 +1,55 @@
+The shocking reality is that sometimes, the biggest threats come from within. So this happened about a year ago. The lawsuits were finally settled, and I am able to write about it now. Once again, timing, spacing, and conversations are embellished for dramatic effect. I do this to make my stories enjoyable; otherwise, they would be boring. A high earner at our company had one of her underlings call into IT support with an issue. She was sending on behalf of another user instead of sending as a user for delegated access. The tech was simply told that inside Citrix it sends on behalf of, but outside it sends as. It took the tech a little bit to piece it together, but he got there in the end. 
+
+The reason why it was working outside Citrix was that the underling was logging into the high performer’s account instead of adding the second mailbox. He dug a little deeper and discovered that all of her underlings were logging into her accounts everywhere—not just Outlook. So he wrote up a ticket and passed it along to me after being told that no, they would not change their ways. I picked it up, and the first thing I did was run a lockout report. This was just so I could gauge how many devices were logging into her account. 
+
+Now picture it in your head: your direct supervisor, the ones who actually do work, picking up the ticket and constantly moving as they check this tool or that tool. Then they just freeze. That was me that day. Forty-two devices—holy smokes. Ok, I call up the lady on the phone. 
+
+“Get me Commander William Adama.” 
+
+“Get me Uppity User.” 
+
+“Or Tammy. Get me—Hello, this is me with IT. I was calling about a situation I had been made aware of. Several people log into your account for the purposes of work, correct?” 
+
+“Yes, that is right. Because of our high volume, we need to be able to quickly respond as me for all situations. This has come up before, and I must say that I have fought hard to get this permission and will not let it go.” 
+
+“I need to know how many devices are currently logged into your credentials at this moment. It is a matter of extreme urgency.” 
+
+“Christ, really? Hold one.” 
+
+“Intermission...” 
+
+“Devices—PCs including mine, everyone’s phones including mine, an iPad I own, and the reception PC in the front foyer.” 
+
+“Only devices? I am reading devices at this current moment. Earlier, it was at.” 
+
+“That is just not possible. The only ones who have my password are the current employees. I have you guys change it every time we get a new one or let one go.” 
+
+“How do we change it? Walk me through the entire process.” 
+
+“I call you guys and have you set it back to what it was before.” 
+
+Long pause. 
+
+“Hello?” 
+
+“Do you not see the issue here? Do you not see what you have done?” 
+
+“What do you mean?” 
+
+“I have your tickets pulled up here in the system. You have submitted several requests to us about disappearing loans in your system. You have directly asked us before if people could be stealing your loans. And right now, you tell me you never change your password. You call in and tell us what you would like it changed to. Do you not see why this is happening?” 
+
+“When you change the password in our system, it makes you put it back into all of the devices, so it can’t be that.” 
+
+“First off, no it does not. Second off, even if it did, all they would have to do is put the same password back in anyways.” 
+
+“Oh...” 
+
+“Yeah, your branch is down. I am locking all of your accounts for now, and we have to get InfoSec involved. I am sorry, but it is out of my hands.” 
+
+I get up from my desk, which was at the old building, and walk into my boss's office, who was in a meeting with the EVP of IT, the CIO, and the accounts team supervisor. 
+
+“Oh good, you are all here.” 
+
+This was how I interrupted their meeting to relay the information. In the movies, no one ever really truly captures the look of horror that slowly creeps into the faces of those who come upon the realization of terrible news. Unlike before in my past stories, this was not a security loophole; this was not a breach through intrusive means. This was merely a self-important user who thought they were above the law, so to speak, because they were a high performer. 
+
+Thankfully, they were from a branch that was only a few miles away, so we were able to head this one off at the pass in terms of limiting their ability to gripe to the correct people to get their accounts turned back on. This day was a bad day for me in terms of management, and a worse day in terms of paperwork. I never had to fill out legal forms before... To be continued tomorrow.

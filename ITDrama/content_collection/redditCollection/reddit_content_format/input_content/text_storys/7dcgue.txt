@@ -1,0 +1,32 @@
+The shocking truth about workplace incompetence unfolds in this intense account. 
+
+Actors in this play are as follows. This happened yesterday, by the way. Today's events will be posted tomorrow. I got an email this morning with a scathing report about one of my techs. I need to inform you of a situation I have been made aware of. It seems one of your techs massively violated the IT data policy and security policy last night. I have gone ahead and submitted the termination paperwork to your boss. Please be aware that this kind of behavior will never be tolerated. I hope that I never have to remind you of this again. 
+
+Around this time, one of the accounts team comes over and asks about this. I told them that it was not approved by me and to keep it quiet while I discuss it with HIT. The discussion did not take long, as the event in question was already flagged for defense. I personally flagged it because the tech told me it may come back to bite him. I re-reviewed the call logs, and oh boy, is it dumb. 
+
+I will just skip to the part in question: 
+ Yes, I need that mapped to the B drive (branch drive).  
+ I can do that for you, however, you should know that this location is already mapped to the S drive for scanning.  
+ ...OK, I am not understanding what you mean.  
+ The drive you are requesting access to is already mapped to a different drive letter.  
+ No, I need access to the B drive, not the S drive.  
+
+Talking to coworkers, thinking she is out of earshot. Wow, when did they hire idiots to work on the helpdesk? I know, right? It's like we are the dumb ones or something. 
+
+Had to clean up the audio in a free audio tool everyone uses first, but I was able to get it by compressing it twice. 
+ OK, I will just map the drive for you.  
+ You do know you are speaking to a member of management, right?  
+ Mutes mic noise. Lady, I don’t care. You are not my manager and are not involved in my management chain. Unmutes mic noise. Yes ma'am, I do understand that. I apologize if I have come across as terse. I have mapped the drive here.  
+ Wait... this is the same as the S drive.  
+ Mutes mic again. I just said that... you know what. Unmutes mic. Yes, I had said that earlier that you already had the drive mapped.  
+ YOU CAN'T HAVE... You can't have access points to the same data. This is a HUGE violation.  
+ Umm, no it is not. Everyone who is on Citrix has an access point to the same data.  
+ No, they do not. No one has access to MY computer.  
+ Well ma'am, we actually do cause Citrix does not run on your computer. It runs off of a server here in our city. See, watch this.  He placed a text file on her desktop named test. 
+ YOU JUST ACCESSED MY SYSTEM! I did NOT authorize that. What is the name of your manager?  
+ I just sent you an email with the contact information for me and HIT.  
+ I am sorry, but I have no choice now. I have to report this massive violation to your managers.  
+
+I emailed HHR back with this lovely gem.  After reviewing the event in question, it has been determined that the fault lies percent with the user here. Her clear lack of knowledge regarding basic server technology led to her thinking she had her machine breached. I have canceled the termination order on my end as well as the emergency maintenance ticket she put in to the orders team. In the future, all concerns about my team are to come through me. We have a process for terminating an employee, which you set up, that you violated. The employee in question did nothing wrong and was unjustly judged by people who have no understanding of basic computer technology. Please do not violate the policy you set in place for terminating an employee in the future... I hope that I never have to remind you of this again.  
+
+I sent a copy of that to HIT, the CIO, and the EVP of IT. About two hours later, I get an email back from the EVP. He apologized for the way that the head of HR acted and promised me that the tech in question will not receive any punishment as he listened to the call himself. Two hours later, I am being told that my annual employee review is being pushed up to tomorrow by the head of HR.
