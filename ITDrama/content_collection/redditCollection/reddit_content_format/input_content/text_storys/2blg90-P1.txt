@@ -1,0 +1,57 @@
+A shocking revelation unfolded in a seemingly ordinary office. 
+
+Part To: Boss Company From: Steve Client Subject: Out of Office 
+
+Dear Sir, 
+
+I apologize for the inconvenience, but I need to request file XYZ from you. My phone is having trouble receiving emails; however, I can receive the file via Facebook message. 
+
+Steve Jack had been out of the office about twenty minutes when Boss forwarded this to me. I called him at his desk. 
+
+ Hey Boss, I just got the email you forwarded me. You need me to send file XYZ for you?  
+
+ Yes. Can you send people files on Facebook?  
+
+ Yes, I can. But I'll have to use the computer Jack’s been using, though. It’s the only one that can access Facebook.  
+
+ Right, right. I'll meet you in my wife’s office.  
+
+I hung up the phone and launched a single .bat file on my desktop. It ran its commands and then deleted itself as I walked away. I got to Boss’s wife's office a few minutes later. I smiled at her and Boss before crossing to the computer. 
+
+ Give me a second to bring up Facebook and then—  I turned the laptop around to face us, and Boss's wife reached over, moving the mouse. The screen flared to life. 
+
+Boss stared. Boss's wife gasped. A soft moan, followed by the neigh of a horse, emanated from the laptop. She frantically closed the video window, revealing a second window underneath it—a Bing search for the best places to buy weed near me. She closed that one too, revealing BuzzFeed's signs you're over your job. 
+
+As she slammed the laptop shut, Boss shook his head, red and shaking with anger. 
+
+ How... How was that—I mean, I thought—WHO WAS USING THIS COMPUTER?  he roared. 
+
+Boss's wife shook her head.  Jack was using it about a half-hour ago.  As if on cue, Jack appeared in the doorway with the leftovers from lunch in a carryout bag in his hand. 
+
+Boss's back was to him. 
+
+ THAT KIND OF THING SHOULD BE BLOCKED!  he yelled at me, pointing to the laptop. 
+
+I nodded.  I agree. Jack said he needed to use the unrestricted computer for some important projects. That's why he asked you to retrieve the key to my desk last week, right?  I pointed to the door with my chin, and Boss saw Jack. Jack blinked at Boss. He looked at me. He looked at the computer. Then back to me. I could see it dawn on him what was going on. 
+
+ Y-you did something to my computer, didn’t you?  he demanded. 
+
+Of course I had. I had copied a hidden batch file onto Jack's desktop from a USB drive when I fixed his computer the other day. A file that would send me his browsing history without remoting into his desktop or alerting him. Then, all it would need would be a remote command, which I'd set off from my own computer. The file would then delete itself after launching three web pages as soon as the mouse moved—three of the most incriminating web pages Jack had ever visited on the computer. 
+
+All it needed was a remote command, which I'd set off from my own computer. Granted, it wasn't entirely untraceable, but the only person who'd know what to look for was in this room, looking with as angry a face as I could muster at the awful end user who had become the bane of my existence. 
+
+Boss's wife chimed in. She was, at least, slightly more computer-savvy than her husband.  No, Clickity didn’t do anything. He just exited the— you know, the screensaver. Whatever was there must have been what you were, um, working on when you rushed out of the office for lunch.  She glared at Jack and then addressed Boss.  He must have forgotten to close out the evidence of his blatant misuse of company property.  
+
+I shook my head solemnly.  And I trusted you with this unrestricted computer, too, Jack. I even gave you your own email address for the company because I thought you’d be an asset. Clearly... clearly I was wrong.  I tried my best to sound hurt. 
+
+Boss's wife nonchalantly picked up the laptop and handed it to me.  Jack, I am rather upset that you'd do something like this. I hired you as a favor to your mother. And you can be certain she'll hear about this. Now go home.  
+
+Jack stood there, shaking. He probably had an idea of what I had done, but he'd have no way to prove it. 
+
+ But... He... I...  He pointed at me wordlessly. 
+
+ GET OUT!  Boss yelled. 
+
+Jack burst into tears and ran from the room. 
+
+Now, as I write this, it's been four weeks since Jack was terminated. I patched the security hole from Spotify and the interns are listening to music again. I didn't give the spare desk key back to the office manager. As for Jack, 
