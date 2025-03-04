@@ -1,0 +1,29 @@
+You won’t believe what happened next! I shared the story of how I got fired in a huff by someone who, to put it diplomatically, overestimated his own authority—only for my termination to be rescinded by his manager a few hours later when she found out about it. This is the follow-up set a year later and is the story of how I finally ended up quitting that job.
+
+Cast of characters:
+Me - I was a lead sysadmin at a very large telecommunications company, responsible for the email system at the corporate headquarters. I was a contractor there, which will become relevant to the story later.
+
+Jim - an IT architect at a large telecommunications company. Jim was my primary customer contact until he flew off the handle and tried to fire me under dubious circumstances. Jim was a pretty smart technical guy who was also a bull in a china shop and shouldn't have been allowed to work around other people.
+
+Lynne - Lynne is the IT architect who I was assigned to work with after Jim messed up in my previous story. She was awesome, for reasons that will become clear soon. She reported to Jim and utterly loathed him.
+
+Marie - Jim's boss, the IT department manager. She fixed everything after Jim fired me.
+
+In early 2020, I got a phone call at home from an IT recruiter. This wasn’t uncommon at all—I had, at one point or another, interacted with half the recruitment agencies in my city. This call was a little bit different. It was from an in-house recruiter for a tech company, one of the shining stars of tech where I lived, with a reputation for not only having solid technology in their market but also being a great place to work. They were an honest-to-goodness unicorn. 
+
+The conversation went something like this:
+Recruiter: Hi, this is the recruiter with CoolTechCompany, how are you today?
+Me: Doing well, thanks, what can I do for you?
+Recruiter: I’m calling because Lynne gave me a copy of your resume and suggested that I reach out to you about a position we have open.
+
+A standard HR introductory call followed, where I found out that they were looking for a lead Windows sysadmin for their internal IT department. This confused me, because Lynne was my lead, albeit through a dotted line. Let that sink in: my boss sent my resume to a recruiter without my knowledge or permission. Obviously, this warranted further investigation. 
+
+So, I called Lynne. Apparently, she had just interviewed at CoolTechCompany, and didn’t get the job. On the thanks-but-no-thanks call from HR, she told the recruiter something to the effect of, “Well, that’s too bad, but I know someone else you need to talk to. He is better at this stuff than me, and I think he'd love working at CoolTechCompany.” She then sent over my resume, which she had from when she referred me for an internal hire job in another division of the telecommunications company we both worked at. When I asked her why she did that, she just said, “You have to trust me on this one. I can’t say more.”
+
+So I had a phone interview with the hiring manager at CoolTechCompany. He and I meshed well, and he decided to bring me in for the full gauntlet interview with the rest of the sysadmin team there. Around this time, I got a meeting request from Jim, who I hadn’t interacted with much since he tried (and failed) to get rid of me. 
+
+At the meeting, Jim informed me that the telecommunications company had decided to insource all the contract sysadmins and bring them on as direct employees. He had an offer letter waiting for me at the meeting. I opened the offer letter, only to discover that it was a pay cut from what I was earning as a contractor to do the same job. There was a slight bump in terms of benefits value, but it was obvious that this was a pay hit no matter how you added it up. Jim also informed me that this wasn’t optional and that the insourcing would happen whether I liked it or not, and that this was a take-it-or-leave-it offer. Not only would this be a pay cut, but I would also be reporting directly to Jim, as would all the other newly-insourced sysadmins on the team. 
+
+I caught up with Lynne a few minutes later. She took one look at my face and knew what had just happened.  This is why I told you to trust me,  she said before I even said a word. I could have kissed her. 
+
+A couple of weeks later, I went in for the full interview at CoolTechCompany, which resulted in an offer that would have been a no-brainer to accept even if I hadn’t just had my pay cut. I received that offer just before the p

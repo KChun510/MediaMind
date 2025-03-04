@@ -1,0 +1,19 @@
+You won't believe what happened when a confused woman tried to  clean up  her computer. Hey everyone, I thought I would share this tale from one of my IT buddies. He had this one woman who would always put in tickets for the smallest things, but this one takes the cake. 
+
+People: 
+IT - IT Buddy  
+CW - Confused Woman  
+
+IT saw a ticket had come in from CW. It said,  You deleted all my files! I need them to do my job!  IT called CW to see what was going on because we don’t delete personal files off of people's computers unless there is a good reason for it and we have the user's permission. While he was on the phone, he remotely accessed her computer and noticed everything but the recycling bin was missing on her desktop. He found files in the recycling bin, so he opened it and said,  Here are all your files. Did you move them in here?  
+
+CW replied,  Yes, I did. I moved them in here to recycle them so they will be clean for me to work on them.  
+
+IT responded,  Excuse me?  
+
+CW said,  Yes, I move them to the recycling bin to make them new again so I can reuse the files.  
+
+IT explained,  This is the trash bin. You would move files here to delete them off of your computer.  
+
+CW insisted,  IT IS NOT A TRASH CAN, IT IS A RECYCLING BIN! IT SAYS SO RIGHT UNDER THE ICON!  
+
+So for the next half hour, my buddy had to teach her how to use the recycling bin.
