@@ -22,7 +22,7 @@ for file in "${CONT_DIR}/youTube_cont/video_dir/"*.{webm,mkv}; do
         output_file="${file%.*}.mp4"
         
         # Convert to .mp4
-        ffmpeg -i "$file" -crf 1 -c:v libx264 -b:v 1500k -c:a aac -b:a 192k "$output_file"
+        ffmpeg -y -i "$file" -crf 1 -c:v libx264 -b:v 1500k -c:a aac -b:a 192k "$output_file"
         
         # Check if the conversion was successful before deleting
         if [[ $? -eq 0 ]]; then
