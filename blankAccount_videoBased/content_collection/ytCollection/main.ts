@@ -1,15 +1,17 @@
-
 import { authorize, getVideosByKeyWords, getVideoDetails } from './gcpYtAPI'
-import { writeMetaData, writeMetaData_VidPlusSub, writeMetaData_twoVids_oneMain } from '../../sysCallAPI'
-import * as fs from 'fs'
-import { appendMainVideoItem, appendInvVidID, VIDEO_SQL_SCHEMA } from '../../db_dir/db_actions'
+import { writeMetaData, writeMetaData_VidPlusSub, writeMetaData_twoVids_oneMain, getProjectRoot } from '../../sysCallAPI'
+import { appendMainVideoItem, appendVideoItem, appendInvVidID, VIDEO_SQL_SCHEMA } from '../../db_dir/db_actions'
 import { execSync } from 'child_process'
 import { OpenAI } from "openai"
 import * as util from 'util'
-require('dotenv').config({ path: require('find-config')('.env') })
+import * as fs from 'fs'
+import path from 'path'
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
-const outPutDir = `${process.env.CONT_DIR}`
+const rootCredPath = path.join(getProjectRoot(__dirname), '/cred_dir/')
+const process1 = { env: require('dotenv').config({ path: require('find-config')('.env') }).parsed || process.env };
+const process2 = { env: require('dotenv').config({ path: path.join(rootCredPath, '.env') }) }
+const openai = new OpenAI({ apiKey: process2.env.OPENAI_API_KEY })
+const outPutDir = `${process1.env.CONT_DIR}`
 const writeFile = util.promisify(fs.writeFile)
 const readFile = util.promisify(fs.readFile)
 
@@ -85,8 +87,8 @@ async function create_metaData_fromTitle(input: { videoID: string, videoTitle: s
     const maxVideoTime = 600
     const minVideoTime = 120
     let totalVideoTime = 0
-    const outPutPath = `${process.env.CONT_DIR}/youTube_cont`
-    fs.readFile('client_secret.json', 'utf8', async function processClientSecrets(err, content) {
+    const outPutPath = `${process1.env.CONT_DIR}/youTube_cont`
+    fs.readFile(rootCredPath + 'client_secret.json', 'utf8', async function process1ClientSecrets(err, content) {
         if (err) {
             console.log('Error loading client secret file: ' + err);
             return;
