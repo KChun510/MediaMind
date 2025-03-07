@@ -222,7 +222,13 @@ export async function create_png_video(ytVideoId: string) {
         // (1-0), smaller value = higher on screen, larger value = lower
         const y_placment = ".1"
 
-        const cmd_with_png_overlay = `ffmpeg -y -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.overlay_png}/${ytVideoId}.png -filter_complex "[0:v]scale=1080:-1:force_original_aspect_ratio=decrease[padded];[1:v]format=rgb24,scale=1080:1920,boxblur=20:10[blurred];[blurred][padded]overlay=(W-w)/2:(H-h)/2[backgrounded];[2:v]scale=iw*${png_scaling_factor}:ih*${png_scaling_factor}[scaled_png];[backgrounded][scaled_png]overlay=(W-w)/2:H*${y_placment}[overlayed]" -map "[overlayed]" -map 0:a -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`;
+        const cmd_with_png_overlay = `ffmpeg -y -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.ytVideos}/${ytVideoId}.mp4 -i ${CONT_DIRS.overlay_png}/${ytVideoId}.png \
+        -filter_complex "[0:v]scale=1080:-1:force_original_aspect_ratio=decrease,setsar=1[padded]; \
+        [1:v]format=rgb24,scale=1080:1920,boxblur=20:10,setsar=1[blurred]; \
+        [blurred][padded]overlay=(W-w)/2:(H-h)/2[backgrounded]; \
+        [2:v]scale=iw*${png_scaling_factor}:ih*${png_scaling_factor}[scaled_png]; \
+        [backgrounded][scaled_png]overlay=(W-w)/2:H*${y_placment}[overlayed]" \
+        -map "[overlayed]" -map 0:a -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k ${CONT_DIRS.prodVidPlusSub}/${ytVideoId}.mp4`;
 
         execSync(cmd_with_png_overlay, { encoding: 'utf-8', maxBuffer: 1024 * 1024 * 10 })
 }
