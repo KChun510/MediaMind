@@ -3,6 +3,7 @@ import { delRedditData, delVidData, getVideoData } from './db_dir/db_actions'
 import { OpenAI } from "openai"
 import * as util from 'util'
 import fs from 'fs';
+import path from 'path';
 require('dotenv').config({ path: require('find-config')('.env') })
 
 const readFile = util.promisify(fs.readFile)
@@ -203,6 +204,19 @@ export function checkFiles(input: { fileNames: string[] }) {
                         delVidData(name)
                 }
         }
+}
+
+export function getProjectRoot(currentFilePath: string) {
+        let dir = path.resolve(currentFilePath)
+
+        while (dir !== path.parse(dir).root) {
+                if (fs.existsSync(path.join(dir, 'package.json')) || fs.existsSync(path.join(dir, '.git'))) {
+                        return dir;
+                }
+                dir = path.dirname(dir)
+        }
+
+        return dir
 }
 
 // Dev FN

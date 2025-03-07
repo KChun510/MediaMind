@@ -1,0 +1,4 @@
+A place holder file, so that git picks up this dir.
+This is meant to hold, the globally used client_secret.json files.
+And a .env file containing the keys needed.
+Takes away the need to have speficic .env files for each account created.
