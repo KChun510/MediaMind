@@ -115,7 +115,7 @@ async function getVideosByKeyWords(auth, { valid_vids = 1, keywords = 'dogs', ty
                 videoLicense,
                 type,
                 videoDuration,
-                publishedAfter: "2022-01-01T00:00:00+00:00",
+                publishedAfter: "2024-01-01T00:00:00+00:00",
                 pageToken
             })
             const video_data = res.data.items
