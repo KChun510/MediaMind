@@ -98,7 +98,7 @@ function storeToken(token) {
 
 // Notes: If your searching by video license, then we need to specify a type of video.
 
-async function getVideosByKeyWords(auth, { valid_vids = 1, keywords = 'dogs', type = 'video', videoDefinition = 'any', videoLicense = "any", results = 10, videoDuration = "medium" }) {
+async function getVideosByKeyWords(auth, { valid_vids = 1, keywords = 'dogs', type = 'video', videoDefinition = 'any', videoLicense = "any", results = 10, videoDuration = "short" }) {
     let service = google.youtube('v3');
     let pageToken = undefined;
     const invalidVidIDs = await getInvVideoIds()
