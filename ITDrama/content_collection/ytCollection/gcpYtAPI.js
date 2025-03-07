@@ -140,7 +140,7 @@ async function getVideosByKeyWords(auth, { valid_vids = 1, keywords = 'dogs', ty
             }
         } catch (e) {
             console.error(`Searching by keyword API fail: ${e}`)
-            return e
+            process.exit();
         }
     }
 }

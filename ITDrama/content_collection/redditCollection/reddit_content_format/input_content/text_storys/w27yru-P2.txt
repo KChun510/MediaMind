@@ -1,9 +1,0 @@
-lower in value than what the contractor rate would have been, and I knew they could expense it anyway. After a day or two, they gave in; I hopped on my bike, signed an NDA, got a laptop, and asked a team member to add me to the Teams channel so I could start working.
-
-As I started to poke around on OneDrive, I couldn’t find my backup folder. After a while, I went to ask my former boss where they moved it, as I couldn't find it anywhere. Oh, we deleted them; didn’t seem important. Those few files were the result of hundreds of hours of experimentation, trying to figure out how the various systems worked together, just the data processing part was a couple hundred lines of code, and without documentation, there was literally zero chance of recreating it in a short amount of time.
-
-Can't you just restore from that online hub? Not really, as you specifically asked me to delete it despite my protests. I left without getting my steak dinner. A few days later, they called me again asking me how much it would cost to make a brand new dashboard. Apparently, some corporate bigwigs overseas were using it for their meetings and were pretty upset that the fancy charts were gone. 
-
-I may or may not have found a relatively recent local version of the Git repo on my Raspberry Pi, which I may or may not have used to do some of the number crunching, as my old corporate laptop could barely handle anything. I may or may not have forgotten to mention this obvious security breach and billed out my hours as I had been creating everything from scratch. 
-
-In summary, you are no longer needed; make the shiny charts go away, which could have been fixed with a steak dinner if people weren't foolish. They were, and I could have bought a few nice things. I have expensive hobbies.
