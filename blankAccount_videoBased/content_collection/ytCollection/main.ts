@@ -98,8 +98,7 @@ async function create_metaData_fromTitle(input: { videoID: string, videoTitle: s
                 const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "Key and Peele", videoLicense: "any", results: 50, videoDuration: "any" })
                 const videoDetails = await getVideoDetails(oAuthToken, vidIdRes)
                 for (const video of videoDetails ?? []) {
-                    const videoCommand = `yt-dlp -f "bv*[height=1080][vcodec^=avc1][ext=mp4]+ba[ext=m4a]/bv*[height=720][vcodec^=avc1][ext=mp4]+ba[ext=m4a]/bv*[height=480][vcodec^=avc1][ext=mp4]+ba[ext=m4a]/b[ext=mp4]" --merge-output-format mp4 --write-sub --write-auto-sub --sub-lang "en.*" --embed-subs --force-overwrites -o "${outPutPath}/video_dir/${video.videoID}.%(ext)s" "https://www.youtube.com/watch?v=${video.videoID}" && ffmpeg -i "${outPutPath}/video_dir/${video.videoID}.mp4" -vf "setsar=1" -c:v libx264 -crf 18 -preset fast -c:a copy "${outPutPath}/video_dir/${video.videoID}_fixed.mp4" && mv "${outPutPath}/video_dir/${video.videoID}_fixed.mp4" "${outPutPath}/video_dir/${video.videoID}.mp4"`;
-
+                    const videoCommand = `yt-dlp -f "bv*[height=1080][ext=mp4]+ba[ext=m4a]/bv*[height=720][ext=mp4]+ba[ext=m4a]/bv*[height=480][ext=mp4]+ba[ext=m4a]/b[ext=mp4]" --merge-output-format mp4 --write-sub --write-auto-sub --sub-lang "en.*" --embed-subs --force-overwrites -o "${outPutPath}/video_dir/${video.videoID}.%(ext)s" "https://www.youtube.com/watch?v=${video.videoID}"`;
 
 
 
