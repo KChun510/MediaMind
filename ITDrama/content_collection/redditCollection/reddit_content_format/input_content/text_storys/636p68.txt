@@ -1,0 +1,31 @@
+You won't believe this chaotic service desk encounter! Here is another tale from the out-of-hours hell desk. This gem happened a few days ago.
+
+Me: Service Desk  
+Caller: THE SERVER IS DOWN; YOU NEED TO FIX THIS NOW.  
+Me: Which server are you referring to?  
+Caller: THE SERVER.  
+Me: Okay, what is it that you are trying to do?  
+Caller: TRYING TO ACCESS THE GOD DAMN SERVER. (Yes, she was SHOUTING the entire time.)  
+Me: Please can you stop shouting at me and tell me which server you are talking about or what it is that you are trying to do? The business we support has many different servers for different things, I need to know exactly what isn't working.  
+Caller: HOLY CRAP, THE SERVER ISN'T WORKING. THE. SERVER. ISN'T. WORKING. YOU ARE WASTING MY TIME. (In the background, I've already loaded up our server monitoring tools - no alerts.)  
+Me: I've checked our monitoring; I'm not seeing any servers as being down. Which department are you calling from?  
+Caller: IRRELEVANT. FIX THE GOD DAMN SERVER NOW.  
+Me: Can I get your Staff ID, please?  
+Caller: IRRELEVANT. (Click) Minutes later...  
+Me: Service Desk  
+Caller: HOLY CRAP, THE GOD DAMN SERVER IS STILL DOWN; WHAT ARE YOU DOING ABOUT THIS?  
+Me: Nothing.  
+Caller: EXCUSE ME, NOTHING?  
+Me: You still haven't told me which server is down or what is not actually working.  
+Caller: YOU PEOPLE, IT'S OBVIOUS MY PHONE ISN'T WORKING; I CAN'T MAKE CALLS. THE SERVER HAS GONE DOWN; YOU NEED TO CALL YOUR PEOPLE AND FIX THIS.  
+Me: Ma'am, I can see you are calling me from your desk phone; is that correct?  
+Caller: YES.  
+Me: And this is the phone you cannot make calls from, correct?  
+Caller: YES.  
+Me: ...  
+Me: Do you see why I'm having trouble understanding the problem?  
+Caller: THE SERVER IS DOWN; I CAN'T CALL.  
+Me: Ma'am, that number is digits short of a valid number; that is why the call is not connecting.  
+Caller: LISTEN, THE SERVER IS OBVIOUSLY DOWN. I'LL HAVE MY PEOPLE CALL YOUR PEOPLE ABOUT THIS.  
+
+I love my job. I love my job. I love my job.
