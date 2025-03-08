@@ -1,5 +1,5 @@
 #!/bin/bash
-source ../../.env
+. ../../.env
 
 npx tsx './downloadNoRestrict.ts'
 

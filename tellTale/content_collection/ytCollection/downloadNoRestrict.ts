@@ -1,8 +1,18 @@
 import { authorize, getVideosByKeyWords, getVideoDetails } from './gcpYtAPI'
+import { writeMetaData, writeMetaData_VidPlusSub, writeMetaData_twoVids_oneMain, getProjectRoot } from '../../sysCallAPI'
+import { appendMainVideoItem, appendVideoItem, appendInvVidID, VIDEO_SQL_SCHEMA } from '../../db_dir/db_actions'
+import { OpenAI } from "openai"
+import * as util from 'util'
 import * as fs from 'fs'
-import { getTotalRedditTime, getTotalVideoTime, appendVideoItem, appendInvVidID, VIDEO_SQL_SCHEMA } from '../../db_dir/db_actions'
-import { execSync } from 'child_process'
-require('dotenv').config({ path: require('find-config')('.env') })
+import path from 'path'
+
+const rootCredPath = path.join(getProjectRoot(__dirname), '/cred_dir/')
+const process1 = { env: require('dotenv').config({ path: require('find-config')('.env') }).parsed || process.env };
+const process2 = { env: require('dotenv').config({ path: path.join(rootCredPath, '.env') }) }
+const openai = new OpenAI({ apiKey: process2.env.OPENAI_API_KEY })
+const outPutDir = `${process1.env.CONT_DIR}`
+const writeFile = util.promisify(fs.writeFile)
+const readFile = util.promisify(fs.readFile)
 
 function videoTime(videoData: VIDEO_SQL_SCHEMA[]): number {
     let total_sec = 0
@@ -19,7 +29,7 @@ function videoTime(videoData: VIDEO_SQL_SCHEMA[]): number {
     const minVideoTime = 240
     let totalVideoTime = 0
     const outPutPath = `${process.env.CONT_DIR}/youTube_cont`
-    fs.readFile('client_secret.json', 'utf8', async function processClientSecrets(err, content) {
+    fs.readFile(rootCredPath + 'client_secret.json', 'utf8', async function process1ClientSecrets(err, content) {
         if (err) {
             console.log('Error loading client secret file: ' + err);
             return;

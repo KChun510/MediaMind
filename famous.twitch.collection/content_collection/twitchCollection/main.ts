@@ -1,17 +1,19 @@
 import { getClips } from './twitchAPI'
-import { writeMetaData, writeMetaData_VidPlusSub, writeMetaData_twoVids_oneMain } from '../../sysCallAPI'
-import * as fs from 'fs'
+import { writeMetaData, writeMetaData_VidPlusSub, writeMetaData_twoVids_oneMain, getProjectRoot } from '../../sysCallAPI'
 import { appendMainVideoItem, appendInvVidID, VIDEO_SQL_SCHEMA } from '../../db_dir/db_actions'
 import { execSync } from 'child_process'
 import { OpenAI } from "openai"
+import path from 'path'
 import * as util from 'util'
-require('dotenv').config({ path: require('find-config')('.env') })
+import * as fs from 'fs'
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
-const outPutDir = `${process.env.CONT_DIR}`
+const rootCredPath = path.join(getProjectRoot(__dirname), '/cred_dir/')
+const process1 = { env: require('dotenv').config({ path: require('find-config')('.env') }).parsed || process.env };
+const process2 = { env: require('dotenv').config({ path: path.join(rootCredPath, '.env') }) }
+const openai = new OpenAI({ apiKey: process2.env.OPENAI_API_KEY })
+const outPutDir = `${process1.env.CONT_DIR}`
 const writeFile = util.promisify(fs.writeFile)
 const readFile = util.promisify(fs.readFile)
-
 
 function videoTime(videoData: VIDEO_SQL_SCHEMA[]): number {
 	let total_sec = 0

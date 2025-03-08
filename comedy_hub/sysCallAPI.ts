@@ -1,11 +1,15 @@
 import { execSync } from 'child_process'
-import { delRedditData, delVidData } from './db_dir/db_actions'
+import { delRedditData, delVidData, getVideoData } from './db_dir/db_actions'
+import { OpenAI } from "openai"
+import path from 'path'
 import * as util from 'util'
 import fs from 'fs';
 const readFile = util.promisify(fs.readFile)
-require('dotenv').config({ path: require('find-config')('.env') })
 
-const CONT_DIR = process.env.CONT_DIR
+const process1 = { env: require('dotenv').config({ path: require('find-config')('.env') }).parsed || process.env };
+const process2 = { env: require('dotenv').config({ path: path.join(getProjectRoot(__dirname), '/cred_dir', '.env') }) }
+const openai = new OpenAI({ apiKey: process2.env.OPENAI_API_KEY })
+const CONT_DIR = process1.env.CONT_DIR;
 
 const CONT_DIRS = {
         overlay_png: `${CONT_DIR}/overlay_png`,
@@ -222,6 +226,19 @@ export function checkFiles(input: { fileNames: string[] }) {
                         delVidData(name)
                 }
         }
+}
+
+export function getProjectRoot(currentFilePath: string) {
+        let dir = path.resolve(currentFilePath); // Ensure it's an absolute path
+
+        while (dir !== path.parse(dir).root) { // Stop when reaching the system root "/"
+                if (fs.existsSync(path.join(dir, 'package.json')) || fs.existsSync(path.join(dir, '.git'))) {
+                        return dir; // Found the root (based on package.json or .git)
+                }
+                dir = path.dirname(dir); // Move up one level
+        }
+
+        return dir; // If no root indicator found, return the system root (e.g., "/")
 }
 
 // Dev FN
