@@ -1,13 +1,15 @@
 import { execSync } from 'child_process'
 import { delRedditData, delVidData, getVideoData } from './db_dir/db_actions'
 import { OpenAI } from "openai"
+import path from 'path'
 import * as util from 'util'
 import fs from 'fs';
-require('dotenv').config({ path: require('find-config')('.env') })
-
 const readFile = util.promisify(fs.readFile)
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
-const CONT_DIR = process.env.CONT_DIR
+
+const process1 = { env: require('dotenv').config({ path: require('find-config')('.env') }).parsed || process.env };
+const process2 = { env: require('dotenv').config({ path: path.join(getProjectRoot(__dirname), '/cred_dir', '.env') }) }
+const openai = new OpenAI({ apiKey: process2.env.OPENAI_API_KEY })
+const CONT_DIR = process1.env.CONT_DIR;
 
 const CONT_DIRS = {
         overlay_png: `${CONT_DIR}/overlay_png`,
@@ -164,7 +166,7 @@ function getRandomInt(min: number, max: number) {
 
 export async function tts_coqui(valid_file: string, randomized: boolean, inputSpeaker: string | null = null) {
         const avail_speakers = ['Claribel Dervla', 'Daisy Studious', 'Gracie Wise', 'Tammie Ema', 'Alison Dietlinde', 'Ana Florence', 'Annmarie Nele', 'Asya Anara', 'Brenda Stern', 'Gitta Nikolina', 'Henriette Usha', 'Sofia Hellen', 'Tammy Grit', 'Tanja Adelina', 'Vjollca Johnnie', 'Andrew Chipper', 'Badr Odhiambo', 'Dionisio Schuyler', 'Royston Min', 'Viktor Eka', 'Abrahan Mack', 'Adde Michal', 'Baldur Sanjin', 'Craig Gutsy', 'Damien Black', 'Ilkin Urbano', 'Kazuhiko Atallah', 'Ludvig Milivoj', 'Suad Qasim', 'Torcull Diarmuid', 'Viktor Menelaos', 'Zacharie Aimilios', 'Nova Hogarth', 'Maja Ruoho', 'Uta Obando', 'Lidiya Szekeres', 'Szofi Granger', 'Camilla Holmström', 'Lilya Stainthorpe', 'Zofija Kendrick', 'Narelle Moon', 'Barbora MacLean', 'Alexandra Hisakawa', 'Alma María', 'Rosemary Okafor', 'Ige Behringer', 'Filip Traverse', 'Damjan Chapman', 'Wulf Carlevaro', 'Aaron Dreschner', 'Kumar Dahl', 'Eugenio Mataracı', 'Ferran Simen', 'Xavier Hayasaka', 'Marcos Rudaski']
-        const outPutDir = `${process.env.CONT_DIR}/reddit_cont`
+        const outPutDir = `${process1.env.CONT_DIR}/reddit_cont`
         const fileContent = await readFile(`./input_content/text_storys/${valid_file}`, 'utf8');
         let tts_string = ""
 
@@ -266,6 +268,20 @@ export function checkFiles(input: { fileNames: string[] }) {
                         delVidData(name)
                 }
         }
+}
+
+
+export function getProjectRoot(currentFilePath: string) {
+        let dir = path.resolve(currentFilePath); // Ensure it's an absolute path
+
+        while (dir !== path.parse(dir).root) { // Stop when reaching the system root "/"
+                if (fs.existsSync(path.join(dir, 'package.json')) || fs.existsSync(path.join(dir, '.git'))) {
+                        return dir; // Found the root (based on package.json or .git)
+                }
+                dir = path.dirname(dir); // Move up one level
+        }
+
+        return dir; // If no root indicator found, return the system root (e.g., "/")
 }
 
 // Dev FN

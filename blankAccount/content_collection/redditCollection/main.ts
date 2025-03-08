@@ -1,12 +1,13 @@
 import { OpenAI } from "openai"
 import { POST_Get_Reddit_Post } from './redditAPI'
 import { appendRedditPost, appendInvalidID, pullAllInvRedditIDs } from '../../db_dir/db_actions'
-import { writeMetaData } from '../../sysCallAPI'
-import * as util from 'util'
+import { writeMetaData, getProjectRoot } from '../../sysCallAPI'
 import * as fs from 'fs'
-require('dotenv').config({ path: require('find-config')('.env') })
+import path from 'path'
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+const rootCredPath = path.join(getProjectRoot(__dirname), '/cred_dir/')
+const process2 = { env: require('dotenv').config({ path: path.join(rootCredPath, '.env') }) }
+const openai = new OpenAI({ apiKey: process2.env.OPENAI_API_KEY })
 
 interface redditPost {
 	postID: string,

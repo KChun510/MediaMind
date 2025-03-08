@@ -1,15 +1,19 @@
-const textToSpeech = require('@google-cloud/text-to-speech')
-const fs = require('fs')
-const util = require('util')
-const OpenAI = require("openai")
 import { updateRedditPost } from "../../../db_dir/db_actions"
-import { tts_coqui, speed_up_audio } from "../../../sysCallAPI"
+import { tts_coqui, speed_up_audio, getProjectRoot } from "../../../sysCallAPI"
 import { convert_to_ass } from "../../convert_to_ass"
-require('dotenv').config({ path: require('find-config')('.env') })
+import textToSpeech from '@google-cloud/text-to-speech'
+import { OpenAI } from "openai"
+import * as util from 'util'
+import * as fs from 'fs'
+import path from 'path'
+
+const rootCredPath = path.join(getProjectRoot(__dirname), '/cred_dir/')
+const process1 = { env: require('dotenv').config({ path: require('find-config')('.env') }).parsed || process.env };
+const process2 = { env: require('dotenv').config({ path: path.join(rootCredPath, '.env') }) }
 
 const gcpClient = new textToSpeech.TextToSpeechClient()
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
-const outPutDir = `${process.env.CONT_DIR}/reddit_cont`
+const openai = new OpenAI({ apiKey: process2.env.OPENAI_API_KEY })
+const outPutDir = `${process1.env.CONT_DIR}/reddit_cont`
 const readFile = util.promisify(fs.readFile)
 const writeFile = util.promisify(fs.writeFile)
 
