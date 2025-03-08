@@ -72,12 +72,8 @@ async function create_metaData(input: { valid_file: string }) {
 
 (async function() {
     // Max is 30 mins
-    //    const maxVideoTime = 1800
-    const maxVideoTime = 240
-
-    const minVideoTime = 120
-
-    //const minVideoTime = 240
+    const maxVideoTime = 1800
+    const minVideoTime = 240
     let totalVideoTime = 0
     const outPutPath = `${process1.env.CONT_DIR}/youTube_cont`
     fs.readFile(rootCredPath + 'client_secret.json', 'utf8', async function process1ClientSecrets(err, content) {
@@ -89,7 +85,8 @@ async function create_metaData(input: { valid_file: string }) {
         const oAuthToken = await authorize(JSON.parse(content))
         while (totalVideoTime <= maxVideoTime) {
             try {
-                const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "HD Gameplay", videoLicense: "any", results: 50, videoDuration: "short" })
+                const vidIdRes = await getVideosByKeyWords(oAuthToken, { valid_vids: 10, keywords: "HD Gameplay", videoLicense: "any", results: 50, videoDuration: "medium" })
+                console.log(`Believe this is the error here: ${vidIdRes}`)
                 const videoDetails = await getVideoDetails(oAuthToken, vidIdRes)
                 for (const video of videoDetails ?? []) {
 

@@ -1,14 +1,15 @@
 import { execSync } from 'child_process'
 import { delRedditData, delVidData, getVideoData } from './db_dir/db_actions'
 import { OpenAI } from "openai"
+import path from 'path'
 import * as util from 'util'
 import fs from 'fs';
-import path from 'path';
-require('dotenv').config({ path: require('find-config')('.env') })
-
 const readFile = util.promisify(fs.readFile)
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
-const CONT_DIR = process.env.CONT_DIR
+
+const process1 = { env: require('dotenv').config({ path: require('find-config')('.env') }).parsed || process.env };
+const process2 = { env: require('dotenv').config({ path: path.join(getProjectRoot(__dirname), '/cred_dir', '.env') }) }
+const openai = new OpenAI({ apiKey: process2.env.OPENAI_API_KEY })
+const CONT_DIR = process1.env.CONT_DIR;
 
 const CONT_DIRS = {
         overlay_png: `${CONT_DIR}/overlay_png`,

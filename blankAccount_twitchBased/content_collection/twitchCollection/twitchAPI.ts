@@ -1,9 +1,12 @@
-import fs from 'fs'
-require('dotenv').config({ path: require('find-config')('.env') })
 import { getInvVideoIds } from '../../db_dir/db_actions'
+import { getProjectRoot } from '../../sysCallAPI'
+import fs from 'fs'
+import path from 'path'
 
-const clientID = process.env.CLIENT_ID ?? ""
-const clientSecret = process.env.CLIENT_SECRET ?? ""
+const rootCredPath = path.join(getProjectRoot(__dirname), '/cred_dir/')
+const process2 = { env: require('dotenv').config({ path: path.join(rootCredPath, '.env') }).parsed }
+const clientID = process2.env.CLIENT_ID ?? ""
+const clientSecret = process2.env.CLIENT_SECRET ?? ""
 
 type Secret = {
 	access_token: string,
