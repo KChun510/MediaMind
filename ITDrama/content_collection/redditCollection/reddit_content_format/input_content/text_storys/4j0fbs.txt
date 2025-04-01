@@ -1,0 +1,29 @@
+You won't believe what happened today at the helldesk! 
+
+It's been quite some time since I last posted. I work at a local authority on the helldesk. Social workers can be the bane of my existence, but you learn to cope with their general incompetence as part of the job. However, sometimes they can still surprise you. 
+
+We use a generic username for most of our computers so that people can log onto the machine, and then from there, they log into Citrix to work. Everyone knows the username and password for this; it's literally written on the walls in most areas because the only thing it can access is another login page, so it isn't a security issue. Most of these accounts stay logged on at all times to save confusion for the geniuses that work here. 
+
+A guy rang up, said hello, and asked for the generic login details. I've changed the exact username and password, but other than that, this is more or less word for word: 
+
+Genius: So what's the username?  
+Me: It's Computer.  
+Genius: So is that the asset number of the PC?  
+Me: No, no, it's just the word Computer.  
+Genius: And then backslash my name?  
+Me: No. It's the word Computer. C-O-M-P-U-T-E-R. Computer. Nothing else.  
+Genius: And what's the password?  
+Me: It's Pssword. As in, the word Password with a capital P, but you replace the 'a' with a '.  
+Genius: So it's Password?  
+Me: No. It is not. It is P-s-s-w-o-r-d with a capital P at the beginning. Everything else is lowercase.  
+Genius: Ok, so the username is ComputerPssword. What's the password?  
+Me: No. The username is Computer. The password is Pssword. That's everything. Just two words. Two boxes, two words.  
+Genius: type type type It didn't work. I typed in password, but it said it's incorrect.  
+Me: Spell out what you typed for me please.  
+Genius: p-a-s-s-w-o-r-d  
+Me: Very slowly and clearly, in case it was my accent or something... Like I said. CAPITAL P. NUMBER FOUR. LOWER CASE S, LOWER CASE S, LOWER CASE W, LOWERCASE O, LOWERCASE R, LOWER CASE D. Pssword.  
+Genius: type type click Nope. And it says the account is locked. I used a capital P this time, definitely.  
+Me: Did you use a '@' instead of the 'a'?  
+Genius: Use four what? 
+
+I remoted into the machine and typed it in for him. He complained that the system was needlessly complicated.

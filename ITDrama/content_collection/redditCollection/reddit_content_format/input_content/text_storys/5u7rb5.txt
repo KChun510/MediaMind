@@ -1,0 +1,21 @@
+You won't believe the frustrating conversation I had with a client over internet connectivity issues. I work for an ISP that deals only in DSL-type connections. No satellite or mobile anything. 
+
+Client: Hello. Where's the Wi-Fi? 
+
+Me: I'm sorry, sir. You're going to have to be a bit more specific. 
+
+Client: I'm paying for this service! This is terrible; it hasn't been here for about a week now! It's usually right here on my phone. Where did it go?
+
+Cue about ten minutes of troubleshooting (Is Wi-Fi enabled on the device? Do you have any devices connected to the router via cable?) until...
+
+Me: Well, sir, since the devices connected by cable seem to be functioning okay, we should check if it's an issue with the Wi-Fi functionality of your router. Do you have a spare router we could test with? 
+
+Client: Yes, but I can't swap them now. 
+
+Me: Um... why?
+
+Client: I'm not at home right now. 
+
+Me: Well, where are you? 
+
+Client: Mozambique.

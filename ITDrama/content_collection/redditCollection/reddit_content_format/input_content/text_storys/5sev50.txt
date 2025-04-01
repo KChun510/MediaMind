@@ -1,0 +1,15 @@
+You won’t believe the hilarity that ensued during a seemingly normal help desk call. I'm a Network and Server Administrator at a hospital, but I occasionally field help desk calls as well. So, one day, I’m slow, so I’m helping answer some calls when one of our Switchboard Operators calls. 
+
+Me: IT.  
+Operator: Hey, I have a problem.  
+Me: OK, what’s up?  
+Operator: I've been playing Candy Crush on my phone, and it keeps messing up.  
+Me: What do you mean? Is your phone disconnecting from WiFi?  
+Operator: No, I just can't seem to beat this level no matter what I try.  
+Me: Uhhh, I’m not familiar with that application. Each department is supposed to have a Super User for their applications, which handles tech support between the users and the vendor. Have you engaged your Super User?  
+Operator: No, smart ass, I didn’t.  
+Me: I’m sorry you’re upset, ma'am, but all I’m doing is trying to help you by getting you to the most appropriate channel for support of your issue.  
+Operator: I thought that you may have played this game before and that you may be able to help.  
+Me: No ma'am, Candy Crush isn’t an application that the IT department uses or supports.  
+
+This was the most humorous call I’ve gotten. What made it so funny is that the user was getting so mad that I couldn’t help her and that I was laughing at her. I mean, come on!

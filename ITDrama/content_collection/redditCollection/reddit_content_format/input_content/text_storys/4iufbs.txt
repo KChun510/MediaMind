@@ -1,0 +1,23 @@
+Buckle up for a trip down memory lane that exposes the realities of tech support! Come while it’s fresh. I just hung up literally moments ago. About fifteen years ago, I was a bright-eyed coder still in college. My family was poor, and thankfully so was my country. A lot of people were experienced in coding, so I often did some freelance jobs to afford a living in my college city. One of the companies I coded for was dedicated to importing metal, cutting it based on the customers' preferences and selling it. I doubt we need to know the details, but I had coded them a simple local network program automating the preferences of the supervisors in the office and the workshop, then storing the data in their accounting program.
+
+Today, I received a call from their boss. Boss: “Hello. We need you here in the city urgently. Your program stopped working.” Me: “Excuse me, I do not recognize the number you're calling from. Which program of mine?” Boss: “Don’t you I am the boss's name. I'm speaking about the program you made for the company.” Me: “Oh... The one I made in college? You're still using it?” Boss: “Yes, we are. But today in the morning, the program stopped working.”
+
+Oh, nostalgia! Anyway, I decided to troubleshoot quickly, learning about the details. Thankfully, I have archives for all my codes, even my first ever program coded in GWBasic. Of course, even coded years ago, a program doesn’t suddenly stop working in a day. I tried to find out what had changed. Nothing seemed to have changed since yesterday. 
+
+“Maybe a blackout?” No. “Changes in network?” Nope. “Changes in any hardware?” None. It will indeed take time. Me: “All right, boss. I guess I can’t solve it from afar. I seriously doubt it's a problem in my code, but just in case, I will provide you the source codes. It's possibly a simple problem in hardware, and you wouldn't want to pay me for that. A local tech will do it for much less.” 
+
+Boss: “Pay you? Why should we pay you? It's your program. Fix it.” Me: (after a hearty laugh) “It's a freelance job I did for you literally fifteen years ago. As you're the witness, it worked well until this morning. Even if it was the product of a giant company, the support would have been dropped already. Think about it; Microsoft has dropped support for XP. You can't expect me to offer free support.” 
+
+Boss: “We still want you to fix it. How much would you charge?” Me: “I'm working for another company already. First, I'll have to ask for unpaid vacation. Then I'll bill all my expenses to you in addition to a rate per day. I doubt it’ll take more than a single day, though.” 
+
+Boss: “It's too much.” Me: “I know. That’s why I urge you to find a local tech and have him take a look. If it's proven that the problem is my code, I’ll happily send you the source codes, and then you may have it updated to your heart's content.” 
+
+Boss: “I don’t understand why the passage of time should change it. It's your program. You should fix it.” Me: “It doesn’t work like that. Anyway, I’ll be awaiting your call from this number. Also, my email is available.” 
+
+He hung up, still muttering about how it's my program and I should fix it for free. I’m dreaming about the future now. I wonder if I’ll receive a call in years, telling about a faulty program of mine.
+
+I didn’t know people would be that much interested in my story. There are too many comments asking about the same stuff, and I’m... lazy. Forgive me. I got my first phone number in 2008. Never changed it. The company would find me anyway. I have social media accounts with photos of mine; my name is common, but surnames are rather unique. My father still lives in that city, and he’s pretty well-known anyway.
+
+The program was written with C, .NET, but no, updates in .NET Framework didn’t cause it. .NET Framework and the newer ones always support without installing anything. Yes, I know it doesn’t work the same with newer versions, but please be my guest and try. Make a very simple .NET application and run it in a brand new Windows computer; it’ll work. Yeah, they used to use Windows then, and .NET Framework had to be installed. But if I remember correctly, it was a simple MB file. 
+
+I only knew Delphi and C to easily make a Windows application then, and I’ve always hated Delphi with a passion. The computers that couldn’t connect to the system in question all had a horde of trojans. I suspect it was because of the cracked Need for Speed I saw in all of them. I don’t know why, but the computer refused to connect to anywhere local. I didn’t care or investigate really; I decided I wouldn’t waste time cleaning everything. I made a factory reset, created user accounts without admin privileges, and gave the admin password to the boss.

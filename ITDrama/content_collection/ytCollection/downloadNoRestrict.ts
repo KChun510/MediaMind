@@ -1,6 +1,7 @@
 import { authorize, getVideosByKeyWords, getVideoDetails } from './gcpYtAPI'
 import { writeMetaData, writeMetaData_VidPlusSub, writeMetaData_twoVids_oneMain, getProjectRoot } from '../../sysCallAPI'
 import { appendMainVideoItem, appendVideoItem, appendInvVidID, VIDEO_SQL_SCHEMA } from '../../db_dir/db_actions'
+import { execSync } from 'child_process'
 import { OpenAI } from "openai"
 import * as util from 'util'
 import * as fs from 'fs'

@@ -1,0 +1,28 @@
+This is a nightmare scenario that illustrates the chaos of technical support! 
+
+So, this little gem started yesterday. Currently, I’m working in the managed print industry. A customer logged a call saying no devices in a building are working, so it’s definitely server software related. I logged in with their IT; the server is freezing, and when logging in with a new account, there is a disk space error. I informed him he needs to clear it down or add some HDD space, and then we can troubleshoot anything if there are issues once it's done. 
+
+I called the end user who logged the call and let her know, but it makes no sense to her. A depressing conversation occurred: 
+Me: Morning, just calling regarding your printing issues at site X. It's due to a server fault your IT is looking into, and they should hopefully have it resolved soon, which will likely resolve your issues. 
+User: Oh, well, the printer still isn’t working. None of them are. This is urgent. 
+Me: I understand, but your IT is looking into it due to a server fault and should have it sorted as soon as possible. 
+User: Okay, so when are you coming out to fix it? 
+Me: I would not be able to fix the machine on site; it is a server issue as it has run out of disk space, and your IT is looking into it. 
+User: This is urgent! The entire site can't print, what’s the ETA on the fix? 
+Me: I am not your IT, so I am unable to advise. You would have to call them as they need to resolve it. 
+User: I need an ETA to inform the users and management. 
+Me: I'm not in your IT, so I can't give an ETA unfortunately. 
+User: Talk to my manager. 
+Manager: We need an ETA for the fix or send someone on site. I want this actioned ASAP. 
+Me: I'm not your IT; I'm from the managed print support company. The issue is with your server, and your IT is looking to fix it. An engineer from us won't be able to assist. 
+Manager: So, you are categorically stating your print engineer can’t fix the printer? What kind of support is this? 
+Me: The issue isn’t with the printer; it's with the server the print software is on, which your IT is looking to fix urgently. 
+Manager: No, the printer is not printing, so it's a printer problem. We don’t have servers. 
+Me: You do have servers. It's what governs the pull print and login for the devices, and it's currently down. Your IT is looking to fix it. 
+Manager: Why are you refusing to fix this? You can’t just say no; we have a support contract. 
+Me: Your IT fixes your servers; we fix the printers and the software that's on the server. You need to call your IT. 
+Manager: I’m escalating this to my director - expect a call back shortly. 
+
+What the actual heck! I’ve had several calls since then that I have ignored. I informed their account manager about what’s going on, and this is now his mountain of problems to deal with. 
+
+TL;DR: Printers don’t work; the server has no space on C drive, IT fixing - I’m not the users’ IT team. 

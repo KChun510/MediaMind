@@ -1,0 +1,24 @@
+You won't believe the sheer absurdity of this tech support experience. After recovering from my stroke, I was in desperate need of work. So desperate, I took an overnight shift at a web host for tech support. Most nights, it was pretty calm, and the people who called during my shift were usually just looking for more help with their website rather than just troubleshooting. However, the night staff had the time, and it helped break up the monotony of the shift. 
+
+Occasionally, I would get gems like this: I received a call from a frantic guy. After finally getting him to confirm his username and password, I asked which of his websites was down. I typed the URL into my web browser, and to my surprise, I accessed his website without any issues. Next, I VPNed to my home computer and pulled it up again with no issues. 
+
+This is where we got into basic PC troubleshooting (reminder: this guy was losing money because his website was down). It was at this point that we got into basic PC troubleshooting, and the following transpired. 
+
+Me: Okay, are you using a Mac or PC?  
+Customer: PC.  
+Me: Can you click on the start menu and type in CMD?  
+Customer: I cannot, the screen is black.  
+Me: Deep breath. Is there a light on the front of your monitor or your tower?  
+Customer: No.  
+Me: Deeper breath. Is the cable plugged into the back of the device, and can you trace that cable back to make sure it is plugged into the wall? If you have a power strip, can you see if it is in the on position?  
+Customer: Rustling. I think it is, but I cannot quite tell.  
+Me: What do you mean you cannot tell?  
+Customer: I can't tell; it is dark.  
+Me: Dark? Can you turn on a light?  
+Customer: I could get a flashlight, but there is no power.  
+Me: *head desk* I assure you, sir, your website is up; you can check it again when you have power back.
+
+TL;DR: Someone making money from his website was unable to tell the difference between being out of power and his website being down. 
+
+Edit: Formatting.  
+Second edit: RIP inbox. Thanks for all the replies; the stories are very entertaining.

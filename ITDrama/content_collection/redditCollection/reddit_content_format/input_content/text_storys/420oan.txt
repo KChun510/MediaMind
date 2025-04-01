@@ -1,0 +1,15 @@
+The email disaster that unfolded was beyond anything anyone could have imagined. I witnessed this astounding IT meltdown in a large academic organization. An employee decided to send a broad solicitation about her need for a local apartment. She happened to discover and use an all-employees email address that included everyone. And by everyone, I mean every employee in a multi-thousand employee academic institution. Everyone from the CEO on down received this lady's apartment inquiry. 
+
+Of course, this kicked off the usual round of  why am I getting this  and  take me off a list  and  oh my gosh everyone stop replying  responses. Each reply-all message added to the all-employees email address, leading to an avalanche of new messages. Email started to bog down as a half-million messages flooded into mailboxes. 
+
+IT Fail: Not necessarily making an all-employees email address – that's quite reasonable – but granting unrestricted access to it without appropriately configuring the mail server to check the sender and generate replies that are authorized. That wasn’t the real problem. That incident might have simmered down after people stopped responding. 
+
+In an organization of this scale, lots of people go on vacation, and some of them remembered to set their email to auto-respond about their absence. The auto-responders responded to the same recipients, including the all-employees email address. So, every  I don’t care about your apartment  message didn’t just generate copies of itself; it also generated entirely new messages. Even the avalanche of apartment messages became drowned out by the volume of  I’ll be gone till November  auto-replies. 
+
+That also wasn’t the real problem, which, again, might have died down on its own. The REAL problem was that the mail servers were quite diligent. The auto-responders didn’t just send one  I’m away  message; they sent an  I’m away  message in response to every incoming message, including the  I’m away  messages from other auto-responders.
+
+The auto-response avalanche converted the entire mail system into a replication factory of away messages, as auto-responders incessantly informed not just every employee, but also each other, about employee status. The email systems melted down. Everything went offline. A university-wide enterprise suddenly had no email for about 48 hours.
+
+That’s not the end of the story. The IT staff busied themselves with clearing the mailboxes from these millions of messages and deactivating the auto-responders. They brought the email system back online, and their first order of business was to send out an email explaining the cause of the problem. They addressed the notification email to the all-employees email address. 
+
+IT Fail: Before they sent their email, they had disabled most of the auto-responders – but they missed at least one. More specifically, they missed at least two.

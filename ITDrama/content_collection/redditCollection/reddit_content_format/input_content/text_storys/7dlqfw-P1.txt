@@ -1,0 +1,75 @@
+This is a story of chaos, miscommunication, and unexpected confrontation in a mundane workplace meeting. 
+
+Yesterday was strange, to say the least. The meeting was scheduled for noon, so the beginning of my day was pretty mundane. I handled a few issues with users who had purchased their own machines because ours were not fast enough, even though the ones they bought were supplied by us. But such is life. At noon, I walked into the conference room for the video review. The Head of IT was in there, as well as the Executive Vice President of IT and Technology. The conference started hilariously when the head of HR could not get her video working. I walked her through how to fix that, as it was a simple error. 
+
+ Have you tried unplugging it and plugging it back in?  I asked. 
+
+ Oh, duh. Should have known it was something stupid like that,  she replied. 
+
+We started the conference, and oh boy, she was gunning for me hard. 
+
+ I have in front of me complaints against you this year. Can you explain these?  
+
+ That's it,  I said.
+
+ Clearly not expecting that. Uhh yes. How do you explain it?  
+
+ Well, as you well know, each complaint is different, and most do not have merit.  
+
+ So you are saying these complaints were made incorrectly?  
+
+ Yes, that is exactly what I am saying.  I pulled out the same folder she probably had. 
+
+ On February 3rd, a user complained that I refused his request.  
+
+ Good one to start with. Explain it.  
+
+ The user wanted me to put a folder on his desktop that would allow him to transfer items between his local desktop and Citrix. This is not possible unless he works on the domain, which he does not. I offered him several alternative options, but he refused each one. He only wanted the original option of a folder on his desktop.  
+
+ So this was impossible?  
+
+ Technology-wise, of course it is possible. We could have set him up with an FTP option directed into his session. But that would never get the approval.  
+
+ Let's move on to the next one. A different user claimed that you were rude to her on the phone and hung up on her.  
+
+ Let's play the call log. The call log is me being professional while she politely berates me on the phone until she cusses me out. I terminated the call and sent it to HR.  
+
+ That call is the reason why she is fired. Your predecessor said I handled it well.  
+
+ Okay, let's move on to the lady who had to wait extra days to get her laptop back from you.  
+
+ Name?  
+
+ The lady who yelled in my face said you helped her three days in a row and finally took an extra two days to get her laptop back to her.  
+
+ You mean the lady who yelled in my face and got fired because of it? Yeah, I remember her. I had to go to the hospital that Friday, so none of my work got done.  
+
+ I see the note here. You thought you had a hernia, but it turned out to be a UTI?  
+
+ Thanks for repeating it here. Yes. Anyways, the point is her laptop was finished within hours of me returning to work. The days she is talking about are because we had a three-day weekend.  
+
+The meeting went on like this for well over an hour as we ran through each complaint, with only one that was legitimate. I misread a technical error and had to fix it minutes later. Oh well. Then came the real kicker. 
+
+ Let's talk about the fire you started,  the head of HR said. 
+
+ I started?  
+
+ He started.  
+
+ Wait, what?  
+
+ Per your report, the fuse box was overloaded when the third rack of servers was plugged in and started a fire inside the wall that ended up burning out most of the building.  
+
+ Yes, that does sound correct. What your report failed to mention is that the circuit breaker was not an actual circuit breaker. It was a bypass installed to bring the building up to code. The fuse box had cabinets built over it so that the owner could hide it. When too much was plugged into a mains line, which was rated to handle it, the fuse should have blown. But there were about 80 cents worth of pennies shoved in there. 
+
+ How was this missed?  
+
+ I don't know. I am not an electrician, I am not a state building inspector, I am not omniscient, and I am certainly not omnipotent. I went in to set up an office.  
+
+ You appear to have an excuse for everything.  
+
+ Yes, it's called covering your ass. You literally have that on a poster in your office.  
+
+ Now let's talk about your language to me yesterday.  
+
+ How about we talk about your blatant disregard for the termination procedures you set in place? You created a paper snafu for my wo

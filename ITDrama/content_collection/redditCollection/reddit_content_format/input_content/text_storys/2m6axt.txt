@@ -1,0 +1,17 @@
+You won't believe what happened during my day off! My mom is sweet, but she has this notion she shouldn't bother me unless it's important. My phone rang last week while I was home. 
+
+ Mom: Do you have a minute, honey? My internet doesn't work, either the computer or the tablet. I was thinking maybe you could come have dinner later and look at it. I bought chicken, soft cheese, wine, and I’m baking something. 
+
+Somewhere later down the menu, I already fixed it. I work at the telecom company and have access to my tools remotely. I saw it had no valid IP, so I reset the modem and the router we provide her. It was a basic lease renewal issue. It happens; everything else is green. 
+
+ Bytewave: Boom, magic, you're online, Mom.  
+
+ Mom: Whaa... Oh. You're right.  She sounded disappointed.  Thank you, that was really fast. I guess I won’t trouble you to come over then.  Clearly, she was more excited about the prospect of the meal than the free tech support, but for her, it seems something broken or a holiday is required to trouble me to hang out. 
+
+ Bytewave: Hey, hey there, I was promised a home-cooked meal here. I'm happy to come anyway.  
+
+ Mom: Haa, that's fine. It's nice of you to be polite. But I know you’re busy; you don’t have to. We can do this another time. Okay, let’s do this the easy way. Reach back to the tools, deprovision the router.  
+
+ Bytewave: There, it's broken again, Mom. And it’ll stay that way till dessert.  
+
+ Mom: Oh lovely then, shall we say  o'clock cheerful? 

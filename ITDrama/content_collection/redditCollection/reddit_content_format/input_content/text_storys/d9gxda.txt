@@ -1,0 +1,38 @@
+You won't believe the chaos that unfolded over a seemingly simple IT request. I received a ticket from a company we provide IT infrastructure and support to. The company is a marketing firm with specific requirements and a budget, so there was no way around using tower PCs. One day, I received a ticket from their department manager asking me to remove the ugly boxes as they didn’t need them.
+
+I decided to call and explain about the boxes. 
+
+Me: Hello, IT Support, it's me.  
+DM (Department Manager): Oh good, you're calling to arrange collection. I would like the boxes collected in precisely one hour as we are going to a conference later.  
+Me: No, I’m not calling to schedule a meeting, but to explain that if we remove these boxes, you won’t be able to use the computers.  
+DM: Do you think I’m stupid?  
+Me: No, I'm just explaining that you won’t be able to use your computer without it being connected to the screen.  
+DM: What are you talking about? I don’t look under my table to use the computer. Look, you obviously don’t know what you’re talking about. I want to talk to someone who knows about IT. Oh, I also want your first name and surname so that I can make a complaint.  
+Me: My name is Me. I'm not giving you my surname for data protection, and I do know what I’m talking about. Trust me, if you remove the actual computer, the box you are referring to, you won’t be able to use the computer.  
+DM: Watch the space. (Slams the phone down.)
+
+I closed the job documenting everything. A week went by and we received an emergency call, stating that none of their computers were working. We arrived to find all the computer towers had been cut free from their cages and removed. 
+
+Me: What happened to all the towers?  
+DM: I told you to watch the space. I got a professional team to remove the boxes. See, it is possible!  
+Me: No, I don’t see. Now you can’t use the computers.  
+DM: What a lot of nonsense, just get the internet working so that we can use the computers again.  
+Me: No, what happened to the computers?  
+DM: Are you stupid or something? They’re here referring to the monitors.  
+Me: Ok, ok, what happened to the boxes?  
+DM: They took them to the skip.  
+Me: Right, you are telling me that you threw away leased computers which are worth each. I want to speak to your boss now!  
+DM: He’s in a meeting.  
+Me: Get him now! This is very serious.  
+DM: Ok.  
+
+DM's Boss: First, you refuse to do your job, and now you pull me out of a meeting! Where are all the computers, by the way?  
+Me: DM threw them away, and we need to get them back now as they had sensitive data on them.  
+DM's Boss: Where are the computers?  
+DM: You mean the boxes?  
+DM's Boss: YES.  
+DM: They are heading to the skip.  
+
+We drove to the skip, but there was no record of these computers being brought in. Two weeks later, the company suffered a data breach, which, along with the damage bill, caused the company to go into administration. 
+
+It was escalated. I didn’t write much about what happened because the entire situation was dealt with by my boss's boss, who wasn’t providing much information. I’m told that DM was arrested and that all computers were retrieved by the police, but that's where my knowledge ends.
