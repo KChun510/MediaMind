@@ -111,6 +111,7 @@ async function getVideosByKeyWords(auth, { valid_vids = 1, keywords = 'dogs', ty
                 part: 'snippet',
                 q: keywords,
                 maxResults: results,
+                relevanceLanguage: "en",
                 videoDefinition,
                 videoLicense,
                 type,
